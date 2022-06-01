@@ -11,10 +11,10 @@ const GNB = () => {
         <NavLink to='/' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>
           <SearchIcon />
         </NavLink>
-        <NavLink to='/Board' className={({ isActive }) => cx(styles.icon, { [styles.isActive]: isActive })}>
+        <NavLink to='/board' className={({ isActive }) => cx(styles.icon, { [styles.isActive]: isActive })}>
           <ListIcon />
         </NavLink>
-        <NavLink to='/manage' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>
+        <NavLink to='/upload' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>
           <UploadIcon />
         </NavLink>
       </nav>
