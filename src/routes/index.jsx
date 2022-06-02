@@ -6,7 +6,7 @@ import Board from '../pages/Board/Board'
 import Upload from '../pages/Upload/Upload'
 import Layout from '../components/Layout/Layout'
 import Header from '../components/Header/Header'
-// import GNB from '../components/GNB'
+import GNB from '../components/GNB/GNB'
 
 const App = () => {
   return (
@@ -20,6 +20,7 @@ const App = () => {
             <Route path='upload' element={<Upload />} />
           </Route>
         </Routes>
+        <GNB />
       </div>
     </div>
   )
