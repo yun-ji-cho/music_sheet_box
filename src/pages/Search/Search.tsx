@@ -4,10 +4,12 @@ import Select from 'react-select'
 import AsyncSelect from 'react-select/async'
 import { useSearchParams } from 'react-router-dom'
 import cx from 'classnames'
+import axios from "axios"
 
 import styles from './search.module.scss'
 import { SearchIcon, CloseIcon } from 'assets/svgs/index'
-// import { getMusicSheetApi } from 'service/getMusicSheetApi'
+import Example from './Example'
+import { getMusicSheetApi } from 'service/getMusicSheetApi'
 
 const codeOptions = [
   { value: 'ALL', label: 'ALL' },
@@ -50,9 +52,14 @@ const colourStyles = {
 }
 
 const Search = () => {
+  const [filter, setFilter] = useState('any')
+  const [code, setCode] = useState('ALL')
   const [searchText, setSearchText] = useState('')
-  const [selectCode, setSelectCode] = useState('ALL')
   const inputEl = useRef<HTMLInputElement>(null)
+
+  const handleFilter = (e:ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.currentTarget.value)
+  }
   
   const handleInputValue = (e:ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.currentTarget.value)
@@ -63,15 +70,40 @@ const Search = () => {
       inputEl.current.focus()
     }
   }
-  // const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    // setSelectCode(e.value)
+  const handleSelectChange = (e: any) => {
+    setCode(e.value)
   }
-  const [searchParams] = useSearchParams()
+
+  const { refetch } = useQuery(['musicSheets', filter, code, searchText], () => {
+    const filterCategory = filter === 'any' ? 'search' : filter === 'title' ? 'title' : 'article'
+    return getMusicSheetApi({search:searchText, music_code:code})
+  }
+  // 1) any 클릭시 {search:searchText, music_code:code}
+  // 2) title 클릭시 {title:searchText, music_code:code}
+  // 3) article 클릭시 {title:searchText, music_code:code}
+
+    // axios.get(
+    //   "https://api.github.com/repos/tannerlinsley/react-query"
+    // ).then((res) => {
+    //   console.log(res.data)
+    //   return res.data
+    // })
+)
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    // const { status, data, error } = useQuery(['musicSheets', filter, code, ], () => getMusicSheetApi({}).then((res) => res.data), {
+    refetch()
+    // const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
+    //   fetch(
+    //     "https://api.github.com/repos/tannerlinsley/react-query"
+    //   ).then((res) => res.json())
+    // )
+
+    // if (isLoading) return "Loading..."
+
+    // if (error) return `An error has occurred: ${error.message}`
+
+    // const { status, data, error } = useQuery(['musicSheets', filter, code, searchText], () => getMusicSheetApi({}).then((res) => res.data), {
     //   refetchOnWindowFocus: false, 
     //   retry: 0,
     //   onSuccess: data => {
@@ -97,15 +129,15 @@ const Search = () => {
           <span>Filter by </span>
           <ul className={styles.selectBox}>
             <li>
-              <input type='radio' id='any' name='filter' value='any' defaultChecked />
+              <input type='radio' id='any' name='filter' value='any' defaultChecked onChange={handleFilter}/>
               <label htmlFor='any'>Any</label>
             </li>
             <li>
-              <input type='radio' id='title' value='title' name='filter' />
+              <input type='radio' id='title' value='title' name='filter' onChange={handleFilter}/>
               <label htmlFor='title'>Title</label>
             </li>
             <li>
-              <input type='radio' id='Content' value='Content' name='filter' />
+              <input type='radio' id='Content' value='Content' name='filter' onChange={handleFilter}/>
               <label htmlFor='Content'>Content</label>
             </li>
           </ul>
@@ -133,6 +165,7 @@ const Search = () => {
           </div>
         </div>
       </form>
+      <Example />
     </div>
   )
 }
