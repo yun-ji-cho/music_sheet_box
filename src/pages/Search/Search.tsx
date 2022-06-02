@@ -1,14 +1,10 @@
-import { MouseEvent, ChangeEvent, FormEvent, useState, useRef, useEffect } from 'react'
+import { ChangeEvent, FormEvent, useState, useRef } from 'react'
 import { useQuery } from 'react-query'
 import Select from 'react-select'
-import AsyncSelect from 'react-select/async'
-import { useSearchParams } from 'react-router-dom'
 import cx from 'classnames'
-import axios from "axios"
 
 import styles from './search.module.scss'
 import { SearchIcon, CloseIcon } from 'assets/svgs/index'
-import Example from './Example'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 
 const codeOptions = [
@@ -74,53 +70,16 @@ const Search = () => {
     setCode(e.value)
   }
 
-  const { refetch } = useQuery(['musicSheets', filter, code, searchText], () => {
-    const filterCategory = filter === 'any' ? 'search' : filter === 'title' ? 'title' : 'article'
-    return getMusicSheetApi({search:searchText, music_code:code})
-  }
-  // 1) any 클릭시 {search:searchText, music_code:code}
-  // 2) title 클릭시 {title:searchText, music_code:code}
-  // 3) article 클릭시 {title:searchText, music_code:code}
-
-    // axios.get(
-    //   "https://api.github.com/repos/tannerlinsley/react-query"
-    // ).then((res) => {
-    //   console.log(res.data)
-    //   return res.data
-    // })
+  const { refetch } = useQuery(['musicSheets', filter, code, searchText], 
+  () => getMusicSheetApi({searchType:filter, musicCode:code, search:searchText })
+  .then((res) => res.data)
 )
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     refetch()
-    // const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
-    //   fetch(
-    //     "https://api.github.com/repos/tannerlinsley/react-query"
-    //   ).then((res) => res.json())
-    // )
-
-    // if (isLoading) return "Loading..."
-
-    // if (error) return `An error has occurred: ${error.message}`
-
-    // const { status, data, error } = useQuery(['musicSheets', filter, code, searchText], () => getMusicSheetApi({}).then((res) => res.data), {
-    //   refetchOnWindowFocus: false, 
-    //   retry: 0,
-    //   onSuccess: data => {
-    //     console.log(data);
-    //   },
-    //   onError: e => {
-    //     console.log(e.message);
-    //   }
-    // })
   }
-  // if (status === 'loading') {
-  //   return <span>Loading...</span>;
-  // }
 
-  // if (status === 'error') {
-  //   return <span>Error: {error.message}</span>;
-  // }
   return (
     <div className={styles.search}>
       <h2>Find Your Music Sheet</h2>
@@ -165,7 +124,6 @@ const Search = () => {
           </div>
         </div>
       </form>
-      <Example />
     </div>
   )
 }

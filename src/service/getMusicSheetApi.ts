@@ -1,20 +1,17 @@
-import axios from 'axios'
-import { IMusicSheetData } from '../types/index'
+import { axios } from 'hooks/worker'
+import { IMusicSheetRes } from 'types/index'
 
-// export const getMusicSheetApi = async (searchText: string): Promise<IMusicSheetData[]> => {
-//   try {
-//     const { data } = await axios.get<IMusicSheetData>({
-//       params: {
-//         searchText,
-//       },
-//     })
-//     const singleItemArr: IMusicSheetData[] = [];
-//     if (totalCount !== 1) {
-//       return sortResult(responseItem, searchText);
-//     }
+const MUSIC_BASE_URL = 'https://api.openweathermap.org/data/2.5'
 
-//     return sortResult(singleItemArr.concat(responseItem), searchText);
-//   } catch (error) {
-//     throw new Error('API 호출 실패');
-//   }
-// }
+interface Params {
+  searchType: string
+  musicCode: string
+  search: string
+}
+
+export const getMusicSheetApi = (params: Params) =>
+  axios.get<IMusicSheetRes>(`${MUSIC_BASE_URL}/forecast`, {
+    params: {
+      ...params,
+    },
+  })
