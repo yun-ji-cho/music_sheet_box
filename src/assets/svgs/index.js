@@ -6,4 +6,5 @@ export { ReactComponent as SaveBoxIcon } from './header_save-box.svg'
 export { ReactComponent as EnvelopeIcon } from './header_envelope.svg'
 export { ReactComponent as ShareIcon } from './header_share.svg'
 export { ReactComponent as CloseIcon } from './close.svg'
+export { ReactComponent as DownloadIcon } from './download.svg'
 

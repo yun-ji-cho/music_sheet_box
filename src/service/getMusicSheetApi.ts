@@ -10,7 +10,7 @@ interface Params {
 }
 
 export const getMusicSheetApi = (params: Params) =>
-  axios.get<IMusicSheetRes>(`${MUSIC_BASE_URL}/forecast`, {
+  axios.get<IMusicSheetRes>(`${MUSIC_BASE_URL}`, {
     params: {
       ...params,
     },
