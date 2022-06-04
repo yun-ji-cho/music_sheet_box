@@ -3,7 +3,7 @@ import {DownloadIcon} from 'assets/svgs/index'
 import { ItemType } from 'types'
 import styles from './item.module.scss'
 import { useRecoilState } from 'recoil'
-import { modalToggleState } from 'recoil/music.atom'
+import { modalToggleState, showItemId } from 'recoil/music.atom'
 
 type ItemProps = {
   item: ItemType 
@@ -11,13 +11,14 @@ type ItemProps = {
 }
 
 const Item = ({ item }: ItemProps): React.ReactElement => {
-  const { title, date, code, image } = item
+  const { id, title, date, code, image } = item
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
+  const [, setShowItemIdModal] = useRecoilState(showItemId)
 
   const handleModalOpen = () => {
     setModalState(true)
+    setShowItemIdModal(id)
   }
-  
   return (
     <li>
       <button type='button' onClick={handleModalOpen}>
