@@ -17,7 +17,6 @@
   justify-content: center;
   width: 350px;
   height: 720px;
-  // padding: 92px 0 60px;
 }
 
 .modalBox {
@@ -25,29 +24,87 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  padding: 30px;
   cursor: auto;
   background-color: colors.$WHITE;
   border-radius: 34px;
-  // background-color: rgba(0, 0, 0, 65%);
 
-  .closeBtn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 25px;
-    height: 25px;
-    // fill: colors.$WHITE;
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 40px;
+
+    .modalTitle {
+      font-size: 20px;
+      font-weight: 700;
+      color: colors.$GRAY2;
+    }
+  }
+
+  .topBtn {
+    width: 45px;
+    height: 45px;
+    background-color: colors.$MODAL_BTN_BG;
+    border: 1px solid colors.$WHITE2;
+    border-radius: 5px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+
+      &.prevIcon {
+        fill: colors.$GRAY2;
+      }
+
+      &.likeIcon {
+        fill: colors.$RED;
+      }
+    }
   }
 
   .inner {
-    padding: 40px 30px;
+    max-height: 530px;
+    overflow-y: auto;
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+
+      img {
+        width: 82%;
+        border-radius: 8px;
+      }
+    }
+
+    .category {
+      color: colors.$MODAL_TEXT_2;
+    }
 
     .title {
-      font-size: 30px;
+      margin: 15px 0 10px;
+      font-size: 22px;
     }
-  
+
+    .code {
+      display: inline-block;
+      padding: 3px 5px;
+      margin-right: 20px;
+      color: colors.$WHITE;
+      background-color: colors.$HIGHLIGHT_ORANGE;
+      border-radius: 4px;
+    }
+
+    .date {
+      color: colors.$MODAL_TEXT_2;
+    }
+
     .contents {
-      color: #6b6b6b;
+      padding-top: 20px;
+      line-height: 1.2;
+      color: colors.$MODAL_TEXT_2;
     }
   }
 }

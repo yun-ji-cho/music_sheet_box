@@ -24,6 +24,7 @@ export type ItemType = {
   date : string
   code: string
   image: string
+  category : string
 }
 
 // export type IModal = {

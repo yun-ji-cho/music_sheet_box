@@ -20,7 +20,7 @@ const Item = ({ item }: ItemProps): React.ReactElement => {
     setShowItemIdModal(id)
   }
   return (
-    <li>
+    <li className={styles.item}>
       <button type='button' onClick={handleModalOpen}>
         <div className={styles.left}>
           <p className={styles.title}>{title}</p>

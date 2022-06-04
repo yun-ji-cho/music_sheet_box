@@ -7,4 +7,8 @@ export { ReactComponent as EnvelopeIcon } from './header_envelope.svg'
 export { ReactComponent as ShareIcon } from './header_share.svg'
 export { ReactComponent as CloseIcon } from './close.svg'
 export { ReactComponent as DownloadIcon } from './download.svg'
+export { ReactComponent as HeartIcon } from './heart.svg'
+export { ReactComponent as PrevIcon } from './chevron_left.svg'
+export { ReactComponent as PlusIcon } from './plus.svg'
+export { ReactComponent as FileImageIcon } from './file_image.svg'
 
