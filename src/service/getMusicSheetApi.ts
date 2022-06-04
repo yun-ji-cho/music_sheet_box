@@ -1,15 +1,15 @@
 import { axios } from 'hooks/worker'
 import { IMusicSheetRes } from 'types/index'
 
-const MUSIC_BASE_URL = 'https://api.openweathermap.org/data/2.5'
+const MUSIC_BASE_URL = 'https://pcjmusic.herokuapp.com/community'
 
 interface Params {
-  searchType: string
-  musicCode: string
+  filterType: string
+  music_code: string
   search: string
 }
 
-export const getMusicSheetApi = (params: Params) =>
+export const getMusicSheetApi = (params?: Params) =>
   axios.get<IMusicSheetRes>(`${MUSIC_BASE_URL}`, {
     params: {
       ...params,

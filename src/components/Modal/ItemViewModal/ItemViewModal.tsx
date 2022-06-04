@@ -1,20 +1,19 @@
 import React from 'react'
 import Potal from '../Potal'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import styles from './ItemViewModal.module.scss'
 import { INITIAL_ITEM } from 'data/data'
-import { showItemId } from 'recoil/music.atom'
-// import musicSheetSample from 'assets/images/1.jpg'
+import { modalToggleState, showItemId } from 'recoil/music.atom'
 import { PrevIcon, HeartIcon } from 'assets/svgs'
 
-interface Props {
-  onClose: () => void;
-}
 
-const ItemViewModal = ({ onClose }: Props) => {
+const ItemViewModal = () => {
   const itemId = useRecoilValue(showItemId)
   const itemInfo = INITIAL_ITEM[itemId - 1]
-
+  const [, setModalState] = useRecoilState(modalToggleState)
+  const handleModalClose = () => {
+    setModalState(false)
+  }
 
   return (
     <Potal>
@@ -22,11 +21,11 @@ const ItemViewModal = ({ onClose }: Props) => {
         <div className={styles.modalLayOut}>
           <div className={styles.modalBox}>
             <div className={styles.top}>
-              <button type='button' className={styles.topBtn} onClick={onClose}>
+              <button type='button' className={styles.topBtn} onClick={handleModalClose}>
                 <PrevIcon className={styles.prevIcon} />
               </button>
               <p className={styles.modalTitle}>Detail Item</p>
-              <button type='button' className={styles.topBtn} onClick={onClose}>
+              <button type='button' className={styles.topBtn}>
                 <HeartIcon className={styles.likeIcon} />
               </button>
             </div>

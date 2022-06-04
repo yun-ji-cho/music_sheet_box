@@ -1,32 +1,14 @@
-// export interface IMusicSheetData {
-//   response: {
-//     body: {
-//       items: {
-//       }
-//     }
-//   }
-// }
-export interface IMusicSheetRes {
-  // cod: string
-  // message: number
-  // cnt: number
-  // list: IListItem[]
-  // city: ICity
-}
-// export interface IMusicSheetPost {
-
-// }
-
-
-export type ItemType = {
+export interface IResultData{
   id: number
-  title : string
-  date : string
-  code: string
-  image: string
-  category : string
+  title: string
+  article: string
+  musicCode: string
+  category: string
+  created: string
 }
-
-// export type IModal = {
-
-// }
+export interface IMusicSheetRes {
+  count: number,
+  next: null | number,
+  previous: null | number,
+  results: IResultData[]
+}

@@ -1,11 +1,17 @@
 import { ChangeEvent, FormEvent, useState, useRef } from 'react'
 import { useQuery } from 'react-query'
+import { useRecoilState } from 'recoil'
 import Select from 'react-select'
 import cx from 'classnames'
 
-import styles from './search.module.scss'
 import { SearchIcon, CloseIcon } from 'assets/svgs/index'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
+import { confirmModalState } from 'recoil/music.atom'
+import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
+import Item from 'pages/Board/Item/Item'
+import { IResultData } from 'types'
+
+import styles from './search.module.scss'
 
 const codeOptions = [
   { value: 'ALL', label: 'ALL' },
@@ -48,10 +54,13 @@ const colourStyles = {
 }
 
 const Search = () => {
-  const [filter, setFilter] = useState('any')
-  const [code, setCode] = useState('ALL')
+  const [filter, setFilter] = useState('')
+  const [code, setCode] = useState('')
   const [searchText, setSearchText] = useState('')
   const inputEl = useRef<HTMLInputElement>(null)
+  const [filtered, setFiltered] = useState<IResultData[] | []>([])
+
+  const [confirmModal, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
 
   const handleFilter = (e:ChangeEvent<HTMLInputElement>) => {
     setFilter(e.currentTarget.value)
@@ -70,15 +79,29 @@ const Search = () => {
     setCode(e.value)
   }
 
-  const { refetch } = useQuery(['musicSheets', filter, code, searchText], 
-  () => getMusicSheetApi({searchType:filter, musicCode:code, search:searchText })
+  const { data, refetch } = useQuery(['musicSheets', filter, code, searchText], 
+  () => getMusicSheetApi({filterType: filter, search:searchText, music_code:code })
   .then((res) => res.data)
-)
+  )
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    refetch()
+    if(!searchText && !code) setConfirmModal(true)
+    
+
+    if(data){
+      setFiltered(data.results)
+      console.log(data.results)
+    }
+
+    
+    // // const filteredData = 
+    // console.log(data)
+    // refetch()
   }
+
+  console.log(filtered, data?.count)
+
 
   return (
     <div className={styles.search}>
@@ -124,6 +147,18 @@ const Search = () => {
           </div>
         </div>
       </form>
+      {data && filtered.length !== data.count ? (
+        <ul>
+          {filtered.map((item) => (
+            <Item key={item.id} item={item} />
+          ))}
+        </ul>
+      ) : (
+        null
+      )}
+
+      {confirmModal && <ConfirmModal message='검색어를 입력해주세요' />}
+
     </div>
   )
 }

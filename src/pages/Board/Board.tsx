@@ -1,31 +1,41 @@
-import { useState } from 'hooks'
+import { useRecoilValue } from 'recoil'
+import { useQuery } from "react-query"
+
+import { modalToggleState } from 'recoil/music.atom'
+import { getMusicSheetApi } from 'service/getMusicSheetApi'
+
 import styles from './board.module.scss'
+
+import Item from 'pages/Board/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 import Portal from 'components/Modal/Potal'
-import Item from 'pages/Board/Item/Item'
-import { useRecoilState } from 'recoil'
-import { modalToggleState } from 'recoil/music.atom'
-import { INITIAL_ITEM } from 'data/data'
 
 
 const Board = () => {
-  const [modalState, setModalState] = useRecoilState<Boolean>(modalToggleState)
-  const handleModalClose = () => {
-    setModalState(false)
-  }
+  const { data } = useQuery('musicSheets', 
+  () => getMusicSheetApi()
+  .then((res) => res.data)
+  )
 
+  const modalState = useRecoilValue(modalToggleState)
   return (
     <div className={styles.board}>
       <Portal>
-        {modalState && <ItemViewModal onClose={handleModalClose}  />}
+        {modalState && <ItemViewModal/>}
       </Portal>
       <div className={styles.tableHeader}>
         <span className={styles.title}>Title</span>
         <span className={styles.code}>Code</span>
       </div>
-      <ul className={styles.tableItemList}>
-        {INITIAL_ITEM.map(item => <Item key={item.id} item={item} />)}
-      </ul>
+      {data ? (
+        <ul className={styles.tableItemList}>
+          {data.results.map((item) => (
+            <Item key={item.id} item={item} />
+          ))}
+        </ul>
+      ) : (
+        <div className={styles.placeholderMsg}>등록된 악보가 없습니다.</div>
+      )}
     </div>
   )
 }
