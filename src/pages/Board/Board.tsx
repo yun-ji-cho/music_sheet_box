@@ -17,8 +17,6 @@ const Board = () => {
   .then((res) => res.data)
   )
 
-  // console.log(data?.results);
-
   const modalState = useRecoilValue(modalToggleState)
   return (
     <div className={styles.board}>

@@ -11,16 +11,33 @@ interface INewItemType {
   article: string
   musicCode: string
   category: string
+  // images: any
 }
 const addNewItem = async (newItem: INewItemType): Promise<INewItemType> => {
   const { data } = await axios.post<INewItemType>('https://pcjmusic.herokuapp.com/community/', newItem)
   return data
 }
 
+interface IImageData {
+  lastModified: number
+  lastModifiedDate: Date
+  name: string
+  size: number
+  type: string
+  webkitRelativePath: string
+}
+
+interface IFileList {
+  FIleList: {
+    File : IImageData
+  }
+}
 
 
 const Upload = () => {
-  const { mutate, isLoading, isError, error, isSuccess } = useMutation(addNewItem)
+  const { mutate } = useMutation(addNewItem)
+  const [image, setImage] = useState<null | IFileList | any>(null)
+  // const [image, setImage] =  useState<Array<Blob>>([])
   const [imageSrc, setImageSrc] = useState('')
   const [title, setTitle] = useState('')
   const [musicCode, setMusicCode] = useState('')
@@ -28,9 +45,10 @@ const Upload = () => {
   const [article, setArticle] = useState('')
   
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.files[0])
     if(!e.currentTarget.files) return
+    const file =  e.currentTarget.files
     const fileName  = e.currentTarget.files[0].name
+    setImage(file)
     setImageSrc(fileName)
   }
 
@@ -49,16 +67,29 @@ const Upload = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // const formdata = new FormData()
+    // formdata.append('images', image[0])
+    // formdata.append('title', title)
+    // formdata.append('article', article)
+    // formdata.append('musicCode', musicCode)
+    // formdata.append('category', category)
+    // console.log(formdata)
+
+    // const config = {
+    //   Headers: {
+    //     'content-type': 'multipart/form-data',
+    //   },
+    // }
+
     mutate({title, article, musicCode, category})
+    // mutate(formdata)
   }
 
   return (
     <div className={styles.upload}>
       <h3>Upload Contents</h3>
-      {isLoading ? ('Adding item') : null}
-      {isError && <p>error: 에러입니다.</p>}
-      {isSuccess && <p>Todo added!</p>}
-      <form action="" onSubmit={handleSubmit}>
+      <form action="" onSubmit={handleSubmit} id='submitForm'>
         <ul>
           <li>
             <p className={styles.itemTitle}>Image</p>
@@ -77,20 +108,20 @@ const Upload = () => {
             {imageSrc && <div className={styles.uploadFile}>{imageSrc}</div>} 
           </li>
           <li>
-            <p className={styles.itemTitle}>Title</p>
-            <input type='text' value={title} onChange={handleTitleValue} />
+            <label htmlFor='title' className={styles.itemTitle}>Title</label>
+            <input type='text' id='title' name='title' value={title} onChange={handleTitleValue} />
           </li>
           <li>
-            <p className={styles.itemTitle}>Music Code</p>
-            <input type='text' value={musicCode} onChange={handleMusicCodeValue} />
+            <label htmlFor='musicCode' className={styles.itemTitle}>Music Code</label>
+            <input type='text' id='musicCode' name='musicCode' value={musicCode} onChange={handleMusicCodeValue} />
           </li>
           <li>
-            <p className={styles.itemTitle}>Category</p>
-            <input type='text' value={category} onChange={handleCategoryValue} />
+            <label htmlFor='category' className={styles.itemTitle}>Category</label>
+            <input type='text' id='category' name='category' value={category} onChange={handleCategoryValue} />
           </li>
           <li>
-            <p className={styles.itemTitle}>Note</p>
-            <textarea value={article} onChange={handleArticleValue} />
+            <label htmlFor='article' className={styles.itemTitle}>Note</label>
+            <textarea value={article} id='article' name='article' onChange={handleArticleValue} />
           </li>
         </ul>
         <div className={styles.buttonWrap}>

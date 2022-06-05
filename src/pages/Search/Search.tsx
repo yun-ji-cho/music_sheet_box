@@ -100,7 +100,6 @@ const Search = () => {
     // refetch()
   }
 
-  console.log(filtered, data?.count)
 
 
   return (

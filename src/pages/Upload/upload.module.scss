@@ -37,7 +37,8 @@
     }
 
     .itemTitle {
-      padding-bottom: 7px;
+      display: inline-block;
+      margin-bottom: 7px;
       color: colors.$APP_INNER;
     }
   }
