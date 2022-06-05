@@ -17,11 +17,13 @@ const Board = () => {
   .then((res) => res.data)
   )
 
+  // console.log(data?.results);
+
   const modalState = useRecoilValue(modalToggleState)
   return (
     <div className={styles.board}>
       <Portal>
-        {modalState && <ItemViewModal/>}
+        {modalState && <ItemViewModal data={data?.results}/>}
       </Portal>
       <div className={styles.tableHeader}>
         <span className={styles.title}>Title</span>

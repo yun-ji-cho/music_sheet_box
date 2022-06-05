@@ -1,15 +1,25 @@
-import React from 'react'
-import Potal from '../Potal'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import styles from './ItemViewModal.module.scss'
+
 import { INITIAL_ITEM } from 'data/data'
+import { IResultData } from 'types/index'
 import { modalToggleState, showItemId } from 'recoil/music.atom'
 import { PrevIcon, HeartIcon } from 'assets/svgs'
 
+import styles from './ItemViewModal.module.scss'
 
-const ItemViewModal = () => {
+import Potal from '../Potal'
+
+interface Props {
+  data: IResultData[] | undefined
+}
+
+
+
+const ItemViewModal = ({data}: Props) => {
   const itemId = useRecoilValue(showItemId)
-  const itemInfo = INITIAL_ITEM[itemId - 1]
+  const itemInfo = data && data[itemId-2]
+  
+  // console.log(data);
   const [, setModalState] = useRecoilState(modalToggleState)
   const handleModalClose = () => {
     setModalState(false)
@@ -29,16 +39,21 @@ const ItemViewModal = () => {
                 <HeartIcon className={styles.likeIcon} />
               </button>
             </div>
-            <div className={styles.inner}>
-              <div className={styles.image}>
-                <img src={itemInfo.image} alt={itemInfo.title} />
-              </div>
-              <span className={styles.category}>{itemInfo.category}</span>
-              <p className={styles.title}>{itemInfo.title}</p>
-              <span className={styles.code}>{itemInfo.code}</span>
-              <span className={styles.date}>{itemInfo.date}</span>
-              <p className={styles.contents}>{itemInfo.content}</p>
-            </div>
+            {
+              data && itemInfo && (
+                <div className={styles.inner}>
+                  <div className={styles.image}>
+                    {/* <img src={itemInfo.image} alt={itemInfo.title} /> */}
+                  </div>
+                  <span className={styles.category}>{itemInfo.category}</span>
+                  <p className={styles.title}>{itemInfo.title}</p>
+                  <span className={styles.code}>{itemInfo.musicCode}</span>
+                  <span className={styles.date}>{itemInfo.created}</span>
+                  <p className={styles.contents}>{itemInfo.article}</p>
+                </div>
+              )
+            }
+
           </div>
         </div>
       </div>

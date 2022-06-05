@@ -1,35 +1,38 @@
-import React from 'react'
-import {DownloadIcon} from 'assets/svgs/index'
-import { IResultData } from 'types'
-import styles from './item.module.scss'
 import { useRecoilState } from 'recoil'
+
+import { IResultData } from 'types'
+import {DownloadIcon} from 'assets/svgs/index'
 import { modalToggleState, showItemId } from 'recoil/music.atom'
+
+import styles from './item.module.scss'
 
 type ItemProps = {
   item: IResultData 
-  // handleItemView:void;
 }
 
-const Item = ({ item }: ItemProps): React.ReactElement => {
+const Item = ({ item }: ItemProps) => {
   const { id, title, article, musicCode, category, created } = item
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
   const [, setShowItemIdModal] = useRecoilState(showItemId)
+
+  const date = created.slice(0,10)
 
   const handleModalOpen = () => {
     setModalState(true)
     setShowItemIdModal(id)
   }
+
   return (
     <li className={styles.item}>
       <button type='button' onClick={handleModalOpen}>
         <div className={styles.left}>
           <p className={styles.title}>{title}</p>
-          <span className={styles.date}>{created}</span>
+          <span className={styles.date}>{date}</span>
         </div>
         <span className={styles.code}>{musicCode}</span>
-        {/* <input type="hidden" data-img={image}/> */}
+        <input type="hidden" data-img='https://i.picsum.photos/id/1028/200/300.jpg?hmac=Ka86H0yLDb-Ft8SNNKSVTSFylu-GfaEGBrS2AP01ZSM' data-category={category} data-article={article}/>
       </button>
-      {/* <a href={image} aria-label='download' download><DownloadIcon /></a> */}
+      <a href='https://i.picsum.photos/id/1028/200/300.jpg?hmac=Ka86H0yLDb-Ft8SNNKSVTSFylu-GfaEGBrS2AP01ZSM' aria-label='download' download><DownloadIcon /></a>
     </li>
   )
 }

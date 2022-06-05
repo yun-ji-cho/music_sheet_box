@@ -19,7 +19,7 @@
     text-align: left;
 
     .left {
-      flex: 1;
+      width: 93%;
 
       .title {
         width: 85%;
@@ -30,6 +30,10 @@
         text-align: left;
         @include typography.lineClamp(1, 20);
       }
+    }
+
+    .code {
+      width: 7%;
     }
 
     span {
