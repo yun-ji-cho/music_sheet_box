@@ -35,3 +35,4 @@ const ConfirmModal = ({ message }: Props) => {
 }
 
 export default ConfirmModal
+
