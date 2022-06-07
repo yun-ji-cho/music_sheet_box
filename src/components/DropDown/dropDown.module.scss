@@ -1,0 +1,11 @@
+@use '/src/styles/constants/colors';
+
+.dropDown {
+  display: flex;
+  align-items: center;
+
+  label {
+    margin-right: 28px;
+    color: colors.$WHITE2;
+  }
+}
