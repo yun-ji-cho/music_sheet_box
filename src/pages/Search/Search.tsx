@@ -1,9 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useQuery } from 'react-query'
-import { useRecoilState } from 'recoil'
 
 import { useRecoil } from 'hooks/state'
-
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import { confirmModalState, musicCodeState, searchTextState } from 'states/music.atom'
 import { IResultData } from 'types'
@@ -22,7 +20,7 @@ const Search = () => {
   const [searchText] = useRecoil(searchTextState)
   const [code] = useRecoil(musicCodeState)
 
-  const [confirmModal, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
+  const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
 
   const handleFilter = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.currentTarget.value)
@@ -54,7 +52,7 @@ const Search = () => {
           <Filter handleFilter={handleFilter} />
         </div>
         <div className={styles.line}>
-          <DropDown />
+          <DropDown optionValue='musicCode' />
         </div>
         <div className={styles.line}>
           <SearchBox />
