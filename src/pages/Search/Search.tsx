@@ -12,6 +12,7 @@ import Item from 'pages/Board/Item/Item'
 import { IResultData } from 'types'
 
 import styles from './search.module.scss'
+import Filter from './Filter/Filter'
 
 const codeOptions = [
   { value: 'ALL', label: 'ALL' },
@@ -54,17 +55,20 @@ const colourStyles = {
 }
 
 const Search = () => {
-  const [filter, setFilter] = useState('')
   const [code, setCode] = useState('')
+  const [filter, setFilter] = useState('')
   const [searchText, setSearchText] = useState('')
   const inputEl = useRef<HTMLInputElement>(null)
   const [filtered, setFiltered] = useState<IResultData[] | []>([])
+  
 
   const [confirmModal, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
 
-  const handleFilter = (e:ChangeEvent<HTMLInputElement>) => {
+
+  const handleFilter = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.currentTarget.value)
   }
+
   
   const handleInputValue = (e:ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.currentTarget.value)
@@ -106,36 +110,24 @@ const Search = () => {
     <div className={styles.search}>
       <h2>Find Your Music Sheet</h2>
       <form action='' onSubmit={handleSubmit}>
-        <div className={cx(styles.line, styles.filter)}>
-          <span>Filter by </span>
-          <ul className={styles.selectBox}>
-            <li>
-              <input type='radio' id='any' name='filter' value='any' defaultChecked onChange={handleFilter}/>
-              <label htmlFor='any'>Any</label>
-            </li>
-            <li>
-              <input type='radio' id='title' value='title' name='filter' onChange={handleFilter}/>
-              <label htmlFor='title'>Title</label>
-            </li>
-            <li>
-              <input type='radio' id='Content' value='Content' name='filter' onChange={handleFilter}/>
-              <label htmlFor='Content'>Content</label>
-            </li>
-          </ul>
+        <div className={styles.line}>
+          <Filter handleFilter={handleFilter} />
         </div>
-        <div className={cx(styles.line, styles.dropDown)}>
-          <label htmlFor='selectCode'>Code </label>
-          <div className={styles.select}>
-            <Select 
-              defaultValue={codeOptions[0]}
-              options={codeOptions}
-              styles={colourStyles}
-              theme={(theme) => ({
-                ...theme,
-                borderRadius: 8,
-              })}
-              onChange={handleSelectChange}
-            />
+        <div className={styles.line}>
+          <div className={styles.dropDown}>
+            <label htmlFor='selectCode'>Code </label>
+            <div className={styles.select}>
+              <Select 
+                defaultValue={codeOptions[0]}
+                options={codeOptions}
+                styles={colourStyles}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 8,
+                })}
+                onChange={handleSelectChange}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.line}>

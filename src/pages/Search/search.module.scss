@@ -18,57 +18,6 @@
     margin-bottom: 20px;
   }
 
-  .filter {
-    display: flex;
-    align-items: center;
-
-    span {
-      color: colors.$WHITE2;
-    }
-
-    .selectBox {
-      display: flex;
-      flex: 1;
-      height: 40px;
-      margin-left: 10px;
-      border: 1px solid colors.$WHITE3;
-      border-radius: 8px;
-
-      li {
-        position: relative;
-        width: 33.33%;
-        height: 100%;
-        color: colors.$WHITE3;
-        text-align: center;
-
-        +li {
-          border-left: 1px solid colors.$WHITE3;
-        }
-      }
-
-      label {
-        display: block;
-        width: 100%;
-        height: 100%;
-        line-height: 40px;
-      }
-
-      input[type='radio'] {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        visibility: hidden;
-
-        &:checked + label {
-          color: colors.$WHITE2;
-        }
-      }
-    }
-  }
-
   .dropDown {
     display: flex;
     align-items: center;
@@ -87,32 +36,32 @@
     height: 45px;
     background: colors.$WHITE;
     border-radius: 8px;
-
+  
     &:hover {
       outline: 1px solid colors.$BLUE;
     }
-
+  
     input[type='text'] {
       width: calc(100% - 45px);
       height: 100%;
       padding: 0 35px 0 10px;
       font-size: 18px;
       color: colors.$GRAY3;
-
+  
       &::placeholder {
         color: colors.$GRAYA;
       }
     }
-
+  
     button {
       width: 45px;
       height: 45px;
-
+  
       svg {
         width: 22px;
         height: 22px;
       }
-
+  
       &.deleteBtn {
         position: absolute;
         top: 50%;
@@ -120,16 +69,16 @@
         display: none;
         width: 35px;
         transform: translateY(-50%);
-
+  
         &.isActive {
           display: block;
         }
       }
-
+  
       .removeIcon {
         fill: colors.$GRAY3;
       }
-
+  
       .searchIcon {
         fill: colors.$GRAY3;
       }

@@ -1,0 +1,52 @@
+@use '/src/styles/constants/colors';
+
+.filter {
+  display: flex;
+  align-items: center;
+
+  span {
+    color: colors.$WHITE2;
+  }
+
+  .selectBox {
+    display: flex;
+    flex: 1;
+    height: 40px;
+    margin-left: 10px;
+    border: 1px solid colors.$WHITE3;
+    border-radius: 8px;
+
+    li {
+      position: relative;
+      width: 33.33%;
+      height: 100%;
+      color: colors.$WHITE3;
+      text-align: center;
+
+      +li {
+        border-left: 1px solid colors.$WHITE3;
+      }
+    }
+
+    label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      line-height: 40px;
+    }
+
+    input[type='radio'] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      visibility: hidden;
+
+      &:checked + label {
+        color: colors.$WHITE2;
+      }
+    }
+  }
+}
