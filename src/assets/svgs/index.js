@@ -11,4 +11,4 @@ export { ReactComponent as HeartIcon } from './heart.svg'
 export { ReactComponent as PrevIcon } from './chevron_left.svg'
 export { ReactComponent as PlusIcon } from './plus.svg'
 export { ReactComponent as FileImageIcon } from './file_image.svg'
-
+export { ReactComponent as ArrowDownIcon } from './arrow_down.svg'

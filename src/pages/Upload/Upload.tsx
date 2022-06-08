@@ -7,6 +7,7 @@ import Button from 'components/Button/Button'
 
 import styles from './upload.module.scss'
 import DropDown from 'components/DropDown/DropDown'
+import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
 
 interface INewItemType {
   title: string
@@ -40,6 +41,8 @@ const Upload = () => {
   const { mutate } = useMutation(addNewItem)
   const [image, setImage] = useState<null | IFileList | any>(null)
   // const [image, setImage] =  useState<Array<Blob>>([])
+  const [values, setValues] = useState({ title: '', article: '' })
+  const [selectValues, setSelectValues] = useState({ musicCode: '', Category: '' })
   const [imageSrc, setImageSrc] = useState('')
   const [title, setTitle] = useState('')
   const [musicCode, setMusicCode] = useState('')
@@ -54,38 +57,14 @@ const Upload = () => {
     setImageSrc(fileName)
   }
 
-  const handleTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
-  }
-  const handleMusicCodeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setMusicCode(e.currentTarget.value)
-  }
-  const handleCategoryValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.currentTarget.value)
-  }
-  const handleArticleValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setArticle(e.currentTarget.value)
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setValues({ ...values, [name]: value })
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    // const formdata = new FormData()
-    // formdata.append('images', image[0])
-    // formdata.append('title', title)
-    // formdata.append('article', article)
-    // formdata.append('musicCode', musicCode)
-    // formdata.append('category', category)
-    // console.log(formdata)
-
-    // const config = {
-    //   Headers: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    // }
-
     mutate({ title, article, musicCode, category })
-    // mutate(formdata)
   }
 
   return (
@@ -121,27 +100,19 @@ const Upload = () => {
             <label htmlFor='title' className={styles.itemTitle}>
               Title
             </label>
-            <input type='text' id='title' name='title' value={title} onChange={handleTitleValue} />
+            <input type='text' id='title' name='title' value={title} onChange={handleChange} />
           </li>
           <li>
-            <label htmlFor='musicCode' className={styles.itemTitle}>
-              Music Code
-            </label>
-            <DropDown optionValue='musicCode' colorTheme='blackBorder' />
-            {/* <input type='text' id='musicCode' name='musicCode' value={musicCode} onChange={handleMusicCodeValue} /> */}
+            <DropDown optionValue='musicCode' colorTheme='black' label='code' displayTheme='block' />
           </li>
           <li>
-            <label htmlFor='category' className={styles.itemTitle}>
-              Category
-            </label>
-            <DropDown optionValue='category' colorTheme='blackBorder' />
-            {/* <input type='text' id='category' name='category' value={category} onChange={handleCategoryValue} /> */}
+            <DropDown optionValue='category' colorTheme='black' label='category' displayTheme='block' />
           </li>
           <li>
             <label htmlFor='article' className={styles.itemTitle}>
               Note
             </label>
-            <textarea value={article} id='article' name='article' onChange={handleArticleValue} />
+            <textarea value={article} id='article' name='article' onChange={handleChange} />
           </li>
         </ul>
         <div className={styles.buttonWrap}>

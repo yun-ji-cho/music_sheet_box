@@ -12,8 +12,3 @@ export interface IMusicSheetRes {
   previous: null | number
   results: IResultData[]
 }
-
-export interface ICodeOption {
-  value: string
-  label: string
-}

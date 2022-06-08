@@ -52,7 +52,7 @@ const Search = () => {
           <Filter handleFilter={handleFilter} />
         </div>
         <div className={styles.line}>
-          <DropDown optionValue='musicCode' />
+          <DropDown optionValue='musicCode' label='code' />
         </div>
         <div className={styles.line}>
           <SearchBox />
