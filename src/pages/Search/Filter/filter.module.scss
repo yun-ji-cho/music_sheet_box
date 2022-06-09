@@ -4,7 +4,8 @@
   display: flex;
   align-items: center;
 
-  span {
+  .label {
+    width: 80px;
     color: colors.$WHITE2;
   }
 
@@ -18,8 +19,8 @@
 
     li {
       position: relative;
-      width: 33.33%;
       height: 100%;
+      padding: 0 14px;
       color: colors.$WHITE3;
       text-align: center;
 

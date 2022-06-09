@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 
 import { useRecoil } from 'hooks/state'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
-import { confirmModalState, musicCodeState, searchTextState } from 'states/music.atom'
+import { confirmModalState, searchMusicCodeState, searchTextState } from 'states/music.atom'
 import { IResultData } from 'types'
 
 import styles from './search.module.scss'
@@ -18,7 +18,7 @@ const Search = () => {
   const [filter, setFilter] = useState('')
   const [filtered, setFiltered] = useState<IResultData[] | []>([])
   const [searchText] = useRecoil(searchTextState)
-  const [code] = useRecoil(musicCodeState)
+  const [code] = useRecoil(searchMusicCodeState)
 
   const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
 
@@ -52,7 +52,10 @@ const Search = () => {
           <Filter handleFilter={handleFilter} />
         </div>
         <div className={styles.line}>
-          <DropDown optionValue='musicCode' label='code' />
+          <DropDown page='search' optionValue='musicCode' label='code' colorTheme='white' />
+        </div>
+        <div className={styles.line}>
+          <DropDown page='search' optionValue='category' label='category' colorTheme='white' />
         </div>
         <div className={styles.line}>
           <SearchBox />

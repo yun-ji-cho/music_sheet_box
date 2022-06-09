@@ -1,15 +1,16 @@
 import { ArrowDownIcon } from 'assets/svgs'
-import { FormEvent, useEffect, useRef, useState } from 'react'
-import styles from './dropDownBox.module.css'
+import { FormEvent, useEffect, useRef, useState, MouseEvent } from 'react'
+import cx from 'classnames'
+import styles from './dropDownBox.module.scss'
 // import { ArrowDownIcon } from 'assets'
 
 interface IProps {
   listItem: Array<string>
   colorTheme?: string
-  onChange: (value: string) => void
 }
 
-const DropDownBox = ({ listItem, colorTheme, onChange }: IProps) => {
+const DropDownBox = ({ listItem, colorTheme }: IProps) => {
+  const [current, setCurrent] = useState(listItem[0])
   const [isopenDropDown, setIsopenDropDown] = useState(false)
 
   const handleShowDropDown = () => {
@@ -17,20 +18,23 @@ const DropDownBox = ({ listItem, colorTheme, onChange }: IProps) => {
   }
 
   const handleChangeTitle = (e: FormEvent<HTMLButtonElement>) => {
+    setCurrent(e.currentTarget.value)
     setIsopenDropDown(false)
   }
 
+  const color = colorTheme === 'black' ? styles.black : styles.white
+
   return (
-    <div className={styles.dropDownBox}>
-      <button type='button' onClick={handleShowDropDown}>
-        {listItem[0]}
-        <ArrowDownIcon />
+    <div className={cx(styles.dropDownBox, { [color]: colorTheme }, { [styles.isActive]: isopenDropDown })}>
+      <button type='button' className={styles.current} onClick={handleShowDropDown}>
+        {current}
+        <ArrowDownIcon className={cx(styles.arrowDownIcon, { [color]: colorTheme })} />
       </button>
       {isopenDropDown && (
-        <ul>
+        <ul className={styles.list}>
           {listItem.map((item) => {
             return (
-              <li key={Math.random() * 1000}>
+              <li key={item}>
                 <button type='button' onClick={handleChangeTitle} value={item}>
                   {item}
                 </button>

@@ -71,7 +71,7 @@ const Upload = () => {
     <div className={styles.upload}>
       <h3>Upload Contents</h3>
       <form action='' onSubmit={handleSubmit} id='submitForm'>
-        <ul>
+        <ul className={styles.formList}>
           <li>
             <p className={styles.itemTitle}>Image</p>
             <input
@@ -103,10 +103,10 @@ const Upload = () => {
             <input type='text' id='title' name='title' value={title} onChange={handleChange} />
           </li>
           <li>
-            <DropDown optionValue='musicCode' colorTheme='black' label='code' displayTheme='block' />
+            <DropDown page='upload' optionValue='musicCode' colorTheme='black' label='code' displayTheme='block' />
           </li>
           <li>
-            <DropDown optionValue='category' colorTheme='black' label='category' displayTheme='block' />
+            <DropDown page='upload' optionValue='category' colorTheme='black' label='category' displayTheme='block' />
           </li>
           <li>
             <label htmlFor='article' className={styles.itemTitle}>

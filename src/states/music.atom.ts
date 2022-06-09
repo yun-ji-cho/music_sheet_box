@@ -20,7 +20,19 @@ export const searchTextState = atom({
   default: '',
 })
 
-export const musicCodeState = atom({
-  key: 'musicCodeState',
+export const searchMusicCodeState = atom({
+  key: 'searchMusicCodeState',
+  default: '',
+})
+export const searchCategoryState = atom({
+  key: 'searchCategoryState',
+  default: '',
+})
+export const uploadMusicCodeState = atom({
+  key: 'uploadMusicCodeState',
+  default: '',
+})
+export const uploadCategoryState = atom({
+  key: 'uploadCategoryState',
   default: '',
 })

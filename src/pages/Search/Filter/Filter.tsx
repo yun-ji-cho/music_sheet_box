@@ -25,7 +25,7 @@ const Filter = ({ handleFilter }: Props) => {
 
   return (
     <div className={styles.filter}>
-      <span>Filter by </span>
+      <p className={styles.label}>Filter by </p>
       <ul className={styles.selectBox}>{listItem}</ul>
     </div>
   )

@@ -4,6 +4,11 @@
   display: flex;
   align-items: center;
 
+  label {
+    width: 70px;
+    margin-right: 28px;
+  }
+
   &.black {
     label {
       display: inline-block;
@@ -12,12 +17,15 @@
     }
   }
 
-  &.display {
-    display: block;
+  &.white {
+    label {
+      display: inline-block;
+      margin-bottom: 7px;
+      color: colors.$WHITE;
+    }
   }
 
-  label {
-    margin-right: 28px;
-    color: colors.$WHITE2;
+  &.display {
+    display: block;
   }
 }
