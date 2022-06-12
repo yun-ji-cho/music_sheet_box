@@ -1,28 +1,21 @@
 import { useRecoilValue } from 'recoil'
-import { useQuery } from "react-query"
+import { useQuery } from 'react-query'
 
-import { modalToggleState } from 'recoil/music.atom'
+import { modalToggleState } from 'states/music.atom'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 
 import styles from './board.module.scss'
 
-import Item from 'pages/Board/Item/Item'
+import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
-import Portal from 'components/Modal/Potal'
-
 
 const Board = () => {
-  const { data } = useQuery('musicSheets', 
-  () => getMusicSheetApi()
-  .then((res) => res.data)
-  )
+  const { data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
 
   const modalState = useRecoilValue(modalToggleState)
   return (
     <div className={styles.board}>
-      <Portal>
-        {modalState && <ItemViewModal data={data?.results}/>}
-      </Portal>
+      {modalState && <ItemViewModal data={data?.results} />}
       <div className={styles.tableHeader}>
         <span className={styles.title}>Title</span>
         <span className={styles.code}>Code</span>

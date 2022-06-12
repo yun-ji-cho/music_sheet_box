@@ -1,4 +1,4 @@
-export interface IResultData{
+export interface IResultData {
   id: number
   title: string
   article: string
@@ -7,8 +7,8 @@ export interface IResultData{
   created: string
 }
 export interface IMusicSheetRes {
-  count: number,
-  next: null | number,
-  previous: null | number,
+  count: number
+  next: null | number
+  previous: null | number
   results: IResultData[]
 }

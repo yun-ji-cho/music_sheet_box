@@ -18,7 +18,6 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
         <RecoilRoot>
           <RootRoute />
         </RecoilRoot>

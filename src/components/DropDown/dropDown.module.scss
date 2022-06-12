@@ -1,0 +1,16 @@
+@use '/src/styles/constants/colors';
+
+.dropDown {
+  label {
+    display: inline-block;
+    width: 70px;
+    margin-right: 28px;
+    margin-bottom: 7px;
+    font-size: 14px;
+    color: colors.$INPUT_LABEL;
+  }
+
+  &.display {
+    display: block;
+  }
+}

@@ -1,0 +1,58 @@
+@use '/src/styles/constants/colors';
+
+.searchBox {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  width: calc(100% - 55px);
+  height: 45px;
+  background: colors.$WHITE;
+  border-radius: 8px;
+
+  &:hover {
+    outline: 1px solid colors.$BLUE;
+  }
+
+  input[type='text'] {
+    width: calc(100% - 45px);
+    height: 100%;
+    padding: 0 35px 0 10px;
+    font-size: 18px;
+    color: colors.$GRAY3;
+
+    &::placeholder {
+      color: colors.$GRAYA;
+    }
+  }
+
+  button {
+    width: 45px;
+    height: 45px;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    &.deleteBtn {
+      position: absolute;
+      top: 50%;
+      right: 45px;
+      display: none;
+      width: 35px;
+      transform: translateY(-50%);
+
+      &.isActive {
+        display: block;
+      }
+    }
+
+    .removeIcon {
+      fill: colors.$GRAY3;
+    }
+
+    .searchIcon {
+      fill: colors.$GRAY3;
+    }
+  }
+}

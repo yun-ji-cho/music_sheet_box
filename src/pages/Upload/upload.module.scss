@@ -11,9 +11,9 @@
     // font-weight: 700;
   }
 
-  ul {
-    li {
-      padding-bottom: 30px;
+  .formList {
+    >li {
+      padding: 0 2px 30px;
       font-size: 16px;
 
       input[type='text'] {
