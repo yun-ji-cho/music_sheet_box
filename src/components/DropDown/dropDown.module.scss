@@ -1,28 +1,13 @@
 @use '/src/styles/constants/colors';
 
 .dropDown {
-  display: flex;
-  align-items: center;
-
   label {
+    display: inline-block;
     width: 70px;
     margin-right: 28px;
-  }
-
-  &.black {
-    label {
-      display: inline-block;
-      margin-bottom: 7px;
-      color: colors.$APP_INNER;
-    }
-  }
-
-  &.white {
-    label {
-      display: inline-block;
-      margin-bottom: 7px;
-      color: colors.$WHITE;
-    }
+    margin-bottom: 7px;
+    font-size: 14px;
+    color: colors.$INPUT_LABEL;
   }
 
   &.display {

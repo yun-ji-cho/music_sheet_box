@@ -4,7 +4,7 @@
   position: relative;
   box-sizing: border-box;
   display: flex;
-  width: 100%;
+  width: calc(100% - 55px);
   height: 45px;
   background: colors.$WHITE;
   border-radius: 8px;

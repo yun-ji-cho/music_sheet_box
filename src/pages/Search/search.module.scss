@@ -6,12 +6,33 @@
   h2 {
     padding: 40px 0 20px;
     font-size: 28px;
-    color: colors.$WHITE;
+    color: colors.$LOGO_TITLE;
     border-top: 1px solid colors.$DIVISION_LINE;
   }
 
   form {
-    margin-top: 40px;
+    margin-top: 25px;
+  }
+
+  .searchWrap {
+    display: flex;
+  }
+
+  .tagWrap {
+    display: flex;
+  }
+
+  .filterBtn {
+    width: 45px;
+    height: 45px;
+    padding: 5px;
+    margin-left: 10px;
+    background: colors.$HIGHLIGHT_PURPLE;
+    border-radius: 8px;
+
+    .filterIcon {
+      fill: colors.$WHITE;
+    }
   }
 
   .line {

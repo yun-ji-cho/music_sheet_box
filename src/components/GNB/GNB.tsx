@@ -1,4 +1,3 @@
-import {MouseEvent, useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import { SearchIcon, ListIcon, UploadIcon } from 'assets/svgs/index'
 
@@ -7,9 +6,9 @@ import styles from './gnb.module.scss'
 
 const GNB = () => {
   return (
-    <div className={cx(styles.gnb)}>
+    <div className={styles.gnb}>
       <nav className={styles.menu}>
-        <NavLink to='/' className={({ isActive }) => cx({[styles.isActive]: isActive })}>
+        <NavLink to='/' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>
           <span>
             <SearchIcon />
           </span>

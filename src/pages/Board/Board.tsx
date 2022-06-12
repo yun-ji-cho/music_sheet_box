@@ -8,7 +8,6 @@ import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
-import Portal from 'components/Modal/Potal'
 
 const Board = () => {
   const { data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
@@ -16,7 +15,7 @@ const Board = () => {
   const modalState = useRecoilValue(modalToggleState)
   return (
     <div className={styles.board}>
-      <Portal>{modalState && <ItemViewModal data={data?.results} />}</Portal>
+      {modalState && <ItemViewModal data={data?.results} />}
       <div className={styles.tableHeader}>
         <span className={styles.title}>Title</span>
         <span className={styles.code}>Code</span>

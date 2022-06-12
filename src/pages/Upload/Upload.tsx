@@ -7,7 +7,6 @@ import Button from 'components/Button/Button'
 
 import styles from './upload.module.scss'
 import DropDown from 'components/DropDown/DropDown'
-import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
 
 interface INewItemType {
   title: string
@@ -103,10 +102,10 @@ const Upload = () => {
             <input type='text' id='title' name='title' value={title} onChange={handleChange} />
           </li>
           <li>
-            <DropDown page='upload' optionValue='musicCode' colorTheme='black' label='code' displayTheme='block' />
+            <DropDown optionValue='uploadMusicCode' label='code' />
           </li>
           <li>
-            <DropDown page='upload' optionValue='category' colorTheme='black' label='category' displayTheme='block' />
+            <DropDown optionValue='uploadCategory' label='category' />
           </li>
           <li>
             <label htmlFor='article' className={styles.itemTitle}>

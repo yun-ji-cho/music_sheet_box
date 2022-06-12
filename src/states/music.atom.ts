@@ -10,6 +10,11 @@ export const confirmModalState = atom<Boolean>({
   default: false,
 })
 
+export const filterModalState = atom<Boolean>({
+  key: 'filterModalState',
+  default: false,
+})
+
 export const showItemId = atom({
   key: 'showItemId',
   default: 0,
@@ -19,20 +24,24 @@ export const searchTextState = atom({
   key: 'searchTextState',
   default: '',
 })
-
+export const searchTextFilterState = atom({
+  key: 'searchTextFilterState',
+  default: 'Any',
+})
 export const searchMusicCodeState = atom({
   key: 'searchMusicCodeState',
-  default: '',
+  default: 'ALL',
 })
 export const searchCategoryState = atom({
   key: 'searchCategoryState',
-  default: '',
+  default: 'ALL',
 })
+
 export const uploadMusicCodeState = atom({
   key: 'uploadMusicCodeState',
-  default: '',
+  default: 'ALL',
 })
 export const uploadCategoryState = atom({
   key: 'uploadCategoryState',
-  default: '',
+  default: 'ALL',
 })

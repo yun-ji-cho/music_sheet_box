@@ -6,4 +6,9 @@
   color: colors.$WHITE;
   background-color: colors.$HIGHLIGHT_ORANGE;
   border-radius: 8px;
+
+  &.full {
+    width: 100%;
+    font-size: 16px;
+  }
 }
