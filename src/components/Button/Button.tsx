@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import { memo } from 'react'
 import styles from './button.module.scss'
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
   onClose?: () => void
 }
 
-const Button = ({ message, type, onClose, fullWidth }: Props) => {
+const Button = memo(({ message, type, onClose, fullWidth }: Props) => {
   if (type === 'submit')
     return (
       <button type='submit' className={cx(styles.primaryBtn, { [styles.full]: fullWidth })}>
@@ -21,6 +22,8 @@ const Button = ({ message, type, onClose, fullWidth }: Props) => {
       {message}
     </button>
   )
-}
+})
+
+Button.displayName = 'Button'
 
 export default Button

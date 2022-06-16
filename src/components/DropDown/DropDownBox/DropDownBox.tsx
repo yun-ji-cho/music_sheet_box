@@ -1,5 +1,5 @@
 import { ArrowDownIcon } from 'assets/svgs'
-import { FormEvent, useState } from 'react'
+import { FormEvent, memo, useState } from 'react'
 import cx from 'classnames'
 import styles from './dropDownBox.module.scss'
 import { useRecoil } from 'hooks/state'
@@ -10,7 +10,7 @@ interface IProps {
   optionValue: string
 }
 
-const DropDownBox = ({ listItem, optionValue }: IProps) => {
+const DropDownBox = memo(({ listItem, optionValue }: IProps) => {
   const [, setSearchMusicCode] = useRecoil(searchMusicCodeState)
   const [, setSearchCategory] = useRecoil(searchCategoryState)
   const [, setUploadMusicCode] = useRecoil(uploadMusicCodeState)
@@ -53,6 +53,8 @@ const DropDownBox = ({ listItem, optionValue }: IProps) => {
       )}
     </div>
   )
-}
+})
+
+DropDownBox.displayName = 'DropDownBox'
 
 export default DropDownBox

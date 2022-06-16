@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import styles from './dropDown.module.scss'
 
 import DropDownBox from './DropDownBox/DropDownBox'
@@ -10,7 +11,7 @@ interface Props {
   label?: string
 }
 
-const DropDown = ({ optionValue, label }: Props) => {
+const DropDown = memo(({ optionValue, label }: Props) => {
   const listItem =
     optionValue === 'searchMusicCode' || optionValue === 'uploadMusicCode' ? CODE_OPTIONS : CATEGORY_OPTIONS
 
@@ -24,6 +25,8 @@ const DropDown = ({ optionValue, label }: Props) => {
       </div>
     </div>
   )
-}
+})
+
+DropDown.displayName = 'DropDown'
 
 export default DropDown

@@ -21,7 +21,7 @@ const Item = ({ item }: ItemProps) => {
 
   const handleModalOpen = () => {
     setModalState(true)
-    setShowItemIdModal(id)
+    setShowItemIdModal(id.toString())
   }
 
   return (

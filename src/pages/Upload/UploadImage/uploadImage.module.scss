@@ -1,0 +1,98 @@
+@use '/src/styles/constants/colors';
+
+.fileUpload {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.selectFile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 40px 20px;
+  border: 3px dashed #d5d5d6;
+  border-radius: 4px;
+
+  .innerText {
+    color: colors.$GRAY3;
+    text-align: center;
+  }
+
+  .iconWrap {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+
+    .plusIconBG {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background-color: colors.$GRAY3;
+      border-radius: 50%;
+
+      .plusIcon {
+        width: 70%;
+        height: 70%;
+        fill: colors.$WHITE;
+      }
+    }
+
+    .fileImageIcon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: colors.$MODAL_TEXT_2;
+    }
+  }
+
+  .message1 {
+    padding: 20px 0 10px;
+    font-size: 18px;
+    color: colors.$GRAY2;
+  }
+
+  .message2 {
+    font-size: 14px;
+    color: colors.$GRAYA;
+  }
+
+  &:hover {
+    border: 3px dashed colors.$HIGHLIGHT_PURPLE;
+
+    .iconWrap {
+      .plusIconBG {
+        background-color: colors.$HIGHLIGHT_PURPLE2;
+      }
+
+      .fileImageIcon {
+        fill: colors.$HIGHLIGHT_PURPLE;
+      }
+    }
+
+    .message1 {
+      color: colors.$INDIGO;
+    }
+  }
+}
+
+.uploadFile {
+  padding: 10px 40px 10px 10px;
+  margin-top: 20px;
+  line-height: 1.2;
+  border: 1px solid colors.$WHITE3;
+  border-radius: 4px;
+}

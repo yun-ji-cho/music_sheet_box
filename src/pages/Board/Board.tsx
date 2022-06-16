@@ -13,6 +13,7 @@ const Board = () => {
   const { data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
 
   const modalState = useRecoilValue(modalToggleState)
+  console.log(data)
   return (
     <div className={styles.board}>
       {modalState && <ItemViewModal data={data?.results} />}
@@ -23,7 +24,7 @@ const Board = () => {
       {data ? (
         <ul className={styles.tableItemList}>
           {data.results.map((item) => (
-            <Item key={item.id} item={item} />
+            <Item key={item.id.toString()} item={item} />
           ))}
         </ul>
       ) : (

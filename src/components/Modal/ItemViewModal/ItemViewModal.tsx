@@ -14,8 +14,12 @@ interface Props {
 
 const ItemViewModal = ({ data }: Props) => {
   const itemId = useRecoilValue(showItemId)
-  const itemInfo = data && data[itemId - 2]
-  const date = itemInfo?.created.slice(0, 10)
+  // const itemInfo = data && data[itemId - 2]
+  const itemInfo = () => {
+    console.log(data)
+    // data?.find((item) => item.id.toString() === itemId)
+  }
+  // const date = itemInfo?.created.slice(0, 10)
   const [, setModalState] = useRecoilState(modalToggleState)
   const handleModalClose = () => {
     setModalState(false)
@@ -35,7 +39,7 @@ const ItemViewModal = ({ data }: Props) => {
                 <HeartIcon className={styles.likeIcon} />
               </button>
             </div>
-            {data && itemInfo && (
+            {/* {itemInfo && (
               <div className={styles.inner}>
                 <div className={styles.image}>
                   <img src={sample} alt={itemInfo.title} />
@@ -46,7 +50,7 @@ const ItemViewModal = ({ data }: Props) => {
                 <span className={styles.date}>{date}</span>
                 <p className={styles.contents}>{itemInfo.article}</p>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
