@@ -31,6 +31,9 @@ const UploadImage = ({ handleImageUpload, imageSrc }: Props) => {
           <p className={styles.message1}>Select a Image File</p>
           <span className={styles.message2}>Click Here!</span>
         </div>
+        <div className={styles.image}>
+          <img src={imageSrc} alt='업로드 이미지' />
+        </div>
       </label>
       {imageSrc && <div className={styles.uploadFile}>{imageSrc}</div>}
     </>
