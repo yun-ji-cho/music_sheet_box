@@ -9,6 +9,7 @@ import DropDown from 'components/DropDown/DropDown'
 import UploadImage from './UploadImage/UploadImage'
 import { useRecoil } from 'hooks/state'
 import { uploadCategoryState, uploadMusicCodeState } from 'states/music.atom'
+import { renderMatches } from 'react-router-dom'
 
 interface INewItemType {
   title: string
@@ -42,16 +43,23 @@ const Upload = () => {
   const { mutate } = useMutation(addNewItem)
   const [image, setImage] = useState<null | IFileList | any>(null)
   const [values, setValues] = useState({ title: '', article: '' })
-  const [imageSrc, setImageSrc] = useState('')
+  const [imageSrc, setImageSrc] = useState<any>('')
+  const [imageVisible, setImageVisible] = useState(Boolean)
   const [musicCode] = useRecoil(uploadMusicCodeState)
   const [category] = useRecoil(uploadCategoryState)
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.currentTarget.files) return
-    const file = e.currentTarget.files
-    const fileName = e.currentTarget.files[0].name
-    setImage(file)
-    setImageSrc(fileName)
+    const reader = new FileReader()
+    reader.readAsDataURL(e.currentTarget.files[0])
+    // eslint-disable-next-line consistent-return
+    return new Promise<void>((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result)
+        setImageVisible(true)
+        resolve()
+      }
+    })
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,6 +75,11 @@ const Upload = () => {
     mutate({ title, article, musicCode, category })
   }
 
+  const handleRemoveImage = () => {
+    setImageVisible(false)
+    setImageSrc('')
+  }
+
   return (
     <div className={styles.upload}>
       <h3>Upload Contents</h3>
@@ -74,7 +87,12 @@ const Upload = () => {
         <ul className={styles.formList}>
           <li>
             <p className={styles.itemTitle}>Image</p>
-            <UploadImage handleImageUpload={handleImageUpload} imageSrc={imageSrc} />
+            <UploadImage
+              handleImageUpload={handleImageUpload}
+              imageSrc={imageSrc}
+              imageVisible={imageVisible}
+              handleRemoveImage={handleRemoveImage}
+            />
           </li>
           <li>
             <label htmlFor='title' className={styles.itemTitle}>

@@ -1,15 +1,18 @@
 import React, { ChangeEvent } from 'react'
+import cx from 'classnames'
 
 import styles from './uploadImage.module.scss'
 
-import { PlusIcon, FileImageIcon } from 'assets/svgs/index'
+import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svgs/index'
 
 interface Props {
-  handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => void
+  handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => any
   imageSrc: string
+  imageVisible: boolean
+  handleRemoveImage: () => void
 }
 
-const UploadImage = ({ handleImageUpload, imageSrc }: Props) => {
+const UploadImage = ({ handleImageUpload, imageSrc, imageVisible, handleRemoveImage }: Props) => {
   return (
     <>
       <input
@@ -20,7 +23,7 @@ const UploadImage = ({ handleImageUpload, imageSrc }: Props) => {
         onChange={handleImageUpload}
         name='file'
       />
-      <label htmlFor='fileUpload' className={styles.selectFile}>
+      <label htmlFor='fileUpload' className={cx(styles.selectFile, { [styles.imageVisible]: imageVisible })}>
         <div className={styles.innerText}>
           <div className={styles.iconWrap}>
             <FileImageIcon className={styles.fileImageIcon} />
@@ -32,10 +35,12 @@ const UploadImage = ({ handleImageUpload, imageSrc }: Props) => {
           <span className={styles.message2}>Click Here!</span>
         </div>
         <div className={styles.image}>
-          <img src={imageSrc} alt='업로드 이미지' />
+          <img src={imageSrc} alt='upload images' />
+          <button type='button' className={styles.removeBtn} onClick={handleRemoveImage}>
+            <CloseIcon className={styles.closeBtn} />
+          </button>
         </div>
       </label>
-      {imageSrc && <div className={styles.uploadFile}>{imageSrc}</div>}
     </>
   )
 }
