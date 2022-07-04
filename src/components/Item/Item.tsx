@@ -15,13 +15,11 @@ const imgUrl = 'https://i.picsum.photos/id/1028/200/300.jpg?hmac=Ka86H0yLDb-Ft8S
 const Item = ({ item }: ItemProps) => {
   const { id, title, article, musicCode, category, created } = item
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
-  const [, setShowItemIdModal] = useRecoilState(showItemId)
-
-  const date = created.slice(0, 10)
+  const [, setShowMatchedItem] = useRecoilState(showItemId)
 
   const handleModalOpen = () => {
     setModalState(true)
-    setShowItemIdModal(id.toString())
+    setShowMatchedItem(id.toString())
   }
 
   return (
@@ -29,7 +27,7 @@ const Item = ({ item }: ItemProps) => {
       <button type='button' onClick={handleModalOpen}>
         <div className={styles.left}>
           <p className={styles.title}>{title}</p>
-          <span className={styles.date}>{date}</span>
+          <span className={styles.date}>{created.slice(0, 10)}</span>
         </div>
         <span className={styles.code}>{musicCode}</span>
         <input type='hidden' data-img={imgUrl} data-category={category} data-article={article} />

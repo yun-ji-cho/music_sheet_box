@@ -7,19 +7,23 @@ import sample from 'assets/images/1.jpg'
 import styles from './ItemViewModal.module.scss'
 
 import Potal from '../Potal'
+import { useEffect, useState } from 'react'
 
-interface Props {
+interface ItemProps {
   data: IResultData[] | undefined
 }
 
-const ItemViewModal = ({ data }: Props) => {
+const ItemViewModal = ({ data }: ItemProps) => {
+  // console.log(data)
   const itemId = useRecoilValue(showItemId)
-  // const itemInfo = data && data[itemId - 2]
-  const itemInfo = () => {
-    console.log(data)
-    // data?.find((item) => item.id.toString() === itemId)
-  }
-  // const date = itemInfo?.created.slice(0, 10)
+  const [filterData, setFilterData] = useState<IResultData>()
+
+  useEffect(() => {
+    if (!data) return
+    const clickedItem = data.find((item) => item.id.toString() === itemId)
+    setFilterData(clickedItem)
+  }, [data, itemId])
+
   const [, setModalState] = useRecoilState(modalToggleState)
   const handleModalClose = () => {
     setModalState(false)
@@ -39,18 +43,18 @@ const ItemViewModal = ({ data }: Props) => {
                 <HeartIcon className={styles.likeIcon} />
               </button>
             </div>
-            {/* {itemInfo && (
+            {filterData && (
               <div className={styles.inner}>
                 <div className={styles.image}>
-                  <img src={sample} alt={itemInfo.title} />
+                  <img src={sample} alt={filterData.title} />
                 </div>
-                <span className={styles.category}>{itemInfo.category}</span>
-                <p className={styles.title}>{itemInfo.title}</p>
-                <span className={styles.code}>{itemInfo.musicCode}</span>
-                <span className={styles.date}>{date}</span>
-                <p className={styles.contents}>{itemInfo.article}</p>
+                <span className={styles.category}>{filterData.category}</span>
+                <p className={styles.title}>{filterData.title}</p>
+                <span className={styles.code}>{filterData.musicCode}</span>
+                <span className={styles.date}>{filterData.created.slice(0, 10)}</span>
+                <p className={styles.contents}>{filterData.article}</p>
               </div>
-            )} */}
+            )}
           </div>
         </div>
       </div>

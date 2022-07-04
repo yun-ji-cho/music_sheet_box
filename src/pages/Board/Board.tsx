@@ -9,9 +9,11 @@ import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
+// import { convertItemData } from 'utils/convertItemData'
 
 const Board = () => {
   const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
+
   const modalState = useRecoilValue(modalToggleState)
 
   if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
