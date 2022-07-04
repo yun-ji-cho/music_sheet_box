@@ -18,7 +18,7 @@ import styles from './search.module.scss'
 import Item from 'components/Item/Item'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import SearchBox from './SearchBox/SearchBox'
-import { FilterIcon } from 'assets/svgs'
+import { FilterIcon } from 'assets/svg'
 import FilterModal from './FilterModal/FilterModal'
 import Tag from './Tag/Tag'
 

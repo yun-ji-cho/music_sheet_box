@@ -2,7 +2,7 @@ import { ChangeEvent, memo, useRef } from 'react'
 import { useRecoil } from 'hooks/state'
 import cx from 'classnames'
 
-import { SearchIcon, CloseIcon } from 'assets/svgs/index'
+import { SearchIcon, CloseIcon } from 'assets/svg/index'
 
 import styles from './searchBox.module.scss'
 import { searchTextState } from 'states/music.atom'

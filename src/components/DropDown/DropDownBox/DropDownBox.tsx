@@ -1,4 +1,4 @@
-import { ArrowDownIcon } from 'assets/svgs'
+import { ArrowDownIcon } from 'assets/svg'
 import { FormEvent, memo, useState } from 'react'
 import cx from 'classnames'
 import styles from './dropDownBox.module.scss'

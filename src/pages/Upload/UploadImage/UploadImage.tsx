@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import styles from './uploadImage.module.scss'
 
-import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svgs/index'
+import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svg/index'
 
 interface Props {
   handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => any

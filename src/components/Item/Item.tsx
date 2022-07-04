@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil'
 
 import { IResultData } from 'types'
-import { DownloadIcon } from 'assets/svgs/index'
+import { DownloadIcon } from 'assets/svg/index'
 import { modalToggleState, showItemId } from 'states/music.atom'
 
 import styles from './item.module.scss'

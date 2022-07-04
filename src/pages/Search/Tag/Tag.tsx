@@ -1,4 +1,4 @@
-import { CloseIcon } from 'assets/svgs'
+import { CloseIcon } from 'assets/svg'
 
 import { useRecoil } from 'hooks/state'
 import { searchCategoryState, searchMusicCodeState, searchTextFilterState } from 'states/music.atom'

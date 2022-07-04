@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { IResultData } from 'types/index'
 import { modalToggleState, showItemId } from 'states/music.atom'
-import { PrevIcon, HeartIcon } from 'assets/svgs'
+import { PrevIcon, HeartIcon } from 'assets/svg'
 import sample from 'assets/images/1.jpg'
 
 import styles from './ItemViewModal.module.scss'
