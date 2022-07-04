@@ -17,3 +17,12 @@
     overflow: auto;
   }
 }
+
+.loadingIcon {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+}
