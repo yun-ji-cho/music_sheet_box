@@ -1,13 +1,13 @@
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, memo, useRef } from 'react'
 import { useRecoil } from 'hooks/state'
 import cx from 'classnames'
 
-import { SearchIcon, CloseIcon } from 'assets/svgs/index'
+import { SearchIcon, CloseIcon } from 'assets/svg/index'
 
 import styles from './searchBox.module.scss'
 import { searchTextState } from 'states/music.atom'
 
-const SearchBox = () => {
+const SearchBox = memo(() => {
   const [searchInput, setSearchInput, resetSearchText] = useRecoil(searchTextState)
   const inputEl = useRef<HTMLInputElement>(null)
   const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +36,8 @@ const SearchBox = () => {
       </button>
     </div>
   )
-}
+})
+
+SearchBox.displayName = 'SearchBox'
 
 export default SearchBox

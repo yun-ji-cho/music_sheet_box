@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { SaveBoxIcon, EnvelopeIcon, ShareIcon } from 'assets/svgs/index'
+import { SaveBoxIcon, EnvelopeIcon, ShareIcon } from 'assets/svg/index'
 
 import styles from './header.module.scss'
 

@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { useQuery } from 'react-query'
+import loadingIcon from 'assets/images/loading.gif'
 
 import { modalToggleState } from 'states/music.atom'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
@@ -8,11 +9,15 @@ import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
+// import { convertItemData } from 'utils/convertItemData'
 
 const Board = () => {
-  const { data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
+  const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
 
   const modalState = useRecoilValue(modalToggleState)
+
+  if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
+
   return (
     <div className={styles.board}>
       {modalState && <ItemViewModal data={data?.results} />}
@@ -23,7 +28,7 @@ const Board = () => {
       {data ? (
         <ul className={styles.tableItemList}>
           {data.results.map((item) => (
-            <Item key={item.id} item={item} />
+            <Item key={item.id.toString()} item={item} />
           ))}
         </ul>
       ) : (

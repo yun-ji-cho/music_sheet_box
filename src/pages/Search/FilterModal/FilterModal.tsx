@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, memo } from 'react'
 import cx from 'classnames'
 
 import { filterModalState, searchTextFilterState } from 'states/music.atom'
@@ -7,11 +7,11 @@ import styles from './filterModal.module.scss'
 
 import Potal from '../../../components/Modal/Potal'
 import DropDown from 'components/DropDown/DropDown'
-import Filter from '../TextFilter/TextFilter'
+import TextFilter from '../TextFilter/TextFilter'
 import { useRecoil } from 'hooks/state'
 import Button from 'components/Button/Button'
 
-const FilterModal = () => {
+const FilterModal = memo(() => {
   const [, setTextFilter] = useRecoil(searchTextFilterState)
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
 
@@ -32,7 +32,7 @@ const FilterModal = () => {
             </div>
             <ul className={styles.filterList}>
               <li className={styles.line}>
-                <Filter handleFilterText={handleFilterText} />
+                <TextFilter handleFilterText={handleFilterText} />
               </li>
               <li className={styles.line}>
                 <DropDown optionValue='searchMusicCode' label='Code' />
@@ -49,6 +49,8 @@ const FilterModal = () => {
       </div>
     </Potal>
   )
-}
+})
+
+FilterModal.displayName = 'FilterModal'
 
 export default FilterModal

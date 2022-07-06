@@ -17,7 +17,7 @@ export const filterModalState = atom<Boolean>({
 
 export const showItemId = atom({
   key: 'showItemId',
-  default: 0,
+  default: '',
 })
 
 export const searchTextState = atom({

@@ -1,5 +1,5 @@
 import { useRecoil } from 'hooks/state'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, memo } from 'react'
 import { searchTextFilterState } from 'states/music.atom'
 
 import styles from './textFilter.module.scss'
@@ -10,7 +10,7 @@ interface Props {
   handleFilterText: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextFilter = ({ handleFilterText }: Props) => {
+const TextFilter = memo(({ handleFilterText }: Props) => {
   const [textFilter] = useRecoil(searchTextFilterState)
   const listItem = filterList.map((item) => (
     <li key={item}>
@@ -32,6 +32,8 @@ const TextFilter = ({ handleFilterText }: Props) => {
       <ul className={styles.radioBox}>{listItem}</ul>
     </div>
   )
-}
+})
+
+TextFilter.displayName = 'TextFilter'
 
 export default TextFilter

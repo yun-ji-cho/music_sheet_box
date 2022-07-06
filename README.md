@@ -33,7 +33,7 @@ src
  ┣ assets
  ┃ ┣ images
  ┃ ┃ ┗ 1.jpg
- ┃ ┗ svgs
+ ┃ ┗ svg
  ┃ ┃ ┣ chevron_left.svg
  ┃ ┃ ┣ close.svg
  ┃ ┃ ┣ download.svg
