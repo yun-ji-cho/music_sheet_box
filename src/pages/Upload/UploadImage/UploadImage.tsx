@@ -21,7 +21,7 @@ const UploadImage = ({ handleImageUpload, previewURL, imageVisible, handleRemove
         id='fileUpload'
         className={styles.fileUpload}
         onChange={handleImageUpload}
-        name='file'
+        name='images'
       />
       <label htmlFor='fileUpload' className={cx(styles.selectFile, { [styles.imageVisible]: imageVisible })}>
         <div className={styles.innerText}>

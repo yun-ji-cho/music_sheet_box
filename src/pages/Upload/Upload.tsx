@@ -16,7 +16,7 @@ interface INewItemType {
   article: string
   musicCode: string
   category: string
-  // images: any
+  images: any
 }
 
 interface IImageData {
@@ -34,8 +34,8 @@ interface IFileList {
   }
 }
 
-const addNewItem = async (newItem: INewItemType): Promise<INewItemType> => {
-  const { data } = await axios.post<INewItemType>('https://pcjmusic.herokuapp.com/community/', newItem)
+const addNewItem = async (newItem: any): Promise<any> => {
+  const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', newItem)
   return data
 }
 
@@ -49,6 +49,7 @@ const Upload = () => {
   const [category] = useRecoil(uploadCategoryState)
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     if (!e.currentTarget.files) return
     const reader = new FileReader()
     reader.readAsDataURL(e.currentTarget.files[0])
@@ -56,6 +57,7 @@ const Upload = () => {
       setPreviewURL(reader.result)
       setImageVisible(true)
     }
+    setImage(e.currentTarget.files?.[0])
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -65,10 +67,30 @@ const Upload = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { title } = values
-    const { article } = values
+    const { title, article } = values
 
-    mutate({ title, article, musicCode, category })
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('article', article)
+    formData.append('musicCode', musicCode)
+    formData.append('category', category)
+    formData.append('image', image)
+    axios({
+      method: 'POST',
+      url: `https://pcjmusic.herokuapp.com/community/`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((response) => {
+        alert('이미지 업로드 완료')
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log('error')
+        console.error(error)
+      })
   }
 
   const handleRemoveImage = () => {

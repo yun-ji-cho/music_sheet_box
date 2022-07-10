@@ -13,6 +13,7 @@ import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 
 const Board = () => {
   const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
+  console.log(data)
 
   const modalState = useRecoilValue(modalToggleState)
 
