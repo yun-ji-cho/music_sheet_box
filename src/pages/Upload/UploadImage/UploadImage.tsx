@@ -7,12 +7,12 @@ import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svg/index'
 
 interface Props {
   handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => any
-  imageSrc: string
+  previewURL: string
   imageVisible: boolean
   handleRemoveImage: () => void
 }
 
-const UploadImage = ({ handleImageUpload, imageSrc, imageVisible, handleRemoveImage }: Props) => {
+const UploadImage = ({ handleImageUpload, previewURL, imageVisible, handleRemoveImage }: Props) => {
   return (
     <>
       <input
@@ -35,7 +35,7 @@ const UploadImage = ({ handleImageUpload, imageSrc, imageVisible, handleRemoveIm
           <span className={styles.message2}>Click Here!</span>
         </div>
         <div className={styles.image}>
-          <img src={imageSrc} alt='upload images' />
+          <img src={previewURL} alt='upload images' />
           <button type='button' className={styles.removeBtn} onClick={handleRemoveImage}>
             <CloseIcon className={styles.closeBtn} />
           </button>

@@ -43,7 +43,7 @@ const Upload = () => {
   const { mutate } = useMutation(addNewItem)
   const [image, setImage] = useState<null | IFileList | any>(null)
   const [values, setValues] = useState({ title: '', article: '' })
-  const [imageSrc, setImageSrc] = useState<any>('')
+  const [previewURL, setPreviewURL] = useState<any>('')
   const [imageVisible, setImageVisible] = useState(Boolean)
   const [musicCode] = useRecoil(uploadMusicCodeState)
   const [category] = useRecoil(uploadCategoryState)
@@ -52,14 +52,10 @@ const Upload = () => {
     if (!e.currentTarget.files) return
     const reader = new FileReader()
     reader.readAsDataURL(e.currentTarget.files[0])
-    // eslint-disable-next-line consistent-return
-    return new Promise<void>((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result)
-        setImageVisible(true)
-        resolve()
-      }
-    })
+    reader.onload = () => {
+      setPreviewURL(reader.result)
+      setImageVisible(true)
+    }
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -67,7 +63,7 @@ const Upload = () => {
     setValues({ ...values, [name]: value })
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { title } = values
     const { article } = values
@@ -77,7 +73,7 @@ const Upload = () => {
 
   const handleRemoveImage = () => {
     setImageVisible(false)
-    setImageSrc('')
+    setPreviewURL('')
   }
 
   return (
@@ -89,7 +85,7 @@ const Upload = () => {
             <p className={styles.itemTitle}>Image</p>
             <UploadImage
               handleImageUpload={handleImageUpload}
-              imageSrc={imageSrc}
+              previewURL={previewURL}
               imageVisible={imageVisible}
               handleRemoveImage={handleRemoveImage}
             />
