@@ -6,7 +6,7 @@ import styles from './uploadImage.module.scss'
 import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svg/index'
 
 interface Props {
-  handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => any
+  handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => void
   previewURL: string
   imageVisible: boolean
   handleRemoveImage: () => void
@@ -17,7 +17,7 @@ const UploadImage = ({ handleImageUpload, previewURL, imageVisible, handleRemove
     <>
       <input
         type='file'
-        accept='image/*'
+        accept='.png, .jpeg, .gif, .jpg'
         id='fileUpload'
         className={styles.fileUpload}
         onChange={handleImageUpload}

@@ -2,7 +2,6 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { IResultData } from 'types/index'
 import { modalToggleState, showItemId } from 'states/music.atom'
 import { PrevIcon, HeartIcon } from 'assets/svg'
-import sample from 'assets/images/1.jpg'
 
 import styles from './ItemViewModal.module.scss'
 
@@ -14,7 +13,6 @@ interface ItemProps {
 }
 
 const ItemViewModal = ({ data }: ItemProps) => {
-  // console.log(data)
   const itemId = useRecoilValue(showItemId)
   const [filterData, setFilterData] = useState<IResultData>()
 
@@ -46,7 +44,7 @@ const ItemViewModal = ({ data }: ItemProps) => {
             {filterData && (
               <div className={styles.inner}>
                 <div className={styles.image}>
-                  <img src={sample} alt={filterData.title} />
+                  <img src={filterData.image} alt={filterData.title} />
                 </div>
                 <span className={styles.category}>{filterData.category}</span>
                 <p className={styles.title}>{filterData.title}</p>

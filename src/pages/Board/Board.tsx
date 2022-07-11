@@ -9,11 +9,9 @@ import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
-// import { convertItemData } from 'utils/convertItemData'
 
 const Board = () => {
   const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
-  console.log(data)
 
   const modalState = useRecoilValue(modalToggleState)
 

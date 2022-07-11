@@ -10,10 +10,8 @@ type ItemProps = {
   item: IResultData
 }
 
-const imgUrl = 'https://i.picsum.photos/id/1028/200/300.jpg?hmac=Ka86H0yLDb-Ft8SNNKSVTSFylu-GfaEGBrS2AP01ZSM'
-
 const Item = ({ item }: ItemProps) => {
-  const { id, title, article, musicCode, category, created } = item
+  const { id, title, article, musicCode, category, created, image } = item
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
   const [, setShowMatchedItem] = useRecoilState(showItemId)
 
@@ -30,9 +28,9 @@ const Item = ({ item }: ItemProps) => {
           <span className={styles.date}>{created.slice(0, 10)}</span>
         </div>
         <span className={styles.code}>{musicCode}</span>
-        <input type='hidden' data-img={imgUrl} data-category={category} data-article={article} />
+        <input type='hidden' data-img={image} data-category={category} data-article={article} />
       </button>
-      <a href={imgUrl} aria-label='download' download>
+      <a href={image} aria-label='download' download>
         <DownloadIcon />
       </a>
     </li>

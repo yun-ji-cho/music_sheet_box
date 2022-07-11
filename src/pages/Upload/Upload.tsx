@@ -16,7 +16,7 @@ interface INewItemType {
   article: string
   musicCode: string
   category: string
-  images: any
+  images: string
 }
 
 interface IImageData {
@@ -34,13 +34,7 @@ interface IFileList {
   }
 }
 
-const addNewItem = async (newItem: any): Promise<any> => {
-  const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', newItem)
-  return data
-}
-
 const Upload = () => {
-  const { mutate } = useMutation(addNewItem)
   const [image, setImage] = useState<null | IFileList | any>(null)
   const [values, setValues] = useState({ title: '', article: '' })
   const [previewURL, setPreviewURL] = useState<any>('')
@@ -88,6 +82,7 @@ const Upload = () => {
         console.log(response.data)
       })
       .catch((error) => {
+        alert('이미지 업로드 실패')
         console.log('error')
         console.error(error)
       })

@@ -5,6 +5,7 @@ export interface IResultData {
   musicCode: string
   category: string
   created: string
+  image: string
 }
 export interface IMusicSheetRes {
   count: number
