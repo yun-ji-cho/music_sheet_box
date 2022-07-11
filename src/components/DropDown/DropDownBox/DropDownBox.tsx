@@ -17,10 +17,10 @@ const DropDownBox = memo(({ listItem, optionValue }: IProps) => {
   const [, setUploadCategory] = useRecoil(uploadCategoryState)
   const [current, setCurrent] = useState('ALL')
 
-  const [isopenDropDown, setIsopenDropDown] = useState(false)
+  const [isOpenDropDown, setIsOpenDropDown] = useState(false)
 
   const handleShowDropDown = () => {
-    setIsopenDropDown((prev) => !prev)
+    setIsOpenDropDown((prev) => !prev)
   }
 
   const handleChangeTitle = (e: FormEvent<HTMLButtonElement>) => {
@@ -29,16 +29,16 @@ const DropDownBox = memo(({ listItem, optionValue }: IProps) => {
     if (optionValue === 'uploadMusicCode') setUploadMusicCode(e.currentTarget.value)
     if (optionValue === 'uploadCategory') setUploadCategory(e.currentTarget.value)
     setCurrent(e.currentTarget.value)
-    setIsopenDropDown(false)
+    setIsOpenDropDown(false)
   }
 
   return (
-    <div className={cx(styles.dropDownBox, { [styles.isActive]: isopenDropDown })}>
+    <div className={cx(styles.dropDownBox, { [styles.isActive]: isOpenDropDown })}>
       <button type='button' className={styles.current} onClick={handleShowDropDown}>
         {current}
         <ArrowDownIcon className={styles.arrowDownIcon} />
       </button>
-      {isopenDropDown && (
+      {isOpenDropDown && (
         <ul className={styles.list}>
           {listItem.map((item) => {
             return (

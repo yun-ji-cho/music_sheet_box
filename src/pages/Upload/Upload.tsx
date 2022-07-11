@@ -1,5 +1,5 @@
 import { FormEvent, ChangeEvent, useState } from 'react'
-import { useMutation } from 'react-query'
+import { useRecoilState } from 'recoil'
 import axios from 'axios'
 
 import Button from 'components/Button/Button'
@@ -7,17 +7,9 @@ import Button from 'components/Button/Button'
 import styles from './upload.module.scss'
 import DropDown from 'components/DropDown/DropDown'
 import UploadImage from './UploadImage/UploadImage'
+import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import { useRecoil } from 'hooks/state'
-import { uploadCategoryState, uploadMusicCodeState } from 'states/music.atom'
-import { renderMatches } from 'react-router-dom'
-
-interface INewItemType {
-  title: string
-  article: string
-  musicCode: string
-  category: string
-  images: string
-}
+import { uploadCategoryState, uploadMusicCodeState, confirmModalState } from 'states/music.atom'
 
 interface IImageData {
   lastModified: number
@@ -37,10 +29,12 @@ interface IFileList {
 const Upload = () => {
   const [image, setImage] = useState<null | IFileList | any>(null)
   const [values, setValues] = useState({ title: '', article: '' })
+  const [alertMessage, setAlertMessage] = useState('')
+  const [confirmModal, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
   const [previewURL, setPreviewURL] = useState<any>('')
   const [imageVisible, setImageVisible] = useState(Boolean)
-  const [musicCode] = useRecoil(uploadMusicCodeState)
-  const [category] = useRecoil(uploadCategoryState)
+  const [musicCode, setMusicCode] = useRecoilState(uploadMusicCodeState)
+  const [category, setCategory] = useRecoilState(uploadCategoryState)
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -78,13 +72,19 @@ const Upload = () => {
       },
     })
       .then((response) => {
-        alert('이미지 업로드 완료')
-        console.log(response.data)
+        // eslint-disable-next-line no-console
+        console.log(response)
+        setConfirmModal(true)
+        setAlertMessage('이미지 업로드 완료')
+        setValues({ title: '', article: '' })
+        setMusicCode('ALL')
+        setCategory('ALL')
       })
       .catch((error) => {
-        alert('이미지 업로드 실패')
-        console.log('error')
-        console.error(error)
+        // eslint-disable-next-line no-console
+        console.log(error)
+        setConfirmModal(true)
+        setAlertMessage('이미지 업로드 실패')
       })
   }
 
@@ -130,6 +130,7 @@ const Upload = () => {
           <Button message='SAVE' type='submit' />
         </div>
       </form>
+      {confirmModal && <ConfirmModal message={alertMessage} />}
     </div>
   )
 }
