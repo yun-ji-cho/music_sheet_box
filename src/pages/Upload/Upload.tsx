@@ -8,7 +8,6 @@ import styles from './upload.module.scss'
 import DropDown from 'components/DropDown/DropDown'
 import UploadImage from './UploadImage/UploadImage'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
-import { useRecoil } from 'hooks/state'
 import { uploadCategoryState, uploadMusicCodeState, confirmModalState } from 'states/music.atom'
 
 interface IImageData {
