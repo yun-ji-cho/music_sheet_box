@@ -33,7 +33,7 @@ const Search = () => {
 
   const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
 
-  const { data } = useQuery(['musicSheets', filter, code, searchText], () =>
+  const { data } = useQuery(['musicSheetsSearch', filter, code, searchText], () =>
     getMusicSheetApi({ filterType: filter, search: searchText, music_code: code }).then((res) => res.data)
   )
 

@@ -1,6 +1,6 @@
 import { FormEvent, ChangeEvent, useState, useRef } from 'react'
 import { useRecoilState } from 'recoil'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 
 import Button from 'components/Button/Button'
@@ -50,6 +50,7 @@ const Upload = () => {
   const [imageVisible, setImageVisible] = useState(Boolean)
   const [musicCode, setMusicCode] = useRecoilState(uploadMusicCodeState)
   const [category, setCategory] = useRecoilState(uploadCategoryState)
+  const queryClient = useQueryClient()
 
   const { mutate } = useMutation(addNewItem, {
     onSuccess: () => {
@@ -58,6 +59,7 @@ const Upload = () => {
       setValues({ title: '', article: '' })
       setMusicCode('ALL')
       setCategory('ALL')
+      queryClient.invalidateQueries('musicSheets')
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
