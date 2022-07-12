@@ -11,15 +11,22 @@ import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 
 const Board = () => {
-  const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data))
+  const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data), {
+    refetchOnWindowFocus: false,
+  })
 
   const modalState = useRecoilValue(modalToggleState)
 
   if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
 
+  console.log(data)
+
   return (
     <div className={styles.board}>
       {modalState && <ItemViewModal data={data?.results} />}
+      <div className={styles.itemCount}>
+        <strong>{data?.count} </strong>개의 악보가 있습니다.
+      </div>
       <div className={styles.tableHeader}>
         <span className={styles.title}>Title</span>
         <span className={styles.code}>Code</span>
@@ -27,7 +34,7 @@ const Board = () => {
       {data ? (
         <ul className={styles.tableItemList}>
           {data.results.map((item) => (
-            <Item key={item.id.toString()} item={item} />
+            <Item key={item.id.toString()} {...item} />
           ))}
         </ul>
       ) : (

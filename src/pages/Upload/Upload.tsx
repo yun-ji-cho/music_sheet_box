@@ -1,5 +1,6 @@
 import { FormEvent, ChangeEvent, useState, useRef } from 'react'
 import { useRecoilState } from 'recoil'
+import { useMutation } from 'react-query'
 import axios from 'axios'
 
 import Button from 'components/Button/Button'
@@ -9,6 +10,14 @@ import DropDown from 'components/DropDown/DropDown'
 import UploadImage from './UploadImage/UploadImage'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import { uploadCategoryState, uploadMusicCodeState, confirmModalState } from 'states/music.atom'
+
+interface INewItemType {
+  title: string
+  article: string
+  musicCode: string
+  category: string
+  // images: any
+}
 
 interface IImageData {
   lastModified: number
@@ -25,6 +34,11 @@ interface IFileList {
   }
 }
 
+const addNewItem = async (newItem: any): Promise<any> => {
+  const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', newItem)
+  return data
+}
+
 const Upload = () => {
   const titleInput = useRef<HTMLInputElement | null>(null)
   const articleInput = useRef<HTMLTextAreaElement | null>(null)
@@ -36,6 +50,22 @@ const Upload = () => {
   const [imageVisible, setImageVisible] = useState(Boolean)
   const [musicCode, setMusicCode] = useRecoilState(uploadMusicCodeState)
   const [category, setCategory] = useRecoilState(uploadCategoryState)
+
+  const { mutate } = useMutation(addNewItem, {
+    onSuccess: () => {
+      setConfirmModal(true)
+      setAlertMessage('이미지 업로드 완료')
+      setValues({ title: '', article: '' })
+      setMusicCode('ALL')
+      setCategory('ALL')
+    },
+    onError: (error) => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      setConfirmModal(true)
+      setAlertMessage('이미지 업로드 실패')
+    },
+  })
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -74,29 +104,8 @@ const Upload = () => {
     formData.append('musicCode', musicCode)
     formData.append('category', category)
     formData.append('image', image)
-    axios({
-      method: 'POST',
-      url: `https://pcjmusic.herokuapp.com/community/`,
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response)
-        setConfirmModal(true)
-        setAlertMessage('이미지 업로드 완료')
-        setValues({ title: '', article: '' })
-        setMusicCode('ALL')
-        setCategory('ALL')
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
-        setConfirmModal(true)
-        setAlertMessage('이미지 업로드 실패')
-      })
+
+    mutate(formData)
   }
 
   const handleRemoveImage = () => {

@@ -6,12 +6,7 @@ import { modalToggleState, showItemId } from 'states/music.atom'
 
 import styles from './item.module.scss'
 
-type ItemProps = {
-  item: IResultData
-}
-
-const Item = ({ item }: ItemProps) => {
-  const { id, title, article, musicCode, category, created, image } = item
+const Item = ({ id, title, article, musicCode, category, created, image }: IResultData) => {
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
   const [, setShowMatchedItem] = useRecoilState(showItemId)
 

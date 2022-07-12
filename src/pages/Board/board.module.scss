@@ -2,6 +2,17 @@
 @use '/src/styles/mixins/typography';
 
 .board {
+  .itemCount {
+    padding-bottom: 25px;
+    font-size: 13px;
+    color: colors.$MODAL_TEXT_2;
+
+    strong {
+      font-weight: 700;
+      color: colors.$GRAY3;
+    }
+  }
+
   .tableHeader {
     display: flex;
     justify-content: space-between;
