@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState } from 'react'
+import { FormEvent, ChangeEvent, useState, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 import axios from 'axios'
 
@@ -26,6 +26,8 @@ interface IFileList {
 }
 
 const Upload = () => {
+  const titleInput = useRef<HTMLInputElement | null>(null)
+  const articleInput = useRef<HTMLTextAreaElement | null>(null)
   const [image, setImage] = useState<null | IFileList | any>(null)
   const [values, setValues] = useState({ title: '', article: '' })
   const [alertMessage, setAlertMessage] = useState('')
@@ -54,6 +56,16 @@ const Upload = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (values.title === '') {
+      titleInput.current?.focus()
+      return
+    }
+    if (values.article === '') {
+      articleInput.current?.focus()
+      return
+    }
+
     const { title, article } = values
 
     const formData = new FormData()
@@ -110,7 +122,7 @@ const Upload = () => {
             <label htmlFor='title' className={styles.itemTitle}>
               Title
             </label>
-            <input type='text' id='title' name='title' value={values.title} onChange={handleChange} />
+            <input type='text' id='title' name='title' ref={titleInput} value={values.title} onChange={handleChange} />
           </li>
           <li>
             <DropDown optionValue='uploadMusicCode' label='Code' />
@@ -122,7 +134,7 @@ const Upload = () => {
             <label htmlFor='article' className={styles.itemTitle}>
               Note
             </label>
-            <textarea value={values.article} id='article' name='article' onChange={handleChange} />
+            <textarea value={values.article} id='article' name='article' ref={articleInput} onChange={handleChange} />
           </li>
         </ul>
         <div className={styles.buttonWrap}>
