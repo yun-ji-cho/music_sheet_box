@@ -11,15 +11,14 @@ import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 
 const Board = () => {
-  const { isLoading, data } = useQuery('musicSheets', () => getMusicSheetApi().then((res) => res.data), {
+  const { isLoading, data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,
+    refetchOnMount: true,
   })
 
   const modalState = useRecoilValue(modalToggleState)
 
   if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
-
-  console.log(data)
 
   return (
     <div className={styles.board}>

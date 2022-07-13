@@ -1,6 +1,6 @@
 import { FormEvent, ChangeEvent, useState, useRef } from 'react'
 import { useRecoilState } from 'recoil'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import axios from 'axios'
 
 import Button from 'components/Button/Button'
@@ -11,31 +11,21 @@ import UploadImage from './UploadImage/UploadImage'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import { uploadCategoryState, uploadMusicCodeState, confirmModalState } from 'states/music.atom'
 
-interface INewItemType {
-  title: string
-  article: string
-  musicCode: string
-  category: string
-  // images: any
-}
-
-interface IImageData {
-  lastModified: number
-  lastModifiedDate: Date
-  name: string
-  size: number
-  type: string
-  webkitRelativePath: string
-}
-
 interface IFileList {
   FIleList: {
-    File: IImageData
+    File: {
+      lastModified: number
+      lastModifiedDate: Date
+      name: string
+      size: number
+      type: string
+      webkitRelativePath: string
+    }
   }
 }
 
-const addNewItem = async (newItem: any): Promise<any> => {
-  const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', newItem)
+const addNewItem = async (formData: any): Promise<any> => {
+  const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)
   return data
 }
 
@@ -50,24 +40,6 @@ const Upload = () => {
   const [imageVisible, setImageVisible] = useState(Boolean)
   const [musicCode, setMusicCode] = useRecoilState(uploadMusicCodeState)
   const [category, setCategory] = useRecoilState(uploadCategoryState)
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation(addNewItem, {
-    onSuccess: () => {
-      setConfirmModal(true)
-      setAlertMessage('이미지 업로드 완료')
-      setValues({ title: '', article: '' })
-      setMusicCode('ALL')
-      setCategory('ALL')
-      queryClient.invalidateQueries('musicSheets')
-    },
-    onError: (error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      setConfirmModal(true)
-      setAlertMessage('이미지 업로드 실패')
-    },
-  })
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -85,6 +57,22 @@ const Upload = () => {
     const { name, value } = e.target
     setValues({ ...values, [name]: value })
   }
+
+  const { mutate } = useMutation(addNewItem, {
+    onSuccess: () => {
+      setConfirmModal(true)
+      setAlertMessage('이미지 업로드 완료')
+      setValues({ title: '', article: '' })
+      setMusicCode('ALL')
+      setCategory('ALL')
+    },
+    onError: (error) => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      setConfirmModal(true)
+      setAlertMessage('이미지 업로드 실패')
+    },
+  })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
