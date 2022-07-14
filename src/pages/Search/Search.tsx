@@ -33,19 +33,23 @@ const Search = () => {
 
   const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
 
-  const { data } = useQuery(['musicSheetsSearch', filter, code, searchText], () =>
-    getMusicSheetApi({ filterType: filter, search: searchText, music_code: code }).then((res) => res.data)
-  )
+  // const { data } = useQuery(['musicSheetsSearch', filter, code, searchText], () =>
+  //   getMusicSheetApi({ filterType: filter, search: searchText, music_code: code }).then((res) => res.data)
+  // )
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (!searchText && !code) setConfirmModal(true)
+  // const handleSubmit = (e: FormEvent) => {
+  //   e.preventDefault()
+  //   if (!searchText && !code) setConfirmModal(true)
 
-    if (data) {
-      setFiltered(data.results)
-    }
+  //   if (data) {
+  //     setFiltered(data.results)
+  //   }
+  // }
+  // const isExist = filtered.length !== data?.count
+
+  const handleSubmit = () => {
+    console.log('제출')
   }
-  const isExist = filtered.length !== data?.count
 
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
@@ -74,13 +78,13 @@ const Search = () => {
         </ul>
         <FilterModal />
       </form>
-      {isExist && (
+      {/* {isExist && (
         <ul>
           {filtered.map((item) => (
             <Item key={item.id} {...item} />
           ))}
         </ul>
-      )}
+      )} */}
 
       {confirmModal && <ConfirmModal message='검색어를 입력해주세요' />}
     </div>
