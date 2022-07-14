@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { useQuery } from 'react-query'
-
+import axios from 'axios'
 import { useRecoil } from 'hooks/state'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import {
@@ -22,6 +22,13 @@ import { FilterIcon } from 'assets/svg'
 import FilterModal from './FilterModal/FilterModal'
 import Tag from './Tag/Tag'
 
+interface IProps {
+  filter: string
+  code: string
+  searchText: string
+  category: string
+}
+
 const Search = () => {
   const [filter] = useState('')
   const [filtered, setFiltered] = useState<IResultData[] | []>([])
@@ -33,23 +40,31 @@ const Search = () => {
 
   const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
 
-  // const { data } = useQuery(['musicSheetsSearch', filter, code, searchText], () =>
-  //   getMusicSheetApi({ filterType: filter, search: searchText, music_code: code }).then((res) => res.data)
+  // const { refetch, data } = useQuery(
+  //   ['musicSheets', filter, code, searchText, category],
+  //   () => getMusicSheetApi().then((res) => res.data),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     refetchOnMount: false,
+  //     onSuccess: () => {
+  //       console.log(data)
+  //     },
+  //     onError: (error) => {
+  //       console.log(error)
+  //     },
+  //   }
   // )
 
-  // const handleSubmit = (e: FormEvent) => {
-  //   e.preventDefault()
-  //   if (!searchText && !code) setConfirmModal(true)
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('submit')
+    // if (!searchText && !code) setConfirmModal(true)
 
-  //   if (data) {
-  //     setFiltered(data.results)
-  //   }
-  // }
-  // const isExist = filtered.length !== data?.count
-
-  const handleSubmit = () => {
-    console.log('제출')
+    // if (data) {
+    //   setFiltered(data.results)
+    // }
   }
+  // const isExist = filtered.length !== data?.count
 
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
