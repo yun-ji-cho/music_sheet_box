@@ -1,6 +1,5 @@
 import { FormEvent, useState } from 'react'
 import { useQuery } from 'react-query'
-import axios from 'axios'
 import { useRecoil } from 'hooks/state'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import {
@@ -22,16 +21,10 @@ import { FilterIcon } from 'assets/svg'
 import FilterModal from './FilterModal/FilterModal'
 import Tag from './Tag/Tag'
 
-interface IProps {
-  filter: string
-  code: string
-  searchText: string
-  category: string
-}
-
 const Search = () => {
-  const [filter] = useState('')
-  const [filtered, setFiltered] = useState<IResultData[] | []>([])
+  const [visibleItem, setVisibleItem] = useState(false)
+  const [filtered, setFiltered] = useState<IResultData[] | undefined>([])
+  const [alertMessage, setAlertMessage] = useState('')
   const [searchText] = useRecoil(searchTextState)
   const [textFilter] = useRecoil(searchTextFilterState)
   const [code] = useRecoil(searchMusicCodeState)
@@ -40,31 +33,27 @@ const Search = () => {
 
   const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
 
-  // const { refetch, data } = useQuery(
-  //   ['musicSheets', filter, code, searchText, category],
-  //   () => getMusicSheetApi().then((res) => res.data),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     refetchOnMount: false,
-  //     onSuccess: () => {
-  //       console.log(data)
-  //     },
-  //     onError: (error) => {
-  //       console.log(error)
-  //     },
-  //   }
-  // )
+  const { data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+  })
+
+  const filterData = () => {
+    const getData = data?.results
+    const filteredData = getData?.filter((item) => item.title.includes(searchText))
+    setFiltered(filteredData)
+  }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('submit')
-    // if (!searchText && !code) setConfirmModal(true)
-
-    // if (data) {
-    //   setFiltered(data.results)
-    // }
+    if (!searchText) {
+      setConfirmModal(true)
+      setAlertMessage('검색어를 입력해주세요.')
+    } else {
+      filterData()
+      setVisibleItem(true)
+    }
   }
-  // const isExist = filtered.length !== data?.count
 
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
@@ -93,15 +82,20 @@ const Search = () => {
         </ul>
         <FilterModal />
       </form>
-      {/* {isExist && (
-        <ul>
-          {filtered.map((item) => (
-            <Item key={item.id} {...item} />
-          ))}
-        </ul>
-      )} */}
+      {visibleItem && (
+        <div className={styles.result}>
+          <p className={styles.length}>검색결과 총 {filtered?.length}건을 찾았습니다.</p>
+          {/* {filtered && (
+              {filtered.map((item) => (
+                <Item key={item.id} {...item} />
+              ))}
+            <ul>
+            </ul>
+          )} */}
+        </div>
+      )}
 
-      {confirmModal && <ConfirmModal message='검색어를 입력해주세요' />}
+      {confirmModal && <ConfirmModal message={alertMessage} />}
     </div>
   )
 }

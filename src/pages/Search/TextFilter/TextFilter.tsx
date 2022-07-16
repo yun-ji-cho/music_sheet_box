@@ -28,7 +28,7 @@ const TextFilter = memo(({ handleFilterText }: Props) => {
 
   return (
     <div className={styles.filter}>
-      <p className={styles.label}>Filter by </p>
+      <p className={styles.label}>Search text filter by </p>
       <ul className={styles.radioBox}>{listItem}</ul>
     </div>
   )
