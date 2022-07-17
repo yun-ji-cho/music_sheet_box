@@ -1,0 +1,45 @@
+@use '/src/styles/constants/colors';
+
+.resultItem {
+  .titleArea {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: colors.$WHITE;
+    border-bottom: 1px solid colors.$GRAYA;
+  }
+
+  .title {
+    padding-bottom: 10px;
+    font-size: 13px;
+    color: colors.$TASKS_TITLE;
+  }
+
+  .item {
+    padding: 15px 10px;
+    margin-bottom: 8px;
+    background: colors.$SEARCH_ITEM_BG;
+    border-radius: 8px;
+
+    button {
+      all: initial;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      color: colors.$GRAY4;
+    }
+
+    &Desc {
+      padding-top: 10px;
+      font-size: 13px;
+    }
+
+    &Code {
+      padding-right: 5px;
+    }
+  }
+
+  mark {
+    color: colors.$WHITE;
+    background-color: colors.$MARK_TEXT;
+  }
+}

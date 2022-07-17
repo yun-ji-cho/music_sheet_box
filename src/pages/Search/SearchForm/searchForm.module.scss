@@ -1,0 +1,26 @@
+@use '/src/styles/constants/colors';
+
+.searchForm {
+  margin-top: 25px;
+
+  .searchWrap {
+    display: flex;
+  }
+
+  .tagWrap {
+    display: flex;
+  }
+
+  .filterBtn {
+    width: 45px;
+    height: 45px;
+    padding: 5px;
+    margin-left: 10px;
+    background: colors.$HIGHLIGHT_PURPLE;
+    border-radius: 8px;
+  }
+
+  .filterIcon {
+    fill: colors.$WHITE;
+  }
+}
