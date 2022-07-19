@@ -27,6 +27,23 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
     if (filterArray && filterArray.length > 0) setItemLength(filterArray.length)
   }, [filterArray])
 
+  const handleBoldText = (item: IResultData) => {
+    if (type === 'title') {
+      return (
+        <>
+          <p className={styles.itemTitle}>{parse(BoldText(searchText, item.title))}</p>
+          <p className={styles.itemDesc}>{item.article}</p>
+        </>
+      )
+    }
+    return (
+      <>
+        <p className={styles.itemTitle}>{item.title}</p>
+        <p className={styles.itemDesc}>{parse(BoldText(searchText, item.article))}</p>
+      </>
+    )
+  }
+
   return (
     <div className={styles.resultItem}>
       {filterArray && itemLength > 0 && (
@@ -39,10 +56,7 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
               return (
                 <li className={styles.item} key={item.id}>
                   <button type='button'>
-                    <div className={styles.text}>
-                      <p className={styles.itemTitle}>{parse(BoldText(searchText, item.title))}</p>
-                      <p className={styles.itemDesc}>{item.article}</p>
-                    </div>
+                    <div className={styles.text}>{handleBoldText(item)}</div>
                     <span className={styles.itemCode}>{item.musicCode}</span>
                   </button>
                 </li>
