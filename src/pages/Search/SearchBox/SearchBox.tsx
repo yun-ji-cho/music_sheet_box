@@ -1,13 +1,14 @@
 import { ChangeEvent, memo, useEffect, useRef } from 'react'
-import { useRecoil } from 'hooks/state'
+import { useRecoil, useRecoilState } from 'hooks/state'
 import cx from 'classnames'
 
 import { SearchIcon, CloseIcon } from 'assets/svg/index'
 
 import styles from './searchBox.module.scss'
-import { searchTextState } from 'states/music.atom'
+import { searchItemVisible, searchTextState } from 'states/music.atom'
 
 const SearchBox = memo(() => {
+  const [, setItemVisible] = useRecoilState(searchItemVisible)
   const [searchInput, setSearchInput, resetSearchText] = useRecoil(searchTextState)
   const inputEl = useRef<HTMLInputElement>(null)
   const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,9 +23,9 @@ const SearchBox = memo(() => {
 
   useEffect(() => {
     if (searchInput === '') {
-      console.log('빈값')
+      setItemVisible(false)
     }
-  }, [searchInput])
+  }, [searchInput, setItemVisible])
 
   return (
     <div className={styles.searchBox}>
