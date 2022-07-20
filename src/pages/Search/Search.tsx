@@ -22,7 +22,6 @@ import SearchForm from './SearchForm/SearchForm'
 
 const Search = () => {
   const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
-  // const [visibleItem, setVisibleItem] = useState(false)
   const [filterTitle, setFilterTitle] = useState<IResultData[] | undefined>([])
   const [filterContent, setFilterContent] = useState<IResultData[] | undefined>([])
   const [textFilter] = useRecoil(searchTextFilterState)

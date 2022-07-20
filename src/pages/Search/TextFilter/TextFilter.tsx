@@ -6,11 +6,11 @@ import styles from './textFilter.module.scss'
 
 const filterList = ['Any', 'Title', 'Content']
 
-interface Props {
-  handleFilterText: (e: ChangeEvent<HTMLInputElement>) => void
-}
-
-const TextFilter = memo(({ handleFilterText }: Props) => {
+const TextFilter = memo(() => {
+  const [, setTextFilter] = useRecoil(searchTextFilterState)
+  const handleFilterText = (e: ChangeEvent<HTMLInputElement>) => {
+    setTextFilter(e.currentTarget.value)
+  }
   const [textFilter] = useRecoil(searchTextFilterState)
   const listItem = filterList.map((item) => (
     <li key={item}>

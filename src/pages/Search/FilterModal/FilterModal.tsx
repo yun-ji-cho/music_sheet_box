@@ -1,5 +1,6 @@
 import { ChangeEvent, memo } from 'react'
 import cx from 'classnames'
+import { CloseIcon } from 'assets/svg/index'
 
 import { filterModalState, searchTextFilterState } from 'states/music.atom'
 
@@ -12,14 +13,18 @@ import { useRecoil } from 'hooks/state'
 import Button from 'components/Button/Button'
 
 const FilterModal = memo(() => {
-  const [, setTextFilter] = useRecoil(searchTextFilterState)
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
+  const [, setTextFilter] = useRecoil(searchTextFilterState)
 
-  const handleFilterText = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextFilter(e.currentTarget.value)
-  }
   const handleFilterApply = () => {
     setFilterModal(false)
+  }
+
+  const handleCloseModal = () => {
+    setFilterModal(false)
+    // setTextFilter((prev) => {
+    //   return prev
+    // })
   }
 
   return (
@@ -27,12 +32,15 @@ const FilterModal = memo(() => {
       <div className={cx(styles.modal, { [styles.show]: filterModal })}>
         <div className={styles.modalLayOut}>
           <div className={styles.modalBox}>
+            <button type='button' className={styles.closeBtn} onClick={handleCloseModal}>
+              <CloseIcon />
+            </button>
             <div className={styles.top}>
               <p className={styles.modalTitle}>Filters</p>
             </div>
             <ul className={styles.filterList}>
               <li className={styles.line}>
-                <TextFilter handleFilterText={handleFilterText} />
+                <TextFilter />
               </li>
               <li className={styles.line}>
                 <DropDown optionValue='searchMusicCode' label='Code' />
