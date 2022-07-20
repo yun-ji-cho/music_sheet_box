@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useRecoil } from 'hooks/state'
-import { searchTextState } from 'states/music.atom'
+import { useEffect, useState, MouseEvent } from 'react'
+import { useRecoil, useRecoilState } from 'hooks/state'
+import { modalToggleState, searchTextState, showItemId } from 'states/music.atom'
 
 import { IResultData } from 'types'
 import { BoldText } from '../BoldText'
 import parse from 'html-react-parser'
 
 import styles from './resultItem.module.scss'
+import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 
 interface IFilter {
   filterArray: IResultData[] | undefined
@@ -17,6 +18,9 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
   const [searchText] = useRecoil(searchTextState)
   const [title, setTitle] = useState('')
   const [itemLength, setItemLength] = useState(0)
+  // const [modalVisible, setModalVisible] = useState(false)
+  const [modalState, setModalState] = useRecoilState(modalToggleState)
+  const [, setShowMatchedItem] = useRecoilState(showItemId)
 
   useEffect(() => {
     if (type === 'title') setTitle('Title')
@@ -44,6 +48,15 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
     )
   }
 
+  const handleOpenPopup = (e: MouseEvent<HTMLButtonElement>) => {
+    setModalState(true)
+    const clickItem = e.currentTarget.getAttribute('data-item')
+
+    if (!clickItem) return
+    setShowMatchedItem(clickItem)
+  }
+  console.log(filterArray)
+
   return (
     <div className={styles.resultItem}>
       {filterArray && itemLength > 0 && (
@@ -55,7 +68,7 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
             {filterArray.map((item) => {
               return (
                 <li className={styles.item} key={item.id}>
-                  <button type='button'>
+                  <button type='button' onClick={handleOpenPopup} data-item={item.id}>
                     <div className={styles.text}>{handleBoldText(item)}</div>
                     <span className={styles.itemCode}>{item.musicCode}</span>
                   </button>
@@ -65,6 +78,7 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
           </ul>
         </div>
       )}
+      {modalState && <ItemViewModal data={filterArray} />}
     </div>
   )
 }

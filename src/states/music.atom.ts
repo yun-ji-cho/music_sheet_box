@@ -19,6 +19,10 @@ export const showItemId = atom({
   key: 'showItemId',
   default: '',
 })
+export const searchItemVisible = atom({
+  key: 'searchItemVisible',
+  default: false,
+})
 
 export const searchTextState = atom({
   key: 'searchTextState',

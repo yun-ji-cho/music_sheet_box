@@ -1,9 +1,15 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useRecoil } from 'hooks/state'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
-import { confirmModalState, searchTextState, modalToggleState, searchTextFilterState } from 'states/music.atom'
+import {
+  confirmModalState,
+  searchTextState,
+  modalToggleState,
+  searchTextFilterState,
+  searchItemVisible,
+} from 'states/music.atom'
 import { IResultData } from 'types'
 
 import styles from './search.module.scss'
@@ -15,7 +21,8 @@ import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
 
 const Search = () => {
-  const [visibleItem, setVisibleItem] = useState(false)
+  const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
+  // const [visibleItem, setVisibleItem] = useState(false)
   const [filterTitle, setFilterTitle] = useState<IResultData[] | undefined>([])
   const [filterContent, setFilterContent] = useState<IResultData[] | undefined>([])
   const [textFilter] = useRecoil(searchTextFilterState)
@@ -62,7 +69,7 @@ const Search = () => {
       setAlertMessage('검색어를 입력해주세요.')
     } else {
       filterData()
-      setVisibleItem(true)
+      setItemVisible(true)
     }
   }
 
@@ -80,7 +87,7 @@ const Search = () => {
     <div className={styles.search}>
       <h2>Find Your Music Sheet</h2>
       <SearchForm handleSubmit={handleSubmit} />
-      {visibleItem && (
+      {itemVisible && (
         <SearchResult totalLength={totalLength} filterTitle={filterTitle} filterContent={filterContent} />
       )}
 

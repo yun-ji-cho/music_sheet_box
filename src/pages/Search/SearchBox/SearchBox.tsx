@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useRef } from 'react'
+import { ChangeEvent, memo, useEffect, useRef } from 'react'
 import { useRecoil } from 'hooks/state'
 import cx from 'classnames'
 
@@ -19,6 +19,12 @@ const SearchBox = memo(() => {
       inputEl.current.focus()
     }
   }
+
+  useEffect(() => {
+    if (searchInput === '') {
+      console.log('빈값')
+    }
+  }, [searchInput])
 
   return (
     <div className={styles.searchBox}>
