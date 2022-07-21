@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from 'react'
+import { ChangeEvent, memo, useState } from 'react'
 import cx from 'classnames'
 import { CloseIcon } from 'assets/svg/index'
 
@@ -14,9 +14,15 @@ import Button from 'components/Button/Button'
 
 const FilterModal = memo(() => {
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
-  const [, setTextFilter] = useRecoil(searchTextFilterState)
+  const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
+  const [localTextFilter, setTextLocalFilter] = useState(globalTextFilter)
 
-  const handleFilterApply = () => {
+  const textApplyGlobal = (textFilter) => {
+    console.log('전달')
+    // setGlobalTextFilter()
+  }
+
+  const handleApply = () => {
     setFilterModal(false)
   }
 
@@ -40,7 +46,7 @@ const FilterModal = memo(() => {
             </div>
             <ul className={styles.filterList}>
               <li className={styles.line}>
-                <TextFilter />
+                <TextFilter textApplyGlobal={textApplyGlobal} />
               </li>
               <li className={styles.line}>
                 <DropDown optionValue='searchMusicCode' label='Code' />
@@ -50,7 +56,7 @@ const FilterModal = memo(() => {
               </li>
             </ul>
             <div className={styles.buttonWrap}>
-              <Button message='Apply Filter' fullWidth onClose={handleFilterApply} />
+              <Button message='Apply Filter' fullWidth onClose={handleApply} />
             </div>
           </div>
         </div>

@@ -1,17 +1,25 @@
-import { useRecoil } from 'hooks/state'
-import { ChangeEvent, memo } from 'react'
+import { useRecoil, useRecoilValue } from 'hooks/state'
+import { ChangeEvent, memo, useState } from 'react'
 import { searchTextFilterState } from 'states/music.atom'
 
 import styles from './textFilter.module.scss'
 
 const filterList = ['Any', 'Title', 'Content']
 
-const TextFilter = memo(() => {
-  const [, setTextFilter] = useRecoil(searchTextFilterState)
+interface IProps {
+  textApplyGlobal: () => void
+}
+
+const TextFilter = memo(({ textApplyGlobal }: IProps) => {
+  const filterState = useRecoilValue(searchTextFilterState)
+  console.log('전역:', filterState)
+  const [localFilter, setLocalFilter] = useState(filterState)
+  // const [, setTextFilter] = useRecoil(searchTextFilterState)
   const handleFilterText = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextFilter(e.currentTarget.value)
+    console.log(e.currentTarget.value)
+    setLocalFilter(e.currentTarget.value)
   }
-  const [textFilter] = useRecoil(searchTextFilterState)
+  // const [textFilter] = useRecoil(searchTextFilterState)
   const listItem = filterList.map((item) => (
     <li key={item}>
       <input
@@ -19,7 +27,7 @@ const TextFilter = memo(() => {
         id={item}
         value={item}
         name='filter'
-        checked={item === textFilter}
+        checked={item === localFilter}
         onChange={handleFilterText}
       />
       <label htmlFor={item}>{item}</label>
