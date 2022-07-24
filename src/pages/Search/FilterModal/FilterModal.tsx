@@ -17,10 +17,10 @@ const FilterModal = memo(() => {
   const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
   const [localTextFilter, setTextLocalFilter] = useState(globalTextFilter)
 
-  const textApplyGlobal = (textFilter) => {
-    console.log('전달')
-    // setGlobalTextFilter()
-  }
+  // const textApplyGlobal = (textFilter) => {
+  //   console.log('전달')
+  //   // setGlobalTextFilter()
+  // }
 
   const handleApply = () => {
     setFilterModal(false)
@@ -46,7 +46,7 @@ const FilterModal = memo(() => {
             </div>
             <ul className={styles.filterList}>
               <li className={styles.line}>
-                <TextFilter textApplyGlobal={textApplyGlobal} />
+                <TextFilter />
               </li>
               <li className={styles.line}>
                 <DropDown optionValue='searchMusicCode' label='Code' />

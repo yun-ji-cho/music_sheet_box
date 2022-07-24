@@ -6,11 +6,11 @@ import styles from './textFilter.module.scss'
 
 const filterList = ['Any', 'Title', 'Content']
 
-interface IProps {
-  textApplyGlobal: () => void
-}
+// interface IProps {
+//   textApplyGlobal: () => void
+// }
 
-const TextFilter = memo(({ textApplyGlobal }: IProps) => {
+const TextFilter = memo(() => {
   const filterState = useRecoilValue(searchTextFilterState)
   console.log('전역:', filterState)
   const [localFilter, setLocalFilter] = useState(filterState)
