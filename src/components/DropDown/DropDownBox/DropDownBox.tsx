@@ -11,10 +11,10 @@ interface IProps {
 }
 
 const DropDownBox = memo(({ listItem, optionValue }: IProps) => {
-  const [, setSearchMusicCode] = useRecoil(searchMusicCodeState)
-  const [, setSearchCategory] = useRecoil(searchCategoryState)
-  const [, setUploadMusicCode] = useRecoil(uploadMusicCodeState)
-  const [, setUploadCategory] = useRecoil(uploadCategoryState)
+  // const [, setSearchMusicCode] = useRecoil(searchMusicCodeState)
+  // const [, setSearchCategory] = useRecoil(searchCategoryState)
+  // const [, setUploadMusicCode] = useRecoil(uploadMusicCodeState)
+  // const [, setUploadCategory] = useRecoil(uploadCategoryState)
   const [current, setCurrent] = useState('ALL')
 
   const [isOpenDropDown, setIsOpenDropDown] = useState(false)
@@ -24,10 +24,10 @@ const DropDownBox = memo(({ listItem, optionValue }: IProps) => {
   }
 
   const handleChangeTitle = (e: FormEvent<HTMLButtonElement>) => {
-    if (optionValue === 'searchMusicCode') setSearchMusicCode(e.currentTarget.value)
-    if (optionValue === 'searchCategory') setSearchCategory(e.currentTarget.value)
-    if (optionValue === 'uploadMusicCode') setUploadMusicCode(e.currentTarget.value)
-    if (optionValue === 'uploadCategory') setUploadCategory(e.currentTarget.value)
+    // if (optionValue === 'searchMusicCode') setSearchMusicCode(e.currentTarget.value)
+    // if (optionValue === 'searchCategory') setSearchCategory(e.currentTarget.value)
+    // if (optionValue === 'uploadMusicCode') setUploadMusicCode(e.currentTarget.value)
+    // if (optionValue === 'uploadCategory') setUploadCategory(e.currentTarget.value)
     setCurrent(e.currentTarget.value)
     setIsOpenDropDown(false)
   }

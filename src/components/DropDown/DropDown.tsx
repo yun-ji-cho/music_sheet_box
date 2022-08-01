@@ -3,18 +3,18 @@ import styles from './dropDown.module.scss'
 
 import DropDownBox from './DropDownBox/DropDownBox'
 
-const CODE_OPTIONS = ['ALL', 'C', 'Db', 'D', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
-const CATEGORY_OPTIONS = ['ALL', '발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉']
+const CODE_OPTIONS = ['C', 'Db', 'D', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+const CATEGORY_OPTIONS = ['발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉']
 
 interface Props {
   optionValue: string
   label?: string
+  type?: string
 }
 
-const DropDown = memo(({ optionValue, label }: Props) => {
-  const listItem =
-    optionValue === 'searchMusicCode' || optionValue === 'uploadMusicCode' ? CODE_OPTIONS : CATEGORY_OPTIONS
-
+const DropDown = memo(({ optionValue, label, type }: Props) => {
+  let listItem = ['searchMusicCode', 'uploadMusicCode'].includes(optionValue) ? CODE_OPTIONS : CATEGORY_OPTIONS
+  if (type === 'search') listItem = ['All', ...listItem]
   if (!listItem) return null
 
   return (

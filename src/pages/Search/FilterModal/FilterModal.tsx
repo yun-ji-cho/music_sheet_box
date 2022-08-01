@@ -49,10 +49,10 @@ const FilterModal = memo(() => {
                 <TextFilter />
               </li>
               <li className={styles.line}>
-                <DropDown optionValue='searchMusicCode' label='Code' />
+                <DropDown type='search' optionValue='searchMusicCode' label='Code' />
               </li>
               <li className={styles.line}>
-                <DropDown optionValue='searchCategory' label='Category' />
+                <DropDown type='search' optionValue='searchCategory' label='Category' />
               </li>
             </ul>
             <div className={styles.buttonWrap}>
