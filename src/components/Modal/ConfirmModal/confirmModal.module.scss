@@ -23,16 +23,20 @@
 .modalBox {
   position: relative;
   width: 85%;
-  height: 150px;
   padding: 30px;
   text-align: center;
   background-color: colors.$WHITE;
   border-radius: 16px;
 
+  // .inner {
+
+  // }
+  .contents {
+    padding-top: 10px;
+    font-size: 20px;
+  }
+
   .buttonWrap {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+    padding-top: 40px;
   }
 }
