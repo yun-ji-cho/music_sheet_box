@@ -5,16 +5,29 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: colors.$BACKGROUND;
+  background-color: #F6F6F6;
 
   .container {
     position: relative;
-    width: 350px;
-    height: 720px;
+    // width: 350px;
+    min-height: 100vh;
     overflow: hidden;
     // padding: 60px 30px 0;
     background: colors.$APP_BACKGROUND;
-    border-radius: 36px;
-    box-shadow: colors.$SHADOW -4px 9px 25px -6px;
+    // border-radius: 36px;
+    // box-shadow: colors.$SHADOW -4px 9px 25px -6px;
+    box-shadow: rgba(100, 100, 111, 20%) 0 7px 29px 0;
+  }
+
+  @media (min-width: 650px) {
+    .container {
+      width: 640px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .container {
+      width: 100%;
+    }
   }
 }

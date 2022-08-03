@@ -1,14 +1,10 @@
 @use '/src/styles/constants/colors';
 
 .upload {
-  max-height: 530px;
-  overflow-y: auto;
-
   h3 {
     padding-bottom: 40px;
     font-size: 28px;
     color: colors.$GRAY3;
-    // font-weight: 700;
   }
 
   .formList {
