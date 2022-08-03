@@ -12,10 +12,13 @@ import TextFilter from '../TextFilter/TextFilter'
 import { useRecoil } from 'hooks/state'
 import Button from 'components/Button/Button'
 
+const filterList = ['Any', 'Title', 'Content']
+
 const FilterModal = memo(() => {
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
-  const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
-  const [localTextFilter, setTextLocalFilter] = useState(globalTextFilter)
+  const [radioValue, setRadioValue] = useState(filterList[0])
+  // const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
+  // const [localTextFilter, setTextLocalFilter] = useState(globalTextFilter)
 
   // const textApplyGlobal = (textFilter) => {
   //   console.log('전달')
@@ -46,7 +49,7 @@ const FilterModal = memo(() => {
             </div>
             <ul className={styles.filterList}>
               <li className={styles.line}>
-                <TextFilter />
+                <TextFilter value={radioValue} onChange={setRadioValue} arr={filterList} />
               </li>
               <li className={styles.line}>
                 <DropDown type='search' optionValue='searchMusicCode' label='Code' />

@@ -4,31 +4,31 @@ import { searchTextFilterState } from 'states/music.atom'
 
 import styles from './textFilter.module.scss'
 
-const filterList = ['Any', 'Title', 'Content']
+interface Props {
+  value: string
+  onChange: (value: string) => void
+  arr: string[]
+}
 
-// interface IProps {
-//   textApplyGlobal: () => void
-// }
-
-const TextFilter = memo(() => {
-  const filterState = useRecoilValue(searchTextFilterState)
-  console.log('전역:', filterState)
-  const [localFilter, setLocalFilter] = useState(filterState)
+const TextFilter = memo(({ value, arr, onChange }: Props) => {
+  // const filterState = useRecoilValue(searchTextFilterState)
+  // console.log('전역:', filterState)
+  const [localFilter, setLocalFilter] = useState(value)
   // const [, setTextFilter] = useRecoil(searchTextFilterState)
-  const handleFilterText = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value)
-    setLocalFilter(e.currentTarget.value)
-  }
+  // const handleFilterText = (e: ChangeEvent<HTMLInputElement>) => {
+  //   // console.log(e.currentTarget.value)
+  //   onChange(e.currentTarget.value)
+  // }
   // const [textFilter] = useRecoil(searchTextFilterState)
-  const listItem = filterList.map((item) => (
+  const listItem = arr.map((item) => (
     <li key={item}>
       <input
         type='radio'
         id={item}
         value={item}
         name='filter'
-        checked={item === localFilter}
-        onChange={handleFilterText}
+        checked={item === value}
+        onChange={(e) => onChange(e.target.value)}
       />
       <label htmlFor={item}>{item}</label>
     </li>
