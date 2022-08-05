@@ -1,19 +1,23 @@
 import { memo } from 'react'
+import { useRecoilValue } from 'recoil'
 import styles from './dropDown.module.scss'
 
 import DropDownBox from './DropDownBox/DropDownBox'
-
-const CODE_OPTIONS = ['C', 'Db', 'D', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
-const CATEGORY_OPTIONS = ['발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉']
+import { codeList, categoryList } from 'states/music.atom'
 
 interface Props {
-  optionValue: string
-  label?: string
   type?: string
+  value: string
+  onChange: (value: string) => void
+  label?: string
+  // list: string[]
 }
 
-const DropDown = memo(({ optionValue, label, type }: Props) => {
-  let listItem = ['searchMusicCode', 'uploadMusicCode'].includes(optionValue) ? CODE_OPTIONS : CATEGORY_OPTIONS
+const DropDown = memo(({ label, type, onChange, value }: Props) => {
+  let listItem = useRecoilValue(codeList)
+  let listItem = useRecoilValue(codeList)
+  // let listItem = ['searchMusicCode', 'uploadMusicCode'].includes(optionValue) ? CODE_OPTIONS : CATEGORY_OPTIONS
+
   if (type === 'search') listItem = ['All', ...listItem]
   if (!listItem) return null
 

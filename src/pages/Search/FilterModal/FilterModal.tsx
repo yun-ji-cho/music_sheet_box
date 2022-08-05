@@ -1,8 +1,8 @@
-import { ChangeEvent, memo, useState } from 'react'
+import { ChangeEvent, memo, useEffect, useState } from 'react'
 import cx from 'classnames'
 import { CloseIcon } from 'assets/svg/index'
 
-import { filterModalState, searchTextFilterState } from 'states/music.atom'
+import { filterModalState, searchTextFilterState, searchMusicCodeState, searchCategoryState } from 'states/music.atom'
 
 import styles from './filterModal.module.scss'
 
@@ -13,27 +13,30 @@ import { useRecoil } from 'hooks/state'
 import Button from 'components/Button/Button'
 
 const filterList = ['Any', 'Title', 'Content']
+// const CODE_OPTIONS = ['C', 'Db', 'D', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+// const CATEGORY_OPTIONS = ['발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉']
 
 const FilterModal = memo(() => {
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
   const [radioValue, setRadioValue] = useState(filterList[0])
-  // const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
-  // const [localTextFilter, setTextLocalFilter] = useState(globalTextFilter)
+  const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
+  const [code, setCode] = useState('')
+  const [globalCode, setGlobalCode] = useRecoil(searchMusicCodeState)
+  const [category, setCategory] = useState('')
+  const [globalCategory, setGlobalCategory] = useRecoil(searchCategoryState)
 
-  // const textApplyGlobal = (textFilter) => {
-  //   console.log('전달')
-  //   // setGlobalTextFilter()
-  // }
+  useEffect(() => {
+    setRadioValue(globalTextFilter)
+  }, [globalTextFilter])
 
   const handleApply = () => {
+    setGlobalTextFilter(radioValue)
     setFilterModal(false)
   }
 
   const handleCloseModal = () => {
+    setRadioValue(globalTextFilter)
     setFilterModal(false)
-    // setTextFilter((prev) => {
-    //   return prev
-    // })
   }
 
   return (
@@ -52,10 +55,10 @@ const FilterModal = memo(() => {
                 <TextFilter value={radioValue} onChange={setRadioValue} arr={filterList} />
               </li>
               <li className={styles.line}>
-                <DropDown type='search' optionValue='searchMusicCode' label='Code' />
+                <DropDown type='search' value={code} onChange={setCode} label='Code' />
               </li>
               <li className={styles.line}>
-                <DropDown type='search' optionValue='searchCategory' label='Category' />
+                <DropDown type='search' value={category} onChange={setCategory} label='Category' />
               </li>
             </ul>
             <div className={styles.buttonWrap}>

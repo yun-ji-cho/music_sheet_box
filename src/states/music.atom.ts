@@ -24,6 +24,15 @@ export const searchItemVisible = atom({
   default: false,
 })
 
+export const codeList = atom({
+  key: 'codeList',
+  default: ['C', 'Db', 'D', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'],
+})
+export const categoryList = atom({
+  key: 'categoryList',
+  default: ['발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉'],
+})
+
 export const searchTextState = atom({
   key: 'searchTextState',
   default: '',
