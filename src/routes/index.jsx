@@ -8,6 +8,8 @@ import Layout from '../components/Layout/Layout'
 import Header from '../components/Header/Header'
 import GNB from '../components/GNB/GNB'
 
+// import Board from "./pages/New";
+
 const App = () => {
   return (
     <div className={styles.app}>

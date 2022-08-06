@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 import cx from 'classnames'
 import { CloseIcon } from 'assets/svg/index'
 
@@ -13,30 +13,28 @@ import { useRecoil } from 'hooks/state'
 import Button from 'components/Button/Button'
 
 const filterList = ['Any', 'Title', 'Content']
-// const CODE_OPTIONS = ['C', 'Db', 'D', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
-// const CATEGORY_OPTIONS = ['발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉']
 
 const FilterModal = memo(() => {
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
   const [radioValue, setRadioValue] = useState(filterList[0])
   const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
-  const [code, setCode] = useState('')
   const [globalCode, setGlobalCode] = useRecoil(searchMusicCodeState)
-  const [category, setCategory] = useState('')
   const [globalCategory, setGlobalCategory] = useRecoil(searchCategoryState)
-
-  useEffect(() => {
-    setRadioValue(globalTextFilter)
-  }, [globalTextFilter])
+  const [code, setCode] = useState(globalCode)
+  const [category, setCategory] = useState(globalCategory)
 
   const handleApply = () => {
     setGlobalTextFilter(radioValue)
+    setGlobalCode(code)
+    setGlobalCategory(category)
     setFilterModal(false)
   }
 
   const handleCloseModal = () => {
-    setRadioValue(globalTextFilter)
     setFilterModal(false)
+    setRadioValue(globalTextFilter)
+    setCode(globalCode)
+    setCategory(globalCategory)
   }
 
   return (

@@ -9,23 +9,22 @@ interface Props {
   type?: string
   value: string
   onChange: (value: string) => void
-  label?: string
-  // list: string[]
+  label: string
 }
 
 const DropDown = memo(({ label, type, onChange, value }: Props) => {
-  let listItem = useRecoilValue(codeList)
-  let listItem = useRecoilValue(codeList)
-  // let listItem = ['searchMusicCode', 'uploadMusicCode'].includes(optionValue) ? CODE_OPTIONS : CATEGORY_OPTIONS
+  const CODE_LIST = useRecoilValue(codeList)
+  const CATEGORY_LIST = useRecoilValue(categoryList)
+  let listItem = label === 'Code' ? CODE_LIST : CATEGORY_LIST
 
-  if (type === 'search') listItem = ['All', ...listItem]
+  if (type === 'search') listItem = ['ALL', ...listItem]
   if (!listItem) return null
 
   return (
     <div className={styles.dropDown}>
       {label && <label htmlFor='selectCode'>{label}</label>}
       <div className={styles.select}>
-        <DropDownBox listItem={listItem} optionValue={optionValue} />
+        <DropDownBox listItem={listItem} value={value} onChange={onChange} />
       </div>
     </div>
   )

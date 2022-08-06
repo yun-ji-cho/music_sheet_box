@@ -52,9 +52,9 @@ export const searchCategoryState = atom({
 
 export const uploadMusicCodeState = atom({
   key: 'uploadMusicCodeState',
-  default: 'ALL',
+  default: '',
 })
 export const uploadCategoryState = atom({
   key: 'uploadCategoryState',
-  default: 'ALL',
+  default: '',
 })

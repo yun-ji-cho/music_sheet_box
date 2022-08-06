@@ -28,12 +28,20 @@
   background-color: colors.$WHITE;
   border-radius: 16px;
 
-  // .inner {
+  .inner {
+    .icon {
+      width: 64px;
+      height: 64px;
 
-  // }
-  .contents {
-    padding-top: 10px;
-    font-size: 20px;
+      &.check {
+        fill: colors.$GREEN;
+      }
+    }
+
+    .contents {
+      padding-top: 10px;
+      font-size: 20px;
+    }
   }
 
   .buttonWrap {

@@ -9,7 +9,7 @@ import styles from './upload.module.scss'
 import DropDown from 'components/DropDown/DropDown'
 import UploadImage from './UploadImage/UploadImage'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
-import { uploadCategoryState, uploadMusicCodeState, confirmModalState } from 'states/music.atom'
+import { confirmModalState } from 'states/music.atom'
 
 interface IFileList {
   FIleList: {
@@ -38,8 +38,9 @@ const Upload = () => {
   const [confirmModal, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
   const [previewURL, setPreviewURL] = useState<any>('')
   const [imageVisible, setImageVisible] = useState(Boolean)
-  const [musicCode, setMusicCode] = useRecoilState(uploadMusicCodeState)
-  const [category, setCategory] = useRecoilState(uploadCategoryState)
+  const [code, setCode] = useState('선택하세요')
+  const [category, setCategory] = useState('선택하세요')
+  const [alertState, setAlertState] = useState('')
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -60,11 +61,9 @@ const Upload = () => {
 
   const { mutate } = useMutation(addNewItem, {
     onSuccess: () => {
+      setAlertState('check')
       setConfirmModal(true)
       setAlertMessage('이미지 업로드 완료')
-      setValues({ title: '', article: '' })
-      setMusicCode('ALL')
-      setCategory('ALL')
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
@@ -91,7 +90,7 @@ const Upload = () => {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('article', article)
-    formData.append('musicCode', musicCode)
+    formData.append('musicCode', code)
     formData.append('category', category)
     formData.append('image', image)
 
@@ -124,10 +123,10 @@ const Upload = () => {
             <input type='text' id='title' name='title' ref={titleInput} value={values.title} onChange={handleChange} />
           </li>
           <li>
-            <DropDown optionValue='uploadMusicCode' label='Code' />
+            <DropDown label='Code' value={code} onChange={setCode} />
           </li>
           <li>
-            <DropDown optionValue='uploadCategory' label='Category' />
+            <DropDown label='Category' value={category} onChange={setCategory} />
           </li>
           <li>
             <label htmlFor='article' className={styles.itemTitle}>
@@ -140,7 +139,7 @@ const Upload = () => {
           <Button message='SAVE' type='submit' />
         </div>
       </form>
-      {confirmModal && <ConfirmModal message={alertMessage} />}
+      {confirmModal && <ConfirmModal alertState={alertState} message={alertMessage} moveToBoard />}
     </div>
   )
 }
