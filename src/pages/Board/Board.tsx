@@ -30,8 +30,8 @@ interface IProps {
 const ControlList = ({ value, onChange, optionList }: IProps) => {
   return (
     <select value={value} onChange={(e) => onChange(e.target.value)}>
-      {optionList.map((it, idx) => (
-        <option key={idx} value={it.value}>
+      {optionList.map((it) => (
+        <option key={value} value={it.value}>
           {it.name}
         </option>
       ))}

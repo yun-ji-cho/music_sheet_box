@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent } from 'react'
 import styles from './searchForm.module.scss'
 
 import SearchBox from '../SearchBox/SearchBox'
