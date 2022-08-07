@@ -14,7 +14,6 @@ interface ItemProps {
 
 const ItemViewModal = ({ data }: ItemProps) => {
   const itemId = useRecoilValue(showItemId)
-  console.log(data, itemId)
   const [filterData, setFilterData] = useState<IResultData>()
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useEffect, useState, MouseEvent } from 'react'
+import { MouseEvent } from 'react'
 import { useRecoil, useRecoilState } from 'hooks/state'
 import { modalToggleState, searchTextState, showItemId } from 'states/music.atom'
 
@@ -10,29 +10,17 @@ import styles from './resultItem.module.scss'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 
 interface IFilter {
-  filterArray: IResultData[] | undefined
-  type: string
+  filterArray: IResultData[]
+  title: string
 }
 
-const ResultItem = ({ filterArray, type }: IFilter) => {
+const ResultItem = ({ filterArray, title }: IFilter) => {
   const [searchText] = useRecoil(searchTextState)
-  const [title, setTitle] = useState('')
-  const [itemLength, setItemLength] = useState(0)
-  // const [modalVisible, setModalVisible] = useState(false)
   const [modalState, setModalState] = useRecoilState(modalToggleState)
   const [, setShowMatchedItem] = useRecoilState(showItemId)
 
-  useEffect(() => {
-    if (type === 'title') setTitle('Title')
-    else setTitle('Content')
-  }, [type])
-
-  useEffect(() => {
-    if (filterArray && filterArray.length > 0) setItemLength(filterArray.length)
-  }, [filterArray])
-
   const handleBoldText = (item: IResultData) => {
-    if (type === 'title') {
+    if (title === 'Title') {
       return (
         <>
           <p className={styles.itemTitle}>{parse(BoldText(searchText, item.title))}</p>
@@ -55,29 +43,28 @@ const ResultItem = ({ filterArray, type }: IFilter) => {
     if (!clickItem) return
     setShowMatchedItem(clickItem)
   }
-  console.log(filterArray)
 
   return (
     <div className={styles.resultItem}>
-      {filterArray && itemLength > 0 && (
-        <div className={styles.titleArea}>
-          <p className={styles.title}>
-            {title} ({itemLength})
-          </p>
-          <ul className={styles.list}>
-            {filterArray.map((item) => {
-              return (
-                <li className={styles.item} key={item.id}>
-                  <button type='button' onClick={handleOpenPopup} data-item={item.id}>
-                    <div className={styles.text}>{handleBoldText(item)}</div>
-                    <span className={styles.itemCode}>{item.musicCode}</span>
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      )}
+      <div className={styles.titleArea}>
+        <p className={styles.title}>
+          {title} ({filterArray.length})
+        </p>
+        <ul className={styles.list}>
+          {filterArray.map((item) => {
+            return (
+              <li className={styles.item} key={item.id}>
+                <button type='button' onClick={handleOpenPopup} data-item={item.id}>
+                  <div className={styles.text}>{handleBoldText(item)}</div>
+                  <span className={styles.itemCode}>
+                    {item.category} / {item.musicCode}
+                  </span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
       {modalState && <ItemViewModal data={filterArray} />}
     </div>
   )

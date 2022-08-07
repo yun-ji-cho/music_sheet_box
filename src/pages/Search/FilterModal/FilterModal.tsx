@@ -1,6 +1,7 @@
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import cx from 'classnames'
 import { CloseIcon } from 'assets/svg/index'
+import { useRecoil } from 'hooks/state'
 
 import { filterModalState, searchTextFilterState, searchMusicCodeState, searchCategoryState } from 'states/music.atom'
 
@@ -9,7 +10,6 @@ import styles from './filterModal.module.scss'
 import Potal from '../../../components/Modal/Potal'
 import DropDown from 'components/DropDown/DropDown'
 import TextFilter from '../TextFilter/TextFilter'
-import { useRecoil } from 'hooks/state'
 import Button from 'components/Button/Button'
 
 const filterList = ['Any', 'Title', 'Content']
@@ -22,6 +22,12 @@ const FilterModal = memo(() => {
   const [globalCategory, setGlobalCategory] = useRecoil(searchCategoryState)
   const [code, setCode] = useState(globalCode)
   const [category, setCategory] = useState(globalCategory)
+
+  useEffect(() => {
+    setRadioValue(globalTextFilter)
+    setCode(globalCode)
+    setCategory(globalCategory)
+  }, [globalCategory, globalCode, globalTextFilter])
 
   const handleApply = () => {
     setGlobalTextFilter(radioValue)

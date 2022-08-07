@@ -4,12 +4,12 @@ import { useRecoil } from 'hooks/state'
 import { searchCategoryState, searchMusicCodeState, searchTextFilterState } from 'states/music.atom'
 import styles from './tag.module.scss'
 
-interface ItagArr {
+interface TagArr {
   title: string
   value: string
 }
 
-const Tag = ({ title, value }: ItagArr) => {
+const Tag = ({ title, value }: TagArr) => {
   const [, , resetTextFilter] = useRecoil(searchTextFilterState)
   const [, , resetSetCode] = useRecoil(searchMusicCodeState)
   const [, , resetCategory] = useRecoil(searchCategoryState)

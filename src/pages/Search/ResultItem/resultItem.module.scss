@@ -2,10 +2,15 @@
 
 .resultItem {
   .titleArea {
-    padding-bottom: 10px;
-    margin-bottom: 20px;
     color: colors.$WHITE;
-    border-bottom: 1px solid colors.$GRAYA;
+  }
+
+  + .resultItem {
+    .titleArea {
+      padding-top: 20px;
+      margin-top: 20px;
+      border-top: 1px solid colors.$GRAYA;
+    }
   }
 
   .title {

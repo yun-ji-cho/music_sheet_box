@@ -1,12 +1,23 @@
 @use '/src/styles/constants/colors';
 
 .search {
-  padding: 85px 30px;
+  padding: 85px 30px 65px;
 
   h2 {
     padding: 40px 0 20px;
     font-size: 28px;
     color: colors.$LOGO_TITLE;
     border-top: 1px solid colors.$DIVISION_LINE;
+  }
+
+  .imageWrap {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+
+    .loadingIcon {
+      width: 100px;
+      height: 100px;
+    }
   }
 }

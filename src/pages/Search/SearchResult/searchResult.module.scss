@@ -1,7 +1,12 @@
 @use '/src/styles/constants/colors';
 
 .searchResult {
-  padding: 30px 0;
+  margin-top: 30px;
+
+  .resultWrap {
+    max-height: 48vh;
+    overflow-y: auto;
+  }
 
   .length {
     padding-bottom: 30px;
