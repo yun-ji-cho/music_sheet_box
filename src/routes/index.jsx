@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import { Routes, Route } from 'react-router-dom'
 import styles from './Routes.module.scss'
 
@@ -10,15 +8,12 @@ import Layout from '../components/Layout/Layout'
 import Header from '../components/Header/Header'
 import GNB from '../components/Modal/GNB/GNB'
 
-import { navToggleState } from 'states/music.atom'
-
 const App = () => {
-  const navToggle = useRecoilValue(navToggleState)
   return (
     <div className={styles.app}>
       <div className={styles.container}>
         <Header />
-        {navToggle && <GNB />}
+        <GNB />
         <Routes>
           <Route path='' element={<Search />} />
           <Route path='/' element={<Layout />}>

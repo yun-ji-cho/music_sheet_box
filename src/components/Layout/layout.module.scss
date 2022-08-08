@@ -5,6 +5,7 @@
   top: 86px;
   bottom: 60px;
   width: 100%;
+  height: calc(100% - 86px);
   padding: 40px 30px 25px;
   overflow: auto;
   background: colors.$BG_WHITE;

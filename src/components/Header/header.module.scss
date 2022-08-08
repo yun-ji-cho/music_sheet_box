@@ -63,6 +63,17 @@
     &::after {
       margin-top: 4px;
     }
-  }
 
+    &.isOpen {
+      &::before {
+        margin: 0;
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+
+      &::after {
+        margin: 0;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+  }
 }

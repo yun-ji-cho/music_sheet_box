@@ -1,23 +1,51 @@
 @use '/src/styles/constants/colors';
 
 .gnb {
-  position: absolute;
+  position: fixed;
   top: 85px;
-  left: 0;
-  z-index: 9;
-  width: 640px;
-  height: 100%;
-  padding-top: 70px;
-  background-color: colors.$APP_BACKGROUND;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 85px);
+
+  .container {
+    position: relative;
+    width: 640px;
+    height: 100%;
+    overflow: hidden;
+    background-color: colors.$APP_BACKGROUND;
+    opacity: 0;
+    transition: all 0.2s;
+  }
 
   .menu {
-    padding: 30px 40px;
+    padding: 80px 40px 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+    transform: translateX(-30px);
 
     a {
       display: block;
-      margin-bottom: 50px;
+      margin-bottom: 70px;
       font-size: 60px;
       color: colors.$WHITE;
+      transition: color 0.3s ease 0.2s;
+    }
+  }
+
+  &.isOpen {
+    .container {
+      opacity: 1;
+    }
+
+    .menu {
+      opacity: 1;
+      transform: translateX(0);
+
+      a {
+        color: colors.$TEAL;
+      }
     }
   }
 }

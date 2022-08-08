@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil'
 import { NavLink } from 'react-router-dom'
+import cx from 'classnames'
 import { SaveBoxIcon } from 'assets/svg/index'
 
 import styles from './header.module.scss'
@@ -7,7 +8,7 @@ import styles from './header.module.scss'
 import { navToggleState } from 'states/music.atom'
 
 const Header = () => {
-  const [, setNavToggle] = useRecoilState(navToggleState)
+  const [navToggle, setNavToggle] = useRecoilState(navToggleState)
 
   const handleNavToggle = () => {
     setNavToggle((prev) => !prev)
@@ -20,7 +21,7 @@ const Header = () => {
           Music sheet box
         </NavLink>
       </h1>
-      <button type='button' className={styles.menuBtn} onClick={handleNavToggle}>
+      <button type='button' className={cx(styles.menuBtn, { [styles.isOpen]: navToggle })} onClick={handleNavToggle}>
         <span className={styles.blind}>menu open</span>
       </button>
     </header>
