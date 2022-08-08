@@ -5,6 +5,11 @@ export const modalToggleState = atom<Boolean>({
   default: false,
 })
 
+export const navToggleState = atom<Boolean>({
+  key: 'navToggleState',
+  default: false,
+})
+
 export const confirmModalState = atom<Boolean>({
   key: 'confirmModalState',
   default: false,

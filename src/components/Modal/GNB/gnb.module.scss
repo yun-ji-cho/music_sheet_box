@@ -1,0 +1,23 @@
+@use '/src/styles/constants/colors';
+
+.gnb {
+  position: absolute;
+  top: 85px;
+  left: 0;
+  z-index: 9;
+  width: 640px;
+  height: 100%;
+  padding-top: 70px;
+  background-color: colors.$APP_BACKGROUND;
+
+  .menu {
+    padding: 30px 40px;
+
+    a {
+      display: block;
+      margin-bottom: 50px;
+      font-size: 60px;
+      color: colors.$WHITE;
+    }
+  }
+}

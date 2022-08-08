@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { Routes, Route } from 'react-router-dom'
 import styles from './Routes.module.scss'
 
@@ -6,15 +8,17 @@ import Board from '../pages/Board/Board'
 import Upload from '../pages/Upload/Upload'
 import Layout from '../components/Layout/Layout'
 import Header from '../components/Header/Header'
-import GNB from '../components/GNB/GNB'
+import GNB from '../components/Modal/GNB/GNB'
 
-// import Board from "./pages/New";
+import { navToggleState } from 'states/music.atom'
 
 const App = () => {
+  const navToggle = useRecoilValue(navToggleState)
   return (
     <div className={styles.app}>
       <div className={styles.container}>
         <Header />
+        {navToggle && <GNB />}
         <Routes>
           <Route path='' element={<Search />} />
           <Route path='/' element={<Layout />}>
@@ -22,7 +26,6 @@ const App = () => {
             <Route path='upload' element={<Upload />} />
           </Route>
         </Routes>
-        <GNB />
       </div>
     </div>
   )
