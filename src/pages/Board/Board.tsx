@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useState, useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useQuery } from 'react-query'
 import loadingIcon from 'assets/images/loading.gif'
@@ -31,7 +31,7 @@ const ControlList = ({ value, onChange, optionList }: IProps) => {
   return (
     <select value={value} onChange={(e) => onChange(e.target.value)}>
       {optionList.map((it) => (
-        <option key={value} value={it.value}>
+        <option key={it.name} value={it.value}>
           {it.name}
         </option>
       ))}
@@ -44,6 +44,11 @@ const Board = () => {
   const { isLoading, data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,
     refetchOnMount: true,
+  })
+
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName('title')[0]
+    titleElement.innerHTML = 'Music box - Board'
   })
 
   const calcTime = (time: string) => {

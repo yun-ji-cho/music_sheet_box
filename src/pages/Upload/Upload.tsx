@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState, useRef } from 'react'
+import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { useMutation } from 'react-query'
 import axios from 'axios'
@@ -41,6 +41,11 @@ const Upload = () => {
   const [code, setCode] = useState('선택하세요')
   const [category, setCategory] = useState('선택하세요')
   const [alertState, setAlertState] = useState('')
+
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName('title')[0]
+    titleElement.innerHTML = 'Music box - Upload'
+  })
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
