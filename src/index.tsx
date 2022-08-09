@@ -5,7 +5,6 @@ import { RecoilRoot } from 'recoil'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import RootRoute from './routes'
 import reportWebVitals from './reportWebVitals'
-import ScrollToTop from 'components/ScrollTotop/ScrollTotop'
 
 import './styles/index.scss'
 
