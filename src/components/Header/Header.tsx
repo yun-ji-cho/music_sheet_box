@@ -18,7 +18,7 @@ const Header = () => {
       <h1>
         <NavLink to='/' className={styles.logo}>
           <SaveBoxIcon className={styles.logoIcon} />
-          Music sheet box
+          Sheet Music Box
         </NavLink>
       </h1>
       <button type='button' className={cx(styles.menuBtn, { [styles.isOpen]: navToggle })} onClick={handleNavToggle}>

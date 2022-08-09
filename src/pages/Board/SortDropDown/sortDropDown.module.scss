@@ -1,0 +1,13 @@
+.sortDropDown {
+  min-width: 117px;
+  padding: 10px 10px;
+  // margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background: url('../../../assets/svg/arrow_down.svg') no-repeat right 9px center;
+  background-color: #ececec;
+  background-size: 15px auto;
+  border: none;
+  border-radius: 5px;
+  appearance: none;
+}

@@ -35,7 +35,7 @@ export const codeList = atom({
 })
 export const categoryList = atom({
   key: 'categoryList',
-  default: ['발라드', '락', '클래식', '락발라드', '재즈', '일렉트로닉'],
+  default: ['발라드', 'CCM', '락', '클래식', '락발라드', '재즈', '일렉트로닉'],
 })
 
 export const searchTextState = atom({

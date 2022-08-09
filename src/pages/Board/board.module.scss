@@ -6,7 +6,7 @@
 
   .itemCount {
     padding-bottom: 25px;
-    font-size: 13px;
+    font-size: 14px;
     color: colors.$MODAL_TEXT_2;
 
     strong {
@@ -26,7 +26,7 @@
   }
 
   .tableItemList {
-    // max-height: 522px;
+    padding-top: 20px;
     overflow: auto;
   }
 }

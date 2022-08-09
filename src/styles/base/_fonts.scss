@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css');
+
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script");
 
 body,
 button,
 input,
-textarea {
-  font-family: Inter, Arial, PingFangSC-Regular, 'Microsoft YaHei', sans-serif !important;
+textarea,
+select {
+  font-family: 'Spoqa Han Sans Neo', Inter, Arial, PingFangSC-Regular, 'Microsoft YaHei', sans-serif;
   font-feature-settings: 'tnum';
 }
 
@@ -16,4 +20,8 @@ input[type='number'] {
     margin: 0;
     -webkit-appearance: none;
   }
+}
+
+header {
+  font-family: 'Nanum Pen Script', Inter, Arial, PingFangSC-Regular, 'Microsoft YaHei', sans-serif;
 }

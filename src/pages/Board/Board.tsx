@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useQuery } from 'react-query'
 import loadingIcon from 'assets/images/loading.gif'
@@ -10,34 +10,12 @@ import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
+import SortDropDown from './SortDropDown/SortDropDown'
 
 const sortOptionList = [
   { value: 'latest', name: '최신순' },
   { value: 'oldest', name: '오래된 순' },
 ]
-
-interface IListData {
-  value: string
-  name: string
-}
-
-interface IProps {
-  value: string
-  onChange: Dispatch<SetStateAction<string>>
-  optionList: IListData[]
-}
-
-const ControlList = ({ value, onChange, optionList }: IProps) => {
-  return (
-    <select value={value} onChange={(e) => onChange(e.target.value)}>
-      {optionList.map((it) => (
-        <option key={it.name} value={it.value}>
-          {it.name}
-        </option>
-      ))}
-    </select>
-  )
-}
 
 const Board = () => {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -80,11 +58,7 @@ const Board = () => {
       <div className={styles.itemCount}>
         <strong>{data?.count} </strong>개의 악보가 있습니다.
       </div>
-      <ControlList value={sortType} onChange={setSortType} optionList={sortOptionList} />
-      <div className={styles.tableHeader}>
-        <span className={styles.title}>Title</span>
-        <span className={styles.code}>Code</span>
-      </div>
+      <SortDropDown value={sortType} onChange={setSortType} optionList={sortOptionList} />
       {data ? (
         <ul className={styles.tableItemList}>
           {getProcessedDiaryList()?.map((item) => (

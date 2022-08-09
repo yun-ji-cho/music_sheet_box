@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
   border-top: 1px solid colors.$GRAYE;
 
   button {
@@ -24,25 +23,69 @@
       .title {
         width: 85%;
         margin-bottom: 10px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         color: colors.$GRAY3;
         text-align: left;
-        @include typography.lineClamp(1, 20);
+        @include typography.lineClamp(1, 28);
+      }
+
+      .category {
+        display: inline-block;
+        padding: 3px 5px;
+        margin-bottom: 7px;
+        font-size: 14px;
+        border-radius: 5px;
+
+        &.blue {
+          color: colors.$TEXT_BLUE;
+          background: colors.$BG_BLUE;
+        }
+
+        &.orange {
+          color: colors.$TEXT_ORANGE;
+          background: colors.$BG_ORANGE;
+        }
+
+        &.green {
+          color: colors.$TEXT_GREEN;
+          background: colors.$BG_GREEN;
+        }
+
+        &.pink {
+          color: colors.$TEXT_PINK;
+          background: colors.$BG_PINK;
+        }
+
+        &.red {
+          color: colors.$TEXT_RED;
+          background: colors.$BG_RED;
+        }
+
+        &.purple {
+          color: colors.$TEXT_PURPLE;
+          background: colors.$BG_PURPLE;
+        }
+
+        &.yellow {
+          color: colors.$TEXT_YELLOW;
+          background: colors.$BG_YELLOW;
+        }
       }
     }
 
-    .code {
-      width: 7%;
-    }
-
     span {
-      font-size: 12px;
+      font-size: 14px;
       color: colors.$WHITE3;
 
       &.date {
         width: 100%;
       }
+    }
+
+    .code {
+      width: 7%;
+      font-size: 16px;
     }
   }
 
