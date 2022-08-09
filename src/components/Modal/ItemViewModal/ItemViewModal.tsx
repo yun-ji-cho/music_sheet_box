@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { IResultData } from 'types/index'
 import { modalToggleState, showItemId } from 'states/music.atom'
-import { PrevIcon, HeartIcon } from 'assets/svg'
+import { PrevIcon, LikeIcon } from 'assets/svg'
 
 import styles from './ItemViewModal.module.scss'
 
@@ -38,7 +38,7 @@ const ItemViewModal = ({ data }: ItemProps) => {
               </button>
               <p className={styles.modalTitle}>Detail Item</p>
               <button type='button' className={styles.topBtn}>
-                <HeartIcon className={styles.likeIcon} />
+                <LikeIcon className={styles.likeIcon} />
               </button>
             </div>
             {filterData && (

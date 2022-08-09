@@ -1,8 +1,9 @@
 import { useRecoilState } from 'recoil'
 import { useState } from 'react'
+import cx from 'classnames'
 
 import { IResultData } from 'types'
-import { DownloadIcon, HeartEmptyIcon, HeartFillIcon } from 'assets/svg/index'
+import { DownloadIcon, LikeIcon } from 'assets/svg/index'
 import { modalToggleState, showItemId } from 'states/music.atom'
 
 import styles from './item.module.scss'
@@ -10,7 +11,7 @@ import styles from './item.module.scss'
 const Item = ({ id, title, article, musicCode, category, created, image }: IResultData) => {
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
   const [, setShowMatchedItem] = useRecoilState(showItemId)
-  const [like, setLike] = useState(false)
+  const [like, setLike] = useState(true)
 
   const categoryColor = {
     발라드: `${styles.blue}`,
@@ -31,12 +32,13 @@ const Item = ({ id, title, article, musicCode, category, created, image }: IResu
     <li className={styles.item}>
       <button type='button' onClick={handleModalOpen}>
         <div className={styles.left}>
-          <p className={`${styles.category} ${categoryColor}`}>{category}</p>
+          <div className={styles.top}>
+            <p className={`${styles.category} ${categoryColor}`}>{category}</p>
+            <LikeIcon className={cx(styles.like, { [styles.fill]: like })} />
+          </div>
           <p className={styles.title}>{title}</p>
           <span className={styles.date}>{created.slice(0, 10)}</span>
         </div>
-        {like ? <HeartFillIcon /> : <HeartEmptyIcon />}
-        <HeartEmptyIcon />
         <span className={styles.code}>{musicCode}</span>
         <input type='hidden' data-img={image} data-category={category} data-article={article} />
       </button>

@@ -20,6 +20,23 @@
     .left {
       width: 93%;
 
+      .top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 7px;
+
+        .like {
+          width: 16px;
+          height: 16px;
+          margin-left: 20px;
+          fill: #9e9ea7;
+
+          &.fill {
+            fill: colors.$PINK;
+          }
+        }
+      }
+
       .title {
         width: 85%;
         margin-bottom: 10px;
@@ -33,7 +50,6 @@
       .category {
         display: inline-block;
         padding: 3px 5px;
-        margin-bottom: 7px;
         font-size: 14px;
         border-radius: 5px;
 
