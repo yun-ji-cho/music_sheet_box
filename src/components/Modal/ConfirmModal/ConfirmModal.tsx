@@ -41,7 +41,7 @@ const ConfirmModal = ({ message, moveToBoard, alertState }: Props) => {
               <p className={styles.contents}>{message}</p>
             </div>
             <div className={styles.buttonWrap}>
-              <Button message='확인' type='button' onClose={handleConfirmClose} />
+              <Button message='확인' type='button' onClick={handleConfirmClose} func='primary' />
             </div>
           </div>
         </div>

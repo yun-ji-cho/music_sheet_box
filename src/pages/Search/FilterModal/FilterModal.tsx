@@ -66,7 +66,7 @@ const FilterModal = memo(() => {
               </li>
             </ul>
             <div className={styles.buttonWrap}>
-              <Button message='Apply Filter' fullWidth onClose={handleApply} />
+              <Button message='Apply Filter' fullWidth onClick={handleApply} func='primary' />
             </div>
           </div>
         </div>

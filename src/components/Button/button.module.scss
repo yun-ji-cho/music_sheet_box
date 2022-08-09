@@ -1,14 +1,25 @@
 @use '/src/styles/constants/colors';
 
-.primaryBtn {
+.button {
   width: 100px;
   padding: 10px;
   color: colors.$WHITE;
-  background-color: colors.$HIGHLIGHT_ORANGE;
   border-radius: 8px;
 
   &.full {
     width: 100%;
     font-size: 16px;
+  }
+
+  &.primary {
+    background-color: colors.$HIGHLIGHT_ORANGE;
+  }
+
+  &.secondary {
+    background-color: colors.$GREEN;
+  }
+
+  &.delete {
+    background-color: colors.$PINK;
   }
 }

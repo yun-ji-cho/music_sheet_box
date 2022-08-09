@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { IResultData } from 'types/index'
 import { modalToggleState, showItemId } from 'states/music.atom'
 import { PrevIcon, LikeIcon } from 'assets/svg'
+import Button from 'components/Button/Button'
 
 import styles from './ItemViewModal.module.scss'
 
 import Potal from '../Potal'
-import { useEffect, useState } from 'react'
 
 interface ItemProps {
   data: IResultData[] | undefined
@@ -25,6 +26,13 @@ const ItemViewModal = ({ data }: ItemProps) => {
   const [, setModalState] = useRecoilState(modalToggleState)
   const handleModalClose = () => {
     setModalState(false)
+  }
+
+  const handleEdit = () => {
+    console.log('수정하기')
+  }
+  const handleDelete = () => {
+    console.log('삭제')
   }
 
   return (
@@ -51,6 +59,10 @@ const ItemViewModal = ({ data }: ItemProps) => {
                 <span className={styles.code}>{filterData.musicCode}</span>
                 <span className={styles.date}>{filterData.created.slice(0, 10)}</span>
                 <p className={styles.contents}>{filterData.article}</p>
+                <div className={styles.buttonWrap}>
+                  <Button message='수정하기' onClick={handleEdit} func='secondary' />
+                  <Button message='삭제하기' onClick={handleDelete} func='delete' />
+                </div>
               </div>
             )}
           </div>

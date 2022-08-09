@@ -149,7 +149,7 @@ const Upload = () => {
           </li>
         </ul>
         <div className={styles.buttonWrap}>
-          <Button message='SAVE' type='submit' />
+          <Button message='SAVE' type='submit' func='primary' />
         </div>
       </form>
       {confirmModal && <ConfirmModal alertState={alertState} message={alertMessage} moveToBoard />}

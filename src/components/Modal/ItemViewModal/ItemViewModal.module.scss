@@ -63,7 +63,7 @@
   }
 
   .inner {
-    max-height: 530px;
+    height: calc(100% - 105px);
     overflow-y: auto;
 
     .image {
@@ -105,5 +105,14 @@
       line-height: 1.2;
       color: colors.$MODAL_TEXT_2;
     }
+  }
+}
+
+.buttonWrap {
+  padding-top: 30px;
+  text-align: right;
+
+  button {
+    margin-left: 10px;
   }
 }

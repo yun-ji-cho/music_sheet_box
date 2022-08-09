@@ -6,19 +6,20 @@ interface Props {
   type?: string
   message: string
   fullWidth?: Boolean
-  onClose?: () => void
+  onClick?: () => void
+  func: 'primary' | 'secondary' | 'delete'
 }
 
-const Button = memo(({ message, type, onClose, fullWidth }: Props) => {
+const Button = memo(({ message, type, onClick, fullWidth, func }: Props) => {
   if (type === 'submit')
     return (
-      <button type='submit' className={cx(styles.primaryBtn, { [styles.full]: fullWidth })}>
+      <button type='submit' className={cx(styles.button, styles[func], { [styles.full]: fullWidth })}>
         {message}
       </button>
     )
 
   return (
-    <button type='button' className={cx(styles.primaryBtn, { [styles.full]: fullWidth })} onClick={onClose}>
+    <button type='button' className={cx(styles.button, styles[func], { [styles.full]: fullWidth })} onClick={onClick}>
       {message}
     </button>
   )
