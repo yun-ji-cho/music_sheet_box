@@ -3,11 +3,13 @@
 .gnb {
   position: fixed;
   top: 85px;
+  z-index: 9;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: calc(100% - 85px);
+  pointer-events: none;
 
   .container {
     position: relative;
@@ -35,6 +37,8 @@
   }
 
   &.isOpen {
+    pointer-events: initial;
+
     .container {
       opacity: 1;
     }
@@ -44,7 +48,11 @@
       transform: translateX(0);
 
       a {
-        color: colors.$TEAL;
+        color: colors.$WHITE;
+
+        &.isActive {
+          color: colors.$TEAL;
+        }
       }
     }
   }
