@@ -11,7 +11,7 @@ import styles from './item.module.scss'
 const Item = ({ id, title, article, musicCode, category, created, image }: IResultData) => {
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
   const [, setShowMatchedItem] = useRecoilState(showItemId)
-  const [like, setLike] = useState(true)
+  const [like] = useState(false)
 
   const categoryColor = {
     발라드: `${styles.blue}`,
