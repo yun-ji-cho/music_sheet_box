@@ -29,7 +29,7 @@ const Board = () => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Board'
     scrollRef.current?.scrollIntoView()
-  })
+  }, [])
 
   const calcTime = (time: string) => {
     const convert = new Date(Date.parse(time))

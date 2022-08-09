@@ -42,7 +42,7 @@ const Search = () => {
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Search'
-  })
+  }, [])
 
   const { data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,

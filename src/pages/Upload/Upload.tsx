@@ -32,7 +32,8 @@ const Upload = () => {
   const titleInput = useRef<HTMLInputElement | null>(null)
   const articleInput = useRef<HTMLTextAreaElement | null>(null)
   const [image, setImage] = useState<null | IFileList | any>(null)
-  const [values, setValues] = useState({ title: '', article: '' })
+  const [title, setTitle] = useState('')
+  const [note, setNote] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModal, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
   const [previewURL, setPreviewURL] = useState<any>('')
@@ -46,7 +47,7 @@ const Upload = () => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Upload'
     scrollRef.current?.scrollIntoView()
-  })
+  }, [])
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -58,11 +59,6 @@ const Upload = () => {
       setImageVisible(true)
     }
     setImage(e.currentTarget.files?.[0])
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setValues({ ...values, [name]: value })
   }
 
   const { mutate } = useMutation(addNewItem, {
@@ -82,20 +78,18 @@ const Upload = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (values.title === '') {
+    if (title === '') {
       titleInput.current?.focus()
       return
     }
-    if (values.article === '') {
+    if (note === '') {
       articleInput.current?.focus()
       return
     }
 
-    const { title, article } = values
-
     const formData = new FormData()
     formData.append('title', title)
-    formData.append('article', article)
+    formData.append('article', note)
     formData.append('musicCode', code)
     formData.append('category', category)
     formData.append('image', image)
@@ -126,7 +120,14 @@ const Upload = () => {
             <label htmlFor='title' className={styles.itemTitle}>
               Title
             </label>
-            <input type='text' id='title' name='title' ref={titleInput} value={values.title} onChange={handleChange} />
+            <input
+              type='text'
+              id='title'
+              name='title'
+              ref={titleInput}
+              value={title}
+              onChange={(e) => setTitle(e.currentTarget.value)}
+            />
           </li>
           <li>
             <DropDown label='Code' value={code} onChange={setCode} />
@@ -138,7 +139,13 @@ const Upload = () => {
             <label htmlFor='article' className={styles.itemTitle}>
               Note
             </label>
-            <textarea value={values.article} id='article' name='article' ref={articleInput} onChange={handleChange} />
+            <textarea
+              value={note}
+              id='article'
+              name='article'
+              ref={articleInput}
+              onChange={(e) => setNote(e.currentTarget.value)}
+            />
           </li>
         </ul>
         <div className={styles.buttonWrap}>
