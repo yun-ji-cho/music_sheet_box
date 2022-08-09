@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState, useEffect } from 'react'
+import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useQuery } from 'react-query'
 import loadingIcon from 'assets/images/loading.gif'
@@ -40,6 +40,7 @@ const ControlList = ({ value, onChange, optionList }: IProps) => {
 }
 
 const Board = () => {
+  const scrollRef = useRef<HTMLDivElement>(null)
   const [sortType, setSortType] = useState('latest')
   const { isLoading, data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,
@@ -49,6 +50,7 @@ const Board = () => {
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Board'
+    scrollRef.current?.scrollIntoView()
   })
 
   const calcTime = (time: string) => {
@@ -73,7 +75,7 @@ const Board = () => {
   if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
 
   return (
-    <div className={styles.board}>
+    <div className={styles.board} ref={scrollRef}>
       {modalState && <ItemViewModal data={data?.results} />}
       <div className={styles.itemCount}>
         <strong>{data?.count} </strong>개의 악보가 있습니다.

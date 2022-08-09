@@ -23,7 +23,6 @@ interface IFileList {
     }
   }
 }
-
 const addNewItem = async (formData: any): Promise<any> => {
   const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)
   return data
@@ -41,10 +40,12 @@ const Upload = () => {
   const [code, setCode] = useState('선택하세요')
   const [category, setCategory] = useState('선택하세요')
   const [alertState, setAlertState] = useState('')
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Upload'
+    scrollRef.current?.scrollIntoView()
   })
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +109,7 @@ const Upload = () => {
   }
 
   return (
-    <div className={styles.upload}>
+    <div className={styles.upload} ref={scrollRef}>
       <h3>Upload Contents</h3>
       <form action='' onSubmit={handleSubmit} id='submitForm'>
         <ul className={styles.formList}>
