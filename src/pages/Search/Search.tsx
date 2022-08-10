@@ -39,16 +39,26 @@ const Search = () => {
   const code = useRecoilValue(searchMusicCodeState)
   const category = useRecoilValue(searchCategoryState)
 
-  useEffect(() => {
-    const titleElement = document.getElementsByTagName('title')[0]
-    titleElement.innerHTML = 'Music box - Search'
-  }, [])
-
   const { data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     retry: 1,
   })
+
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName('title')[0]
+    titleElement.innerHTML = 'Music box - Search'
+  }, [])
+
+  useEffect(() => {
+    let titleDataLength = 0
+    let contentDataLength = 0
+
+    if (filterTitle) titleDataLength = filterTitle.length
+    if (filterContent) contentDataLength = filterContent.length
+
+    setTotalLength(titleDataLength + contentDataLength)
+  }, [filterTitle, filterContent])
 
   const filterData = () => {
     if (!data) return
@@ -97,16 +107,6 @@ const Search = () => {
       }, 500)
     }
   }
-
-  useEffect(() => {
-    let titleDataLength = 0
-    let contentDataLength = 0
-
-    if (filterTitle) titleDataLength = filterTitle.length
-    if (filterContent) contentDataLength = filterContent.length
-
-    setTotalLength(titleDataLength + contentDataLength)
-  }, [filterTitle, filterContent])
 
   return (
     <div className={styles.search}>

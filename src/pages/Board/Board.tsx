@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useQuery } from 'react-query'
-import loadingIcon from 'assets/images/loading.gif'
+import { isAxiosError } from 'utils/axios'
 
+import loadingIcon from 'assets/images/loading.gif'
 import { modalToggleState } from 'states/music.atom'
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
-
 import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
@@ -23,6 +23,13 @@ const Board = () => {
   const { isLoading, data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,
     refetchOnMount: true,
+    useErrorBoundary: true,
+    onError(err) {
+      if (isAxiosError(err)) {
+        // eslint-disable-next-line no-console
+        console.log(err)
+      }
+    },
   })
 
   useEffect(() => {
@@ -36,7 +43,7 @@ const Board = () => {
     return convert.getTime()
   }
 
-  const getProcessedDiaryList = () => {
+  const getProcessedItemList = () => {
     const compare = (a: { created: string }, b: { created: string }) => {
       if (sortType === 'latest') {
         return calcTime(b.created) - calcTime(a.created)
@@ -52,22 +59,20 @@ const Board = () => {
 
   if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
 
+  if (!data) return <div>등록된 악보가 없습니다.</div>
+
   return (
     <div className={styles.board} ref={scrollRef}>
-      {modalState && <ItemViewModal data={data?.results} />}
+      {modalState && <ItemViewModal data={data.results} />}
       <div className={styles.itemCount}>
-        <strong>{data?.count} </strong>개의 악보가 있습니다.
+        <strong>{data.count} </strong>개의 악보가 있습니다.
       </div>
       <SortDropDown value={sortType} onChange={setSortType} optionList={sortOptionList} />
-      {data ? (
-        <ul className={styles.tableItemList}>
-          {getProcessedDiaryList()?.map((item) => (
-            <Item key={item.id.toString()} {...item} />
-          ))}
-        </ul>
-      ) : (
-        <div className={styles.placeholderMsg}>등록된 악보가 없습니다.</div>
-      )}
+      <ul className={styles.tableItemList}>
+        {getProcessedItemList()?.map((item) => (
+          <Item key={item.id.toString()} {...item} />
+        ))}
+      </ul>
     </div>
   )
 }
