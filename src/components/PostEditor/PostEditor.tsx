@@ -46,14 +46,14 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     scrollRef.current?.scrollIntoView()
   }, [])
 
-  useEffect(() => {
-    if (isEdit) {
-      console.log(originData)
-      // setDate(getStringDate(new Date(parseInt(originData.date))))
-      // setCode(originData?.musicCode)
-      // setCategory(originData.content)
-    }
-  }, [isEdit, originData])
+  // useEffect(() => {
+  //   if (isEdit) {
+  //     console.log(originData)
+  //     // setDate(getStringDate(new Date(parseInt(originData.date))))
+  //     // setCode(originData?.musicCode)
+  //     // setCategory(originData.content)
+  //   }
+  // }, [isEdit, originData])
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
