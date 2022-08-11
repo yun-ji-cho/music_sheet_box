@@ -1,10 +1,14 @@
 import PostEditor from 'components/PostEditor/PostEditor'
 import styles from './upload.module.scss'
 
-const Upload = () => {
+interface Props {
+  refetch: () => void
+}
+
+const Upload = ({ refetch }: Props) => {
   return (
     <div className={styles.upload}>
-      <PostEditor />
+      <PostEditor refetch={refetch} />
     </div>
   )
 }

@@ -14,13 +14,14 @@ import UploadImage from './UploadImage/UploadImage'
 interface Props {
   isEdit?: Boolean
   originData?: IResultData
+  refetch: () => void
 }
 const addNewItem = async (formData: any): Promise<any> => {
   const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)
   return data
 }
 
-const PostEditor = ({ isEdit, originData }: Props) => {
+const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const titleInput = useRef<HTMLInputElement>(null)
   const articleInput = useRef<HTMLTextAreaElement>(null)
   const [image, setImage] = useState<null | IFileList | any>(null)
@@ -63,6 +64,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
       setConfirmModalOpen(true)
       setAlertMessage('이미지 업로드 완료')
       setMoveToBoard(true)
+      refetch()
     },
     onError: (error) => {
       // eslint-disable-next-line no-console

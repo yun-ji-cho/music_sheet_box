@@ -14,7 +14,7 @@ import Header from '../components/Header/Header'
 import GNB from '../components/Modal/GNB/GNB'
 
 const App = () => {
-  const { isLoading, data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
+  const { isLoading, data, refetch } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     useErrorBoundary: true,
@@ -34,7 +34,7 @@ const App = () => {
           <Route path='' element={<Search data={data} />} />
           <Route path='/' element={<Layout />}>
             <Route path='board' element={<Board data={data} isLoading={isLoading} />} />
-            <Route path='upload' element={<Upload />} />
+            <Route path='upload' element={<Upload refetch={refetch} />} />
             <Route path='edit/:id' element={<Edit data={data} />} />
           </Route>
         </Routes>

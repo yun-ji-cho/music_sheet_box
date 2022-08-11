@@ -7,9 +7,10 @@ import styles from './edit.module.scss'
 
 interface Props {
   data?: IMusicSheetRes
+  refetch: () => void
 }
 
-const Edit = ({ data }: Props) => {
+const Edit = ({ data, refetch }: Props) => {
   const [originData, setOriginData] = useState<IResultData>()
   const navigate = useNavigate()
   const { id } = useParams()
@@ -29,7 +30,9 @@ const Edit = ({ data }: Props) => {
     }
   }, [data, id, navigate])
 
-  return <div className={styles.edit}>{originData && <PostEditor isEdit originData={originData} />}</div>
+  return (
+    <div className={styles.edit}>{originData && <PostEditor isEdit originData={originData} refetch={refetch} />}</div>
+  )
 }
 
 export default Edit
