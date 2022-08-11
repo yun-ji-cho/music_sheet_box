@@ -8,7 +8,7 @@ import { cx } from 'styles'
 
 interface Props {
   message: string
-  moveToBoard?: true
+  moveToBoard?: Boolean
   alertState?: string
   buttonChild?: ReactNode
   confirmOnClick?: () => void
@@ -19,17 +19,9 @@ const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOn
   const navigate = useNavigate()
 
   const handleOnclick = () => {
-    if (confirmOnClick) {
-      confirmOnClick()
-      return
-    }
-    if (moveToBoard) {
-      navigate(`../board`)
-      return
-    }
-    if (handleCloseModal) {
-      handleCloseModal(false)
-    }
+    if (confirmOnClick) confirmOnClick()
+    if (handleCloseModal) handleCloseModal(false)
+    if (moveToBoard) navigate(`../board`)
   }
 
   const handleAlertIcon = () => {

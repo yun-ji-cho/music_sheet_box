@@ -2,8 +2,9 @@ import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
 import { useMutation } from 'react-query'
 import axios from 'axios'
 
-import styles from './postEditor.module.scss'
 import { IFileList, IResultData } from 'types'
+import styles from './postEditor.module.scss'
+import loadingIcon from 'assets/images/loading.gif'
 
 import Button from 'components/Button/Button'
 import DropDown from 'components/DropDown/DropDown'
@@ -35,6 +36,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const [code, setCode] = useState('선택하세요')
   const [category, setCategory] = useState('선택하세요')
   const [alertState, setAlertState] = useState('')
+  const [moveToBoard, setMoveToBoard] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -55,22 +57,30 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     setImage(e.currentTarget.files?.[0])
   }
 
-  const { mutate } = useMutation(addNewItem, {
+  const { isLoading, mutate } = useMutation(addNewItem, {
     onSuccess: () => {
       setAlertState('check')
       setConfirmModalOpen(true)
       setAlertMessage('이미지 업로드 완료')
+      setMoveToBoard(true)
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
       console.log(error)
       setConfirmModalOpen(true)
       setAlertMessage('이미지 업로드 실패')
+      setMoveToBoard(true)
     },
   })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (!image) {
+      setConfirmModalOpen(true)
+      setAlertMessage('이미지를 등록해주세요')
+      return
+    }
 
     if (title === '') {
       titleInput.current?.focus()
@@ -115,7 +125,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   }
 
   return (
-    <div className={styles.upload} ref={scrollRef}>
+    <div className={styles.postEditor} ref={scrollRef}>
       <h3>Upload Contents</h3>
       <form action='' onSubmit={handleSubmit} id='submitForm'>
         <ul className={styles.formList}>
@@ -165,7 +175,19 @@ const PostEditor = ({ isEdit, originData }: Props) => {
           buttonChild={<Button message='취소' type='button' onClick={handleCloseModal} func='delete' />}
         />
       )}
-      {confirmModalOpen && <ConfirmModal alertState={alertState} message={alertMessage} moveToBoard />}
+      {confirmModalOpen && (
+        <ConfirmModal
+          alertState={alertState}
+          message={alertMessage}
+          handleCloseModal={setConfirmModalOpen}
+          moveToBoard={moveToBoard}
+        />
+      )}
+      {isLoading && (
+        <div className={styles.loading}>
+          <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
+        </div>
+      )}
     </div>
   )
 }
