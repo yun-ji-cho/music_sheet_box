@@ -1,36 +1,28 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
-import { useQuery } from 'react-query'
-import { isAxiosError } from 'utils/axios'
 
 import loadingIcon from 'assets/images/loading.gif'
 import { modalToggleState } from 'states/music.atom'
-import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 import SortDropDown from './SortDropDown/SortDropDown'
+import { IMusicSheetRes } from 'types'
 
 const sortOptionList = [
   { value: 'latest', name: '최신순' },
   { value: 'oldest', name: '오래된 순' },
 ]
 
-const Board = () => {
+interface Props {
+  isLoading: Boolean
+  data?: IMusicSheetRes
+}
+
+const Board = ({ data, isLoading }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [sortType, setSortType] = useState('latest')
-  const { isLoading, data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
-    refetchOnWindowFocus: false,
-    refetchOnMount: true,
-    useErrorBoundary: true,
-    onError(err) {
-      if (isAxiosError(err)) {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      }
-    },
-  })
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]

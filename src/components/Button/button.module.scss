@@ -20,6 +20,8 @@
   }
 
   &.delete {
-    background-color: colors.$PINK;
+    margin-left: 10px;
+    color: colors.$GRAY3;
+    background-color: colors.$GRAYD;
   }
 }

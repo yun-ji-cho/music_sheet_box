@@ -1,0 +1,56 @@
+@use '/src/styles/constants/colors';
+
+.upload {
+  padding-top: 40px;
+
+  h3 {
+    padding-bottom: 40px;
+    font-size: 28px;
+    color: colors.$GRAY3;
+  }
+
+  .formList {
+    >li {
+      padding: 0 2px 30px;
+      font-size: 16px;
+
+      input[type='text'] {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid colors.$SELECT_BORDER;
+        border-radius: 8px;
+
+        &:focus {
+          outline: auto;
+        }
+      }
+
+      textarea {
+        width: 100%;
+        height: 70px;
+        padding: 10px;
+        line-height: 1.4;
+        resize: none;
+        border: 1px solid colors.$SELECT_BORDER;
+        border-radius: 8px;
+
+        &:focus {
+          outline: auto;
+        }
+      }
+    }
+
+    .itemTitle {
+      display: inline-block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      color: colors.$INPUT_LABEL;
+    }
+  }
+
+  .buttonWrap {
+    padding-bottom: 30px;
+    text-align: right;
+  }
+}

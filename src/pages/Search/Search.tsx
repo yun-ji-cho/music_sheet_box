@@ -1,10 +1,7 @@
 import { FormEvent, SetStateAction, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
 import { useRecoil } from 'hooks/state'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import {
-  confirmModalState,
   searchTextState,
   modalToggleState,
   searchTextFilterState,
@@ -12,19 +9,21 @@ import {
   searchCategoryState,
   searchItemVisible,
 } from 'states/music.atom'
-import { IResultData } from 'types'
+import { IResultData, IMusicSheetRes } from 'types'
 
 import styles from './search.module.scss'
+import loadingIcon from 'assets/images/loading.gif'
 
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
-
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
 
-import loadingIcon from 'assets/images/loading.gif'
+interface Props {
+  data?: IMusicSheetRes
+}
 
-const Search = () => {
+const Search = ({ data }: Props) => {
   const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
   const [filterTitle, setFilterTitle] = useState<IResultData[] | undefined>([])
   const [filterContent, setFilterContent] = useState<IResultData[] | undefined>([])
@@ -34,16 +33,10 @@ const Search = () => {
   const [alertMessage, setAlertMessage] = useState('')
   const [searchText] = useRecoil(searchTextState)
 
-  const [confirmModal, setConfirmModal] = useRecoil(confirmModalState)
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const modalState = useRecoilValue(modalToggleState)
   const code = useRecoilValue(searchMusicCodeState)
   const category = useRecoilValue(searchCategoryState)
-
-  const { data } = useQuery(['musicSheets'], () => getMusicSheetApi().then((res) => res.data), {
-    refetchOnWindowFocus: false,
-    refetchOnMount: true,
-    retry: 1,
-  })
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -95,7 +88,7 @@ const Search = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!searchText) {
-      setConfirmModal(true)
+      setConfirmModalOpen(true)
       setAlertMessage('검색어를 입력해주세요.')
     } else {
       setSearch(true)
@@ -121,7 +114,7 @@ const Search = () => {
         <SearchResult totalLength={totalLength} filterTitle={filterTitle} filterContent={filterContent} />
       )}
 
-      {confirmModal && <ConfirmModal message={alertMessage} />}
+      {confirmModalOpen && <ConfirmModal message={alertMessage} handleCloseModal={setConfirmModalOpen} />}
       {modalState && <ItemViewModal data={data?.results} />}
     </div>
   )

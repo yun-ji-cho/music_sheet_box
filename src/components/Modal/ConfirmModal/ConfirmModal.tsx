@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { ReactNode, SetStateAction } from 'react'
 import Potal from '../Potal'
 import Button from 'components/Button/Button'
-import { useRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
-import { confirmModalState } from 'states/music.atom'
 import styles from './confirmModal.module.scss'
 import { WarningIcon, CheckIcon } from 'assets/svg/index'
 import { cx } from 'styles'
@@ -12,15 +10,26 @@ interface Props {
   message: string
   moveToBoard?: true
   alertState?: string
+  buttonChild?: ReactNode
+  confirmOnClick?: () => void
+  handleCloseModal?: React.Dispatch<SetStateAction<boolean>>
 }
 
-const ConfirmModal = ({ message, moveToBoard, alertState }: Props) => {
+const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOnClick, handleCloseModal }: Props) => {
   const navigate = useNavigate()
-  const [, setConfirmModal] = useRecoilState<Boolean>(confirmModalState)
 
-  const handleConfirmClose = () => {
-    setConfirmModal(false)
-    if (moveToBoard) navigate(`../board`)
+  const handleOnclick = () => {
+    if (confirmOnClick) {
+      confirmOnClick()
+      return
+    }
+    if (moveToBoard) {
+      navigate(`../board`)
+      return
+    }
+    if (handleCloseModal) {
+      handleCloseModal(false)
+    }
   }
 
   const handleAlertIcon = () => {
@@ -41,7 +50,8 @@ const ConfirmModal = ({ message, moveToBoard, alertState }: Props) => {
               <p className={styles.contents}>{message}</p>
             </div>
             <div className={styles.buttonWrap}>
-              <Button message='확인' type='button' onClick={handleConfirmClose} func='primary' />
+              <Button message='확인' type='button' onClick={handleOnclick} func='primary' />
+              {buttonChild}
             </div>
           </div>
         </div>
