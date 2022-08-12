@@ -7,7 +7,7 @@ interface Props {
   message: string
   fullWidth?: Boolean
   onClick?: () => void
-  func: 'primary' | 'secondary' | 'delete'
+  func: 'primary' | 'secondary' | 'negative'
 }
 
 const Button = memo(({ message, type, onClick, fullWidth, func }: Props) => {

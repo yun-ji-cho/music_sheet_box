@@ -15,7 +15,7 @@ import styles from './search.module.scss'
 import loadingIcon from 'assets/images/loading.gif'
 
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
-import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
+import Detail from 'pages/Detail/Detail'
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
 
@@ -115,7 +115,7 @@ const Search = ({ data }: Props) => {
       )}
 
       {confirmModalOpen && <ConfirmModal message={alertMessage} handleCloseModal={setConfirmModalOpen} />}
-      {modalState && <ItemViewModal data={data?.results} />}
+      {/* {modalState && <Detail dataList={data?.results} />} */}
     </div>
   )
 }

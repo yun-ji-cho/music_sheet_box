@@ -1,4 +1,5 @@
 import { useRecoilState } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import cx from 'classnames'
 
@@ -9,6 +10,7 @@ import { modalToggleState, showItemId } from 'states/music.atom'
 import styles from './item.module.scss'
 
 const Item = ({ id, title, article, musicCode, category, created, image }: IResultData) => {
+  const navigate = useNavigate()
   const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
   const [, setShowMatchedItem] = useRecoilState(showItemId)
   const [like] = useState(false)
@@ -23,14 +25,13 @@ const Item = ({ id, title, article, musicCode, category, created, image }: IResu
     일렉트로닉: `${styles.purple}`,
   }[category]
 
-  const handleModalOpen = () => {
-    setModalState(true)
-    setShowMatchedItem(id.toString())
+  const handleMoveDetail = () => {
+    navigate(`/detail/${id}`)
   }
 
   return (
     <li className={styles.item}>
-      <button type='button' onClick={handleModalOpen}>
+      <button type='button' onClick={handleMoveDetail}>
         <div className={styles.left}>
           <div className={styles.top}>
             <p className={`${styles.category} ${categoryColor}`}>{category}</p>

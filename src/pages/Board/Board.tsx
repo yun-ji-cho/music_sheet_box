@@ -6,7 +6,6 @@ import { modalToggleState } from 'states/music.atom'
 import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
-import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
 import SortDropDown from './SortDropDown/SortDropDown'
 import { IMusicSheetRes } from 'types'
 
@@ -47,15 +46,12 @@ const Board = ({ data, isLoading }: Props) => {
     return sortedList
   }
 
-  const modalState = useRecoilValue(modalToggleState)
-
   if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
 
   if (!data) return <div>등록된 악보가 없습니다.</div>
 
   return (
     <div className={styles.board} ref={scrollRef}>
-      {modalState && <ItemViewModal data={data.results} />}
       <div className={styles.itemCount}>
         <strong>{data.count} </strong>개의 악보가 있습니다.
       </div>

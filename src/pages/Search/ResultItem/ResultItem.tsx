@@ -7,7 +7,7 @@ import { BoldText } from '../BoldText'
 import parse from 'html-react-parser'
 
 import styles from './resultItem.module.scss'
-import ItemViewModal from 'components/Modal/ItemViewModal/ItemViewModal'
+import Detail from 'pages/Detail/Detail'
 
 interface IFilter {
   filterArray: IResultData[]
@@ -65,7 +65,7 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
           })}
         </ul>
       </div>
-      {modalState && <ItemViewModal data={filterArray} />}
+      {modalState && <Detail dataList={filterArray} />}
     </div>
   )
 }

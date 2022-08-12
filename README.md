@@ -64,9 +64,9 @@ src
  ┃ ┃ ┣ ConfirmModal
  ┃ ┃ ┃ ┣ confirmModal.module.scss
  ┃ ┃ ┃ ┗ ConfirmModal.tsx
- ┃ ┃ ┣ ItemViewModal
- ┃ ┃ ┃ ┣ ItemViewModal.module.scss
- ┃ ┃ ┃ ┗ ItemViewModal.tsx
+ ┃ ┃ ┣ Detail
+ ┃ ┃ ┃ ┣ Detail.module.scss
+ ┃ ┃ ┃ ┗ Detail.tsx
  ┃ ┃ ┗ Potal.tsx
  ┃ ┗ gnb.module.scss
  ┣ data

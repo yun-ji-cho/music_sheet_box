@@ -46,14 +46,13 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     scrollRef.current?.scrollIntoView()
   }, [])
 
-  // useEffect(() => {
-  //   if (isEdit) {
-  //     console.log(originData)
-  //     // setDate(getStringDate(new Date(parseInt(originData.date))))
-  //     // setCode(originData?.musicCode)
-  //     // setCategory(originData.content)
-  //   }
-  // }, [isEdit, originData])
+  useEffect(() => {
+    if (!isEdit || !originData) return
+    setTitle(originData.title)
+    setCode(originData.musicCode)
+    setCategory(originData.category)
+    setNote(originData.article)
+  }, [isEdit, originData])
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -183,7 +182,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
           alertState={alertState}
           message={alertMessage}
           confirmOnClick={handlePostData}
-          buttonChild={<Button message='취소' type='button' onClick={handleCloseModal} func='delete' />}
+          buttonChild={<Button message='취소' type='button' onClick={handleCloseModal} func='negative' />}
         />
       )}
       {confirmModalOpen && (
