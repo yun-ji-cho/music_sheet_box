@@ -3,7 +3,6 @@ import { useRecoil } from 'hooks/state'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   searchTextState,
-  modalToggleState,
   searchTextFilterState,
   searchMusicCodeState,
   searchCategoryState,
@@ -15,7 +14,6 @@ import styles from './search.module.scss'
 import loadingIcon from 'assets/images/loading.gif'
 
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
-import Detail from 'pages/Detail/Detail'
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
 
@@ -34,7 +32,6 @@ const Search = ({ data }: Props) => {
   const [searchText] = useRecoil(searchTextState)
 
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
-  const modalState = useRecoilValue(modalToggleState)
   const code = useRecoilValue(searchMusicCodeState)
   const category = useRecoilValue(searchCategoryState)
 
@@ -115,7 +112,6 @@ const Search = ({ data }: Props) => {
       )}
 
       {confirmModalOpen && <ConfirmModal message={alertMessage} handleCloseModal={setConfirmModalOpen} />}
-      {/* {modalState && <Detail dataList={data?.results} />} */}
     </div>
   )
 }

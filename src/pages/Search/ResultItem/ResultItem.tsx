@@ -1,13 +1,13 @@
 import { MouseEvent } from 'react'
-import { useRecoil, useRecoilState } from 'hooks/state'
-import { modalToggleState, searchTextState, showItemId } from 'states/music.atom'
+import { useNavigate } from 'react-router-dom'
+import { useRecoil } from 'hooks/state'
 
+import { searchTextState } from 'states/music.atom'
 import { IResultData } from 'types'
 import { BoldText } from '../BoldText'
 import parse from 'html-react-parser'
 
 import styles from './resultItem.module.scss'
-import Detail from 'pages/Detail/Detail'
 
 interface IFilter {
   filterArray: IResultData[]
@@ -16,8 +16,7 @@ interface IFilter {
 
 const ResultItem = ({ filterArray, title }: IFilter) => {
   const [searchText] = useRecoil(searchTextState)
-  const [modalState, setModalState] = useRecoilState(modalToggleState)
-  const [, setShowMatchedItem] = useRecoilState(showItemId)
+  const navigate = useNavigate()
 
   const handleBoldText = (item: IResultData) => {
     if (title === 'Title') {
@@ -37,11 +36,8 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
   }
 
   const handleOpenPopup = (e: MouseEvent<HTMLButtonElement>) => {
-    setModalState(true)
-    const clickItem = e.currentTarget.getAttribute('data-item')
-
-    if (!clickItem) return
-    setShowMatchedItem(clickItem)
+    const id = Number(e.currentTarget.value)
+    navigate(`/detail/${id}`)
   }
 
   return (
@@ -54,7 +50,7 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
           {filterArray.map((item) => {
             return (
               <li className={styles.item} key={item.id}>
-                <button type='button' onClick={handleOpenPopup} data-item={item.id}>
+                <button type='button' onClick={handleOpenPopup} value={item.id}>
                   <div className={styles.text}>{handleBoldText(item)}</div>
                   <span className={styles.itemCode}>
                     {item.category} / {item.musicCode}
@@ -65,7 +61,6 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
           })}
         </ul>
       </div>
-      {modalState && <Detail dataList={filterArray} />}
     </div>
   )
 }
