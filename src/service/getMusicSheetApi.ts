@@ -15,3 +15,8 @@ export const getMusicSheetApi = (params?: Params) =>
       ...params,
     },
   })
+
+export const deleteItemApi = async (id: number) => {
+  const { data } = await axios.delete(`${MUSIC_BASE_URL}/${id}`)
+  return data
+}

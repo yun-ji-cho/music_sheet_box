@@ -48,10 +48,12 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
 
   useEffect(() => {
     if (!isEdit || !originData) return
+    setPreviewURL(originData.image)
     setTitle(originData.title)
     setCode(originData.musicCode)
     setCategory(originData.category)
     setNote(originData.article)
+    setImageVisible(true)
   }, [isEdit, originData])
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
 
 import loadingIcon from 'assets/images/loading.gif'
-import { modalToggleState } from 'states/music.atom'
 import styles from './board.module.scss'
 
 import Item from 'components/Item/Item'
@@ -13,13 +11,13 @@ const sortOptionList = [
   { value: 'latest', name: '최신순' },
   { value: 'oldest', name: '오래된 순' },
 ]
-
 interface Props {
   isLoading: Boolean
   data?: IMusicSheetRes
+  refetch: () => void
 }
 
-const Board = ({ data, isLoading }: Props) => {
+const Board = ({ data, isLoading, refetch }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [sortType, setSortType] = useState('latest')
 
@@ -28,6 +26,10 @@ const Board = ({ data, isLoading }: Props) => {
     titleElement.innerHTML = 'Music box - Board'
     scrollRef.current?.scrollIntoView()
   }, [])
+
+  useEffect(() => {
+    refetch()
+  }, [data, refetch])
 
   const calcTime = (time: string) => {
     const convert = new Date(Date.parse(time))

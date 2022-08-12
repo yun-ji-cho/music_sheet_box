@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useMutation } from 'react-query'
 
+import styles from './detail.module.scss'
 import { IResultData } from 'types/index'
 import { PrevIcon, LikeIcon } from 'assets/svg'
+import { deleteItemApi } from 'service/getMusicSheetApi'
 
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
-
-import styles from './detail.module.scss'
 
 interface ItemProps {
   dataList: IResultData[]
@@ -17,10 +18,12 @@ const Detail = ({ dataList }: ItemProps) => {
   const navigate = useNavigate()
   const { id } = useParams()
   const [filterData, setFilterData] = useState<IResultData>()
-  const [errorModal, setErrorModal] = useState(false)
+  const [resultModal, setResultModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const [message, setMessage] = useState('')
   const [moveToBord, setMoveToBord] = useState(false)
+  const [alertState, setAlertState] = useState('')
+  const [moveToBoard, setMoveToBoard] = useState(false)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -35,7 +38,7 @@ const Detail = ({ dataList }: ItemProps) => {
         setFilterData(targetPost)
       } else {
         setMessage('없는 게시물 입니다.')
-        setErrorModal(true)
+        setResultModal(true)
         setMoveToBord(true)
       }
     }
@@ -55,11 +58,31 @@ const Detail = ({ dataList }: ItemProps) => {
   const handleCloseModal = () => {
     setDeleteModal(false)
   }
-  const handleDeletePost = () => {}
+  const handleMoveToBoard = () => {
+    navigate(`../board`)
+  }
+
+  const { isLoading, mutate } = useMutation(deleteItemApi, {
+    onSuccess: () => {
+      setAlertState('check')
+      setResultModal(true)
+      setMessage('게시물 삭제 완료')
+    },
+    onError: (error) => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      setResultModal(true)
+      setMessage('게시물 삭제 실패')
+    },
+  })
+
+  const handleDeletePost = () => {
+    mutate(Number(id))
+  }
 
   return (
     <div className={styles.detail}>
-      {errorModal && <ConfirmModal message={message} moveToBoard={moveToBord} />}
+      {resultModal && <ConfirmModal message={message} moveToBoard={moveToBord} confirmOnClick={handleMoveToBoard} />}
       {deleteModal && (
         <ConfirmModal
           message={message}
