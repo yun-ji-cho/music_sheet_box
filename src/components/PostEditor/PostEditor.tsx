@@ -1,6 +1,5 @@
 import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
 import { useMutation } from 'react-query'
-import axios from 'axios'
 
 import { IFileList, IResultData } from 'types'
 import styles from './postEditor.module.scss'
@@ -10,15 +9,12 @@ import Button from 'components/Button/Button'
 import DropDown from 'components/DropDown/DropDown'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import UploadImage from './UploadImage/UploadImage'
+import { addNewItemApi } from 'service/getMusicSheetApi'
 
 interface Props {
   isEdit?: Boolean
   originData?: IResultData
   refetch: () => void
-}
-const addNewItem = async (formData: any): Promise<any> => {
-  const { data } = await axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)
-  return data
 }
 
 const PostEditor = ({ isEdit, originData, refetch }: Props) => {
@@ -68,20 +64,20 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     setImage(e.currentTarget.files?.[0])
   }
 
-  const { isLoading, mutate } = useMutation(addNewItem, {
+  const { isLoading, mutate } = useMutation(addNewItemApi, {
+    onSettled: () => {
+      setConfirmModalOpen(true)
+      setMoveToBoard(true)
+    },
     onSuccess: () => {
       setAlertState('check')
-      setConfirmModalOpen(true)
       setAlertMessage('이미지 업로드 완료')
-      setMoveToBoard(true)
       refetch()
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
       console.log(error)
-      setConfirmModalOpen(true)
       setAlertMessage('이미지 업로드 실패')
-      setMoveToBoard(true)
     },
   })
 

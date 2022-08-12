@@ -1,18 +1,14 @@
-import { useRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import cx from 'classnames'
 
 import { IResultData } from 'types'
 import { DownloadIcon, LikeIcon } from 'assets/svg/index'
-import { modalToggleState, showItemId } from 'states/music.atom'
 
 import styles from './item.module.scss'
 
 const Item = ({ id, title, article, musicCode, category, created, image }: IResultData) => {
   const navigate = useNavigate()
-  const [, setModalState] = useRecoilState<Boolean>(modalToggleState)
-  const [, setShowMatchedItem] = useRecoilState(showItemId)
   const [like] = useState(false)
 
   const categoryColor = {

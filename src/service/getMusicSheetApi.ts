@@ -16,7 +16,6 @@ export const getMusicSheetApi = (params?: Params) =>
     },
   })
 
-export const deleteItemApi = async (id: number) => {
-  const { data } = await axios.delete(`${MUSIC_BASE_URL}/${id}`)
-  return data
-}
+export const addNewItemApi = (formData: any) => axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)
+
+export const deleteItemApi = (id: number) => axios.delete(`${MUSIC_BASE_URL}/${id}`)

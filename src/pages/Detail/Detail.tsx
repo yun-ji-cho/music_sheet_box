@@ -23,7 +23,6 @@ const Detail = ({ dataList }: ItemProps) => {
   const [message, setMessage] = useState('')
   const [moveToBord, setMoveToBord] = useState(false)
   const [alertState, setAlertState] = useState('')
-  const [moveToBoard, setMoveToBoard] = useState(false)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -62,16 +61,18 @@ const Detail = ({ dataList }: ItemProps) => {
     navigate(`../board`)
   }
 
-  const { isLoading, mutate } = useMutation(deleteItemApi, {
+  const { mutate } = useMutation(deleteItemApi, {
+    onSettled: () => {
+      setDeleteModal(false)
+      setResultModal(true)
+    },
     onSuccess: () => {
       setAlertState('check')
-      setResultModal(true)
       setMessage('게시물 삭제 완료')
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
       console.log(error)
-      setResultModal(true)
       setMessage('게시물 삭제 실패')
     },
   })
@@ -82,7 +83,14 @@ const Detail = ({ dataList }: ItemProps) => {
 
   return (
     <div className={styles.detail}>
-      {resultModal && <ConfirmModal message={message} moveToBoard={moveToBord} confirmOnClick={handleMoveToBoard} />}
+      {resultModal && (
+        <ConfirmModal
+          message={message}
+          alertState={alertState}
+          moveToBoard={moveToBord}
+          confirmOnClick={handleMoveToBoard}
+        />
+      )}
       {deleteModal && (
         <ConfirmModal
           message={message}
