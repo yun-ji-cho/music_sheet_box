@@ -78,9 +78,9 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
       refetch()
     },
     onError: (error) => {
-      // eslint-disable-next-line no-console
       setModalOpen(true)
-      // console.log(error)
+      // eslint-disable-next-line no-console
+      console.log(error)
       setAlertMessage('이미지 업로드 실패')
     },
   })
