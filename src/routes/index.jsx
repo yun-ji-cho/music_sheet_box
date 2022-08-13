@@ -33,11 +33,11 @@ const App = () => {
         <GNB />
         <Routes>
           <Route path='' element={<Search data={data} />} />
+          <Route path='detail/:id' element={<Detail dataList={data?.results} />} />
           <Route path='/' element={<Layout />}>
             <Route path='board' element={<Board data={data} isLoading={isLoading} refetch={refetch} />} />
             <Route path='upload' element={<Upload refetch={refetch} />} />
             <Route path='edit/:id' element={<Edit data={data} />} />
-            <Route path='detail/:id' element={<Detail dataList={data?.results} />} />
           </Route>
         </Routes>
       </div>

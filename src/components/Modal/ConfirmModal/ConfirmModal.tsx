@@ -9,12 +9,14 @@ import { cx } from 'styles'
 interface Props {
   message: string
   moveToBoard?: Boolean
-  alertState?: string
-  buttonChild?: ReactNode
+  iconCheck?: Boolean
+  cancelButton?: Boolean
+  cancelButtonClick?: () => void
+  // buttonChild?: ReactNode
   confirmOnClick: Dispatch<SetStateAction<boolean>>
 }
 
-const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOnClick }: Props) => {
+const ConfirmModal = ({ message, moveToBoard, iconCheck, confirmOnClick, cancelButtonClick, cancelButton }: Props) => {
   const navigate = useNavigate()
 
   const handleOnclick = () => {
@@ -23,11 +25,7 @@ const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOn
   }
 
   const handleAlertIcon = () => {
-    return alertState === 'check' ? (
-      <CheckIcon className={cx(styles.icon, styles.check)} />
-    ) : (
-      <WarningIcon className={styles.icon} />
-    )
+    return iconCheck ? <CheckIcon className={cx(styles.icon, styles.check)} /> : <WarningIcon className={styles.icon} />
   }
 
   return (
@@ -41,7 +39,7 @@ const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOn
             </div>
             <div className={styles.buttonWrap}>
               <Button message='확인' onClick={handleOnclick} type='primary' width='widthBasic' />
-              {buttonChild}
+              {cancelButton && <Button message='취소' onClick={cancelButtonClick} type='negative' width='widthBasic' />}
             </div>
           </div>
         </div>

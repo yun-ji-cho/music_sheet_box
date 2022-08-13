@@ -22,7 +22,8 @@ const Detail = ({ dataList }: ItemProps) => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [message, setMessage] = useState('')
   const [moveToBoard, setMoveToBoard] = useState(false)
-  const [alertState, setAlertState] = useState('')
+  const [iconCheck, setIconCheck] = useState(false)
+  const [cancelButton, setCancelButton] = useState(false)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -53,6 +54,7 @@ const Detail = ({ dataList }: ItemProps) => {
   const handleDelete = () => {
     setMessage('삭제하시겠습니까?')
     setDeleteModal(true)
+    setCancelButton(true)
   }
   const handleCloseModal = () => {
     setDeleteModal(false)
@@ -67,7 +69,7 @@ const Detail = ({ dataList }: ItemProps) => {
       setResultModal(true)
     },
     onSuccess: () => {
-      setAlertState('check')
+      setIconCheck(true)
       setMessage('게시물 삭제 완료')
     },
     onError: (error) => {
@@ -86,7 +88,7 @@ const Detail = ({ dataList }: ItemProps) => {
       {resultModal && (
         <ConfirmModal
           message={message}
-          alertState={alertState}
+          iconCheck={iconCheck}
           moveToBoard={moveToBoard}
           confirmOnClick={handleMoveToBoard}
         />
@@ -94,9 +96,10 @@ const Detail = ({ dataList }: ItemProps) => {
       {deleteModal && (
         <ConfirmModal
           message={message}
+          iconCheck={iconCheck}
           moveToBoard={moveToBoard}
-          confirmOnClick={handleDeletePost}
-          buttonChild={<Button message='취소' onClick={handleCloseModal} type='negative' width='widthBasic' />}
+          confirmOnClick={cancelButton ? handleDeletePost : handleMoveToBoard}
+          cancelButtonClick={handleCloseModal}
         />
       )}
       <div className={styles.top}>
@@ -110,6 +113,10 @@ const Detail = ({ dataList }: ItemProps) => {
       </div>
       {filterData && (
         <div className={styles.inner}>
+          <div className={styles.buttonWrap}>
+            <Button message='수정하기' onClick={handleEdit} type='secondary' width='width50' />
+            <Button message='삭제하기' onClick={handleDelete} type='negative' width='width50' />
+          </div>
           <div className={styles.image}>
             <img src={filterData.image} alt={filterData.title} />
           </div>
@@ -118,10 +125,6 @@ const Detail = ({ dataList }: ItemProps) => {
           <span className={styles.code}>{filterData.musicCode}</span>
           <span className={styles.date}>{filterData.created.slice(0, 10)}</span>
           <p className={styles.contents}>{filterData.article}</p>
-          <div className={styles.buttonWrap}>
-            <Button message='수정하기' onClick={handleEdit} type='secondary' width='widthBasic' />
-            <Button message='삭제하기' onClick={handleDelete} type='negative' width='widthBasic' />
-          </div>
         </div>
       )}
     </div>

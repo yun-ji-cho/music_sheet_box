@@ -1,5 +1,6 @@
 import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
 import { useMutation } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 
 import { IFileList, IResultData } from 'types'
 import { addNewItemApi } from 'service/getMusicSheetApi'
@@ -9,7 +10,6 @@ import Button from 'components/Button/Button'
 import DropDown from 'components/DropDown/DropDown'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import UploadImage from './UploadImage/UploadImage'
-import { useNavigate } from 'react-router-dom'
 import Loading from 'components/Loading/Loading'
 
 interface Props {
@@ -33,7 +33,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [previewURL, setPreviewURL] = useState<any>('')
   const [imageVisible, setImageVisible] = useState(Boolean)
-  const [alertState, setAlertState] = useState('')
+  const [iconCheck, setIconCheck] = useState(false)
   const [moveToBoard, setMoveToBoard] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [cancelButton, setCancelButton] = useState(false)
@@ -70,9 +70,10 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     onSettled: () => {
       setModalOpen(true)
       setMoveToBoard(true)
+      setCancelButton(false)
     },
     onSuccess: () => {
-      setAlertState('check')
+      setIconCheck(true)
       setAlertMessage('이미지 업로드 완료')
       refetch()
     },
@@ -180,15 +181,12 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
       </form>
       {modalOpen && (
         <ConfirmModal
-          alertState={alertState}
+          iconCheck={iconCheck}
           message={alertMessage}
           confirmOnClick={cancelButton ? handlePostData : setModalOpen}
           moveToBoard={moveToBoard}
-          buttonChild={
-            cancelButton ? (
-              <Button message='취소' onClick={handleCloseModal} type='negative' width='widthBasic' />
-            ) : null
-          }
+          cancelButton={cancelButton}
+          cancelButtonClick={handleCloseModal}
         />
       )}
     </div>

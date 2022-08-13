@@ -1,13 +1,12 @@
 @use '/src/styles/constants/colors';
 
 .detail {
-  // position: relative;
-  // box-sizing: border-box;
-  // width: 640px;
-  // height: 100%;
-  // padding: 30px;
-  // cursor: auto;
-  // background-color: colors.$WHITE;
+  position: absolute;
+  top: 85px;
+  bottom: 0;
+  width: 100%;
+  padding: 0 30px 25px;
+  background: colors.$BG_WHITE;
 
   .top {
     display: flex;
@@ -89,11 +88,8 @@
   }
 
   .buttonWrap {
-    padding-top: 30px;
+    display: flex;
+    padding-bottom: 30px;
     text-align: right;
-
-    button {
-      margin-left: 10px;
-    }
   }
 }
