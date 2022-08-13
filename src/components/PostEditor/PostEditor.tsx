@@ -2,7 +2,7 @@ import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 
-import { IFileList, IResultData } from 'types'
+import { IResultData } from 'types'
 import { addNewItemApi } from 'service/getMusicSheetApi'
 import styles from './postEditor.module.scss'
 
@@ -22,7 +22,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const navigate = useNavigate()
   const titleInput = useRef<HTMLInputElement>(null)
   const articleInput = useRef<HTMLTextAreaElement>(null)
-  const [image, setImage] = useState<null | IFileList | any>(null)
+  const [image, setImage] = useState<any>(null)
   const [title, setTitle] = useState('')
   const [code, setCode] = useState('선택하세요')
   const [category, setCategory] = useState('선택하세요')
@@ -31,7 +31,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const [categorySelect, setCategorySelect] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
-  const [previewURL, setPreviewURL] = useState<any>('')
+  const [previewURL, setPreviewURL] = useState<string | undefined>('')
   const [imageVisible, setImageVisible] = useState(Boolean)
   const [iconCheck, setIconCheck] = useState(false)
   const [moveToBoard, setMoveToBoard] = useState(false)
@@ -39,12 +39,11 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const [cancelButton, setCancelButton] = useState(false)
 
   useEffect(() => {
-    const titleElement = document.getElementsByTagName('title')[0]
-    titleElement.innerHTML = 'Music box - Upload'
     scrollRef.current?.scrollIntoView()
   }, [])
 
   useEffect(() => {
+    console.log(originData)
     if (!isEdit || !originData) return
     setPreviewURL(originData.image)
     setTitle(originData.title)
@@ -60,9 +59,10 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     const reader = new FileReader()
     reader.readAsDataURL(e.currentTarget.files[0])
     reader.onload = () => {
-      setPreviewURL(reader.result)
+      setPreviewURL(String(reader.result))
       setImageVisible(true)
     }
+    console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
   }
 
@@ -79,6 +79,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
+      setModalOpen(true)
       console.log(error)
       setAlertMessage('이미지 업로드 실패')
     },
@@ -87,7 +88,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!image) {
+    if (!image || !previewURL) {
       setModalOpen(true)
       setAlertMessage('이미지를 등록해주세요')
       return
@@ -128,6 +129,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const handleRemoveImage = () => {
     setImageVisible(false)
     setPreviewURL('')
+    setImage('')
   }
 
   const handleCloseModal = () => {

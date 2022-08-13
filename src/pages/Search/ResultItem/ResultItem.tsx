@@ -1,13 +1,14 @@
 import { MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoil } from 'hooks/state'
+import parse from 'html-react-parser'
 
 import { searchTextState } from 'states/music.atom'
 import { IResultData } from 'types'
-import { BoldText } from '../BoldText'
-import parse from 'html-react-parser'
 
 import styles from './resultItem.module.scss'
+
+import { BoldText } from '../BoldText'
 
 interface IFilter {
   filterArray: IResultData[]
@@ -51,10 +52,13 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
             return (
               <li className={styles.item} key={item.id}>
                 <button type='button' onClick={handleMoveDetail} value={item.id}>
+                  <div className={styles.imageWrap}>
+                    <img className={styles.image} src={item.image} alt={item.title} />
+                  </div>
                   <div className={styles.text}>{handleBoldText(item)}</div>
-                  <span className={styles.itemCode}>
+                  <div className={styles.itemDetail}>
                     {item.category} / {item.musicCode}
-                  </span>
+                  </div>
                 </button>
               </li>
             )

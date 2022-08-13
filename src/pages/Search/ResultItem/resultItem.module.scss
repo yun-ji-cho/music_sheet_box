@@ -1,7 +1,9 @@
 @use '/src/styles/constants/colors';
+@use '/src/styles/mixins/typography';
 
 .resultItem {
   .titleArea {
+    overflow-x: hidden;
     color: colors.$WHITE;
   }
 
@@ -19,32 +21,64 @@
     color: colors.$TASKS_TITLE;
   }
 
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+  }
+
   .item {
-    padding: 15px 10px;
+    width: 50%;
+    padding-right: 15px;
     margin-bottom: 8px;
-    background: colors.$SEARCH_ITEM_BG;
     border-radius: 8px;
 
     button {
       all: initial;
-      display: flex;
-      justify-content: space-between;
       width: 100%;
       color: colors.$GRAY4;
     }
 
-    &Desc {
-      padding-top: 10px;
-      font-size: 13px;
+    .imageWrap {
+      position: relative;
+      padding-top: 100%;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 8px;
+
+      .image {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+      }
     }
 
-    &Code {
+    .text {
+      margin-top: 10px;
+    }
+
+    &Title {
+      font-size: 16px;
+      @include typography.lineClamp(1, 26);
+    }
+
+    &Desc {
+      font-size: 14px;
+      @include typography.lineClamp(2, 18);
+    }
+
+    &Detail {
       padding-right: 5px;
+      margin-top: 20px;
+      font-size: 12px;
+      color: colors.$BEIGE;
     }
   }
 
   mark {
+    padding: 0 5px;
     color: colors.$WHITE;
-    background-color: colors.$MARK_TEXT;
+    background-color: colors.$HIGHLIGHT_ORANGE;
   }
 }

@@ -7,7 +7,7 @@ import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svg/index'
 
 interface Props {
   handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => void
-  previewURL: string
+  previewURL: string | undefined
   imageVisible: boolean
   handleRemoveImage: () => void
 }

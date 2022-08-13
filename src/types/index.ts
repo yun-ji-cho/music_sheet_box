@@ -13,16 +13,3 @@ export interface IMusicSheetRes {
   previous: null | number
   results: IResultData[]
 }
-
-export interface IFileList {
-  FIleList: {
-    File: {
-      lastModified: number
-      lastModifiedDate: Date
-      name: string
-      size: number
-      type: string
-      webkitRelativePath: string
-    }
-  }
-}
