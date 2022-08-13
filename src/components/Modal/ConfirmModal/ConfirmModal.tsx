@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactNode, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import Portal from '../Portal'
 import Button from 'components/Button/Button'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +12,6 @@ interface Props {
   iconCheck?: Boolean
   cancelButton?: Boolean
   cancelButtonClick?: () => void
-  // buttonChild?: ReactNode
   confirmOnClick: Dispatch<SetStateAction<boolean>>
 }
 
