@@ -111,7 +111,7 @@ const Search = ({ data }: Props) => {
         <SearchResult totalLength={totalLength} filterTitle={filterTitle} filterContent={filterContent} />
       )}
 
-      {confirmModalOpen && <ConfirmModal message={alertMessage} handleCloseModal={setConfirmModalOpen} />}
+      {confirmModalOpen && <ConfirmModal message={alertMessage} confirmOnClick={setConfirmModalOpen} />}
     </div>
   )
 }

@@ -3,23 +3,20 @@ import { memo } from 'react'
 import styles from './button.module.scss'
 
 interface Props {
-  type?: string
   message: string
-  fullWidth?: Boolean
+  submit?: true
+  width: 'widthBasic' | 'width25' | 'width50' | 'widthFull'
+  type: 'primary' | 'secondary' | 'negative'
   onClick?: () => void
-  func: 'primary' | 'secondary' | 'negative'
 }
 
-const Button = memo(({ message, type, onClick, fullWidth, func }: Props) => {
-  if (type === 'submit')
-    return (
-      <button type='submit' className={cx(styles.button, styles[func], { [styles.full]: fullWidth })}>
-        {message}
-      </button>
-    )
-
+const Button = memo(({ message, type, onClick, width, submit }: Props) => {
   return (
-    <button type='button' className={cx(styles.button, styles[func], { [styles.full]: fullWidth })} onClick={onClick}>
+    <button
+      type={submit ? 'submit' : 'button'}
+      className={cx(styles.button, styles[type], styles[width])}
+      onClick={onClick}
+    >
       {message}
     </button>
   )

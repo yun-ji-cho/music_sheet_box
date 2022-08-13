@@ -2,14 +2,15 @@ import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
 import { useMutation } from 'react-query'
 
 import { IFileList, IResultData } from 'types'
+import { addNewItemApi } from 'service/getMusicSheetApi'
 import styles from './postEditor.module.scss'
-import loadingIcon from 'assets/images/loading.gif'
 
 import Button from 'components/Button/Button'
 import DropDown from 'components/DropDown/DropDown'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import UploadImage from './UploadImage/UploadImage'
-import { addNewItemApi } from 'service/getMusicSheetApi'
+import { useNavigate } from 'react-router-dom'
+import Loading from 'components/Loading/Loading'
 
 interface Props {
   isEdit?: Boolean
@@ -18,23 +19,24 @@ interface Props {
 }
 
 const PostEditor = ({ isEdit, originData, refetch }: Props) => {
+  const navigate = useNavigate()
   const titleInput = useRef<HTMLInputElement>(null)
   const articleInput = useRef<HTMLTextAreaElement>(null)
   const [image, setImage] = useState<null | IFileList | any>(null)
   const [title, setTitle] = useState('')
+  const [code, setCode] = useState('선택하세요')
+  const [category, setCategory] = useState('선택하세요')
   const [note, setNote] = useState('')
   const [codeSelect, setCodeSelect] = useState(false)
   const [categorySelect, setCategorySelect] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
-  const [resultModalOpen, setResultModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const [previewURL, setPreviewURL] = useState<any>('')
   const [imageVisible, setImageVisible] = useState(Boolean)
-  const [code, setCode] = useState('선택하세요')
-  const [category, setCategory] = useState('선택하세요')
   const [alertState, setAlertState] = useState('')
   const [moveToBoard, setMoveToBoard] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const [cancelButton, setCancelButton] = useState(false)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -66,7 +68,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
 
   const { isLoading, mutate } = useMutation(addNewItemApi, {
     onSettled: () => {
-      setConfirmModalOpen(true)
+      setModalOpen(true)
       setMoveToBoard(true)
     },
     onSuccess: () => {
@@ -85,7 +87,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     e.preventDefault()
 
     if (!image) {
-      setConfirmModalOpen(true)
+      setModalOpen(true)
       setAlertMessage('이미지를 등록해주세요')
       return
     }
@@ -108,18 +110,17 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     }
 
     isEdit ? setAlertMessage('게시글을 수정하시겠습니까?') : setAlertMessage('새로운 게시글을 등록하시겠습니까?')
-    setResultModalOpen(true)
+    setModalOpen(true)
+    setCancelButton(true)
   }
   const handlePostData = () => {
-    setResultModalOpen(false)
-
+    setModalOpen(false)
     const formData = new FormData()
     formData.append('title', title)
     formData.append('article', note)
     formData.append('musicCode', code)
     formData.append('category', category)
     formData.append('image', image)
-
     mutate(formData)
   }
 
@@ -129,12 +130,13 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   }
 
   const handleCloseModal = () => {
-    setResultModalOpen(false)
+    setModalOpen(false)
   }
 
   return (
     <div className={styles.postEditor} ref={scrollRef}>
-      <h3>Upload Contents</h3>
+      {isLoading && <Loading />}
+      <h3>{isEdit ? 'Modify Post ' : 'Upload Post'}</h3>
       <form action='' onSubmit={handleSubmit} id='submitForm'>
         <ul className={styles.formList}>
           <li>
@@ -172,29 +174,22 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
           </li>
         </ul>
         <div className={styles.buttonWrap}>
-          <Button message='SAVE' type='submit' func='primary' />
+          {isEdit && <Button message='Cancel' type='negative' width='width50' onClick={() => navigate(-1)} />}
+          <Button submit message='Save' type='primary' width={isEdit ? 'width50' : 'widthFull'} />
         </div>
       </form>
-      {resultModalOpen && (
+      {modalOpen && (
         <ConfirmModal
           alertState={alertState}
           message={alertMessage}
-          confirmOnClick={handlePostData}
-          buttonChild={<Button message='취소' type='button' onClick={handleCloseModal} func='negative' />}
-        />
-      )}
-      {confirmModalOpen && (
-        <ConfirmModal
-          alertState={alertState}
-          message={alertMessage}
-          handleCloseModal={setConfirmModalOpen}
+          confirmOnClick={cancelButton ? handlePostData : setModalOpen}
           moveToBoard={moveToBoard}
+          buttonChild={
+            cancelButton ? (
+              <Button message='취소' onClick={handleCloseModal} type='negative' width='widthBasic' />
+            ) : null
+          }
         />
-      )}
-      {isLoading && (
-        <div className={styles.loading}>
-          <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
-        </div>
       )}
     </div>
   )

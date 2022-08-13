@@ -67,7 +67,7 @@ src
  ┃ ┃ ┣ Detail
  ┃ ┃ ┃ ┣ Detail.module.scss
  ┃ ┃ ┃ ┗ Detail.tsx
- ┃ ┃ ┗ Potal.tsx
+ ┃ ┃ ┗ Portal.tsx
  ┃ ┗ gnb.module.scss
  ┣ data
  ┃ ┗ data.ts

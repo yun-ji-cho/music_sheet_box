@@ -39,3 +39,16 @@
   height: 100px;
   transform: translate(-50%, -50%);
 }
+
+.noContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200px;
+
+  .text {
+    padding-top: 30px;
+    font-size: 18px;
+    color: colors.$GRAY6;
+  }
+}

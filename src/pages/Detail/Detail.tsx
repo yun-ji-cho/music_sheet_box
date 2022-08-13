@@ -21,7 +21,7 @@ const Detail = ({ dataList }: ItemProps) => {
   const [resultModal, setResultModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
   const [message, setMessage] = useState('')
-  const [moveToBord, setMoveToBord] = useState(false)
+  const [moveToBoard, setMoveToBoard] = useState(false)
   const [alertState, setAlertState] = useState('')
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Detail = ({ dataList }: ItemProps) => {
       } else {
         setMessage('없는 게시물 입니다.')
         setResultModal(true)
-        setMoveToBord(true)
+        setMoveToBoard(true)
       }
     }
   }, [dataList, id])
@@ -87,16 +87,16 @@ const Detail = ({ dataList }: ItemProps) => {
         <ConfirmModal
           message={message}
           alertState={alertState}
-          moveToBoard={moveToBord}
+          moveToBoard={moveToBoard}
           confirmOnClick={handleMoveToBoard}
         />
       )}
       {deleteModal && (
         <ConfirmModal
           message={message}
-          moveToBoard={moveToBord}
+          moveToBoard={moveToBoard}
           confirmOnClick={handleDeletePost}
-          buttonChild={<Button message='취소' type='button' onClick={handleCloseModal} func='negative' />}
+          buttonChild={<Button message='취소' onClick={handleCloseModal} type='negative' width='widthBasic' />}
         />
       )}
       <div className={styles.top}>
@@ -119,8 +119,8 @@ const Detail = ({ dataList }: ItemProps) => {
           <span className={styles.date}>{filterData.created.slice(0, 10)}</span>
           <p className={styles.contents}>{filterData.article}</p>
           <div className={styles.buttonWrap}>
-            <Button message='수정하기' onClick={handleEdit} func='secondary' />
-            <Button message='삭제하기' onClick={handleDelete} func='negative' />
+            <Button message='수정하기' onClick={handleEdit} type='secondary' width='widthBasic' />
+            <Button message='삭제하기' onClick={handleDelete} type='negative' width='widthBasic' />
           </div>
         </div>
       )}

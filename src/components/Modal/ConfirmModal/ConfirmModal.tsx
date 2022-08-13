@@ -1,5 +1,5 @@
-import React, { ReactNode, SetStateAction } from 'react'
-import Potal from '../Potal'
+import React, { Dispatch, ReactNode, SetStateAction } from 'react'
+import Portal from '../Portal'
 import Button from 'components/Button/Button'
 import { useNavigate } from 'react-router-dom'
 import styles from './confirmModal.module.scss'
@@ -11,16 +11,14 @@ interface Props {
   moveToBoard?: Boolean
   alertState?: string
   buttonChild?: ReactNode
-  confirmOnClick?: () => void
-  handleCloseModal?: React.Dispatch<SetStateAction<boolean>>
+  confirmOnClick: Dispatch<SetStateAction<boolean>>
 }
 
-const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOnClick, handleCloseModal }: Props) => {
+const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOnClick }: Props) => {
   const navigate = useNavigate()
 
   const handleOnclick = () => {
-    if (confirmOnClick) confirmOnClick()
-    if (handleCloseModal) handleCloseModal(false)
+    confirmOnClick(false)
     if (moveToBoard) navigate(`../board`)
   }
 
@@ -33,7 +31,7 @@ const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOn
   }
 
   return (
-    <Potal>
+    <Portal>
       <div className={styles.modal}>
         <div className={styles.modalLayOut}>
           <div className={styles.modalBox}>
@@ -42,13 +40,13 @@ const ConfirmModal = ({ message, moveToBoard, alertState, buttonChild, confirmOn
               <p className={styles.contents}>{message}</p>
             </div>
             <div className={styles.buttonWrap}>
-              <Button message='확인' type='button' onClick={handleOnclick} func='primary' />
+              <Button message='확인' onClick={handleOnclick} type='primary' width='widthBasic' />
               {buttonChild}
             </div>
           </div>
         </div>
       </div>
-    </Potal>
+    </Portal>
   )
 }
 

@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 
-import loadingIcon from 'assets/images/loading.gif'
 import styles from './board.module.scss'
+import { IMusicSheetRes } from 'types'
 
 import Item from 'components/Item/Item'
 import SortDropDown from './SortDropDown/SortDropDown'
-import { IMusicSheetRes } from 'types'
+import Loading from 'components/Loading/Loading'
+import { WarningIcon } from 'assets/svg'
 
 const sortOptionList = [
   { value: 'latest', name: '최신순' },
@@ -48,21 +49,33 @@ const Board = ({ data, isLoading, refetch }: Props) => {
     return sortedList
   }
 
-  if (isLoading) return <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
+  if (isLoading) return <Loading />
 
-  if (!data) return <div>등록된 악보가 없습니다.</div>
+  const handleListView = () => {
+    if (!data || data.count < 1)
+      <div className={styles.noContent}>
+        <WarningIcon />
+        <div className={styles.text}>등록된 악보가 없습니다.</div>
+      </div>
+
+    return (
+      <>
+        <SortDropDown value={sortType} onChange={setSortType} optionList={sortOptionList} />
+        <ul className={styles.tableItemList}>
+          {getProcessedItemList()?.map((item) => (
+            <Item key={item.id.toString()} {...item} />
+          ))}
+        </ul>
+      </>
+    )
+  }
 
   return (
     <div className={styles.board} ref={scrollRef}>
       <div className={styles.itemCount}>
-        <strong>{data.count} </strong>개의 악보가 있습니다.
+        <strong>{data ? data.count : 0} </strong>개의 악보가 있습니다.
       </div>
-      <SortDropDown value={sortType} onChange={setSortType} optionList={sortOptionList} />
-      <ul className={styles.tableItemList}>
-        {getProcessedItemList()?.map((item) => (
-          <Item key={item.id.toString()} {...item} />
-        ))}
-      </ul>
+      {handleListView()}
     </div>
   )
 }

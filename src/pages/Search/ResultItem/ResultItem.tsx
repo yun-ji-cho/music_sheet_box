@@ -35,7 +35,7 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
     )
   }
 
-  const handleOpenPopup = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleMoveDetail = (e: MouseEvent<HTMLButtonElement>) => {
     const id = Number(e.currentTarget.value)
     navigate(`/detail/${id}`)
   }
@@ -50,7 +50,7 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
           {filterArray.map((item) => {
             return (
               <li className={styles.item} key={item.id}>
-                <button type='button' onClick={handleOpenPopup} value={item.id}>
+                <button type='button' onClick={handleMoveDetail} value={item.id}>
                   <div className={styles.text}>{handleBoldText(item)}</div>
                   <span className={styles.itemCode}>
                     {item.category} / {item.musicCode}

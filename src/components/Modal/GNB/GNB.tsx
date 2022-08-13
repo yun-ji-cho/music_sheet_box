@@ -1,10 +1,9 @@
 import { NavLink } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 
-// import { SearchIcon, ListIcon, UploadIcon } from 'assets/svg/index'
 import { navToggleState } from 'states/music.atom'
 
-import Potal from '../Potal'
+import Portal from '../Portal'
 
 import cx from 'classnames'
 import styles from './gnb.module.scss'
@@ -15,7 +14,7 @@ const GNB = () => {
     setNavToggle(false)
   }
   return (
-    <Potal>
+    <Portal>
       <div className={cx(styles.gnb, { [styles.isOpen]: navToggle })}>
         <div className={styles.container}>
           <nav className={styles.menu}>
@@ -39,7 +38,7 @@ const GNB = () => {
           </nav>
         </div>
       </div>
-    </Potal>
+    </Portal>
   )
 }
 

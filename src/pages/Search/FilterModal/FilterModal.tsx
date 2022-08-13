@@ -7,7 +7,7 @@ import { filterModalState, searchTextFilterState, searchMusicCodeState, searchCa
 
 import styles from './filterModal.module.scss'
 
-import Potal from '../../../components/Modal/Potal'
+import Portal from '../../../components/Modal/Portal'
 import DropDown from 'components/DropDown/DropDown'
 import TextFilter from '../TextFilter/TextFilter'
 import Button from 'components/Button/Button'
@@ -44,7 +44,7 @@ const FilterModal = memo(() => {
   }
 
   return (
-    <Potal>
+    <Portal>
       <div className={cx(styles.modal, { [styles.show]: filterModal })}>
         <div className={styles.modalLayOut}>
           <div className={styles.modalBox}>
@@ -66,12 +66,12 @@ const FilterModal = memo(() => {
               </li>
             </ul>
             <div className={styles.buttonWrap}>
-              <Button message='Apply Filter' fullWidth onClick={handleApply} func='primary' />
+              <Button message='Apply Filter' width='widthFull' onClick={handleApply} type='primary' submit />
             </div>
           </div>
         </div>
       </div>
-    </Potal>
+    </Portal>
   )
 })
 
