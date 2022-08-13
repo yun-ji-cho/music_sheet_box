@@ -43,7 +43,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   }, [])
 
   useEffect(() => {
-    console.log(originData)
+    // console.log(originData)
     if (!isEdit || !originData) return
     setPreviewURL(originData.image)
     setTitle(originData.title)
@@ -62,7 +62,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
       setPreviewURL(String(reader.result))
       setImageVisible(true)
     }
-    console.log(e.currentTarget.files?.[0])
+    // console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
   }
 
@@ -80,7 +80,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     onError: (error) => {
       // eslint-disable-next-line no-console
       setModalOpen(true)
-      console.log(error)
+      // console.log(error)
       setAlertMessage('이미지 업로드 실패')
     },
   })
