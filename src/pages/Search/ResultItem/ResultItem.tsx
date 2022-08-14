@@ -7,6 +7,7 @@ import { searchTextState } from 'states/music.atom'
 import { IResultData } from 'types'
 
 import styles from './resultItem.module.scss'
+import defaultImage from 'assets/images/default_img.png'
 
 import { BoldText } from '../BoldText'
 
@@ -41,6 +42,10 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
     navigate(`/detail/${id}`)
   }
 
+  const handleImgError = (e: any) => {
+    e.target.src = defaultImage
+  }
+
   return (
     <div className={styles.resultItem}>
       <div className={styles.titleArea}>
@@ -53,7 +58,7 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
               <li className={styles.item} key={item.id}>
                 <button type='button' onClick={handleMoveDetail} value={item.id}>
                   <div className={styles.imageWrap}>
-                    <img className={styles.image} src={item.image} alt={item.title} />
+                    <img className={styles.image} src={item.image} alt={item.title} onError={handleImgError} />
                   </div>
                   <div className={styles.text}>{handleBoldText(item)}</div>
                   <div className={styles.itemDetail}>

@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import { isAxiosError } from 'utils/axios'
+import loadingBox from 'assets/images/bouncing_box.gif'
 import styles from './Routes.module.scss'
 
 import Search from '../pages/Search/Search'
@@ -26,6 +27,13 @@ const App = () => {
       }
     },
   })
+  if (isLoading)
+    return (
+      <div className={styles.loadingContainer}>
+        <img src={loadingBox} className={styles.loadingIcon} alt='app loader' />
+      </div>
+    )
+
   return (
     <div className={styles.app}>
       <div className={styles.container}>

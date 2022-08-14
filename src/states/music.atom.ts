@@ -1,17 +1,7 @@
 import { atom } from 'recoil'
 
-export const modalToggleState = atom<Boolean>({
-  key: 'modalToggleState',
-  default: false,
-})
-
 export const navToggleState = atom<Boolean>({
   key: 'navToggleState',
-  default: false,
-})
-
-export const confirmModalState = atom<Boolean>({
-  key: 'confirmModalState',
   default: false,
 })
 
@@ -20,10 +10,6 @@ export const filterModalState = atom<Boolean>({
   default: false,
 })
 
-export const showItemId = atom({
-  key: 'showItemId',
-  default: '',
-})
 export const searchItemVisible = atom({
   key: 'searchItemVisible',
   default: false,
@@ -53,13 +39,4 @@ export const searchMusicCodeState = atom({
 export const searchCategoryState = atom({
   key: 'searchCategoryState',
   default: 'ALL',
-})
-
-export const uploadMusicCodeState = atom({
-  key: 'uploadMusicCodeState',
-  default: '',
-})
-export const uploadCategoryState = atom({
-  key: 'uploadCategoryState',
-  default: '',
 })
