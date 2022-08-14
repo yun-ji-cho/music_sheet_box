@@ -42,8 +42,8 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
     navigate(`/detail/${id}`)
   }
 
-  const handleImgError = (e: any) => {
-    e.target.src = defaultImage
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = defaultImage
   }
 
   return (

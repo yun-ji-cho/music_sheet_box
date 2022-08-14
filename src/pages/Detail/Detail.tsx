@@ -6,6 +6,7 @@ import styles from './detail.module.scss'
 import { IResultData } from 'types/index'
 import { PrevIcon, LikeIcon } from 'assets/svg'
 import { deleteItemApi } from 'service/getMusicSheetApi'
+import defaultImage from 'assets/images/default_img.png'
 
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
@@ -83,6 +84,10 @@ const Detail = ({ dataList }: ItemProps) => {
     mutate(Number(id))
   }
 
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = defaultImage
+  }
+
   return (
     <div className={styles.detail}>
       {resultModal && (
@@ -118,7 +123,7 @@ const Detail = ({ dataList }: ItemProps) => {
             <Button message='삭제하기' onClick={handleDelete} type='negative' width='width50' />
           </div>
           <div className={styles.image}>
-            <img src={filterData.image} alt={filterData.title} />
+            <img src={filterData.image} alt={filterData.title} onError={handleImgError} />
           </div>
           <span className={styles.category}>{filterData.category}</span>
           <p className={styles.title}>{filterData.title}</p>
