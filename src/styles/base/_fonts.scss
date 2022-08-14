@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 @import url('//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css');
 
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script");
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 
 body,
 button,
@@ -23,5 +23,5 @@ input[type='number'] {
 }
 
 header {
-  font-family: 'Nanum Pen Script', Inter, Arial, PingFangSC-Regular, 'Microsoft YaHei', sans-serif;
+  font-family: 'Nanum Pen Script', sans-serif;
 }
