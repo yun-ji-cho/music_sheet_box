@@ -34,6 +34,8 @@ const App = () => {
       </div>
     )
 
+  console.log(data)
+
   return (
     <div className={styles.app}>
       <div className={styles.container}>

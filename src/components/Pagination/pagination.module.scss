@@ -1,0 +1,51 @@
+@use '/src/styles/constants/colors';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .current {
+    width: 50px;
+    height: 40px;
+    margin: 0 10px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid colors.$BLUE;
+    border-radius: 8px;
+  }
+
+  .total {
+    display: block;
+    margin-right: 10px;
+  }
+
+  button {
+    padding: 8px;
+    margin: 0;
+    font-size: 1rem;
+    color: colors.$WHITE;
+    background: black;
+    border: none;
+    border-radius: 8px;
+
+    &:hover {
+      cursor: pointer;
+      background: tomato;
+      transform: translateY(-2px);
+    }
+
+    &[disabled] {
+      cursor: revert;
+      background: grey;
+      transform: revert;
+    }
+
+    &[aria-current] {
+      font-weight: bold;
+      cursor: revert;
+      background: deeppink;
+      transform: revert;
+    }
+  }
+}
