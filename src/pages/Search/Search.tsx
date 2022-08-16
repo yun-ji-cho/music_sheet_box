@@ -11,11 +11,11 @@ import {
 import { IResultData, IMusicSheetRes } from 'types'
 
 import styles from './search.module.scss'
-import loadingIcon from 'assets/images/loading.gif'
 
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
+import Loading from 'components/Loading/Loading'
 
 interface Props {
   data?: IMusicSheetRes
@@ -34,6 +34,10 @@ const Search = ({ data }: Props) => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const code = useRecoilValue(searchMusicCodeState)
   const category = useRecoilValue(searchCategoryState)
+
+  useEffect(() => {
+    console.log('search')
+  })
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -100,13 +104,9 @@ const Search = ({ data }: Props) => {
 
   return (
     <div className={styles.search}>
+      {search && <Loading />}
       <h2>Find Your Music Sheet</h2>
       <SearchForm handleSubmit={handleSubmit} />
-      {search && (
-        <div className={styles.imageWrap}>
-          <img src={loadingIcon} className={styles.loadingIcon} alt='loading icon' />
-        </div>
-      )}
       {itemVisible && (
         <SearchResult totalLength={totalLength} filterTitle={filterTitle} filterContent={filterContent} />
       )}

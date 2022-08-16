@@ -7,7 +7,7 @@ import { SearchIcon, CloseIcon } from 'assets/svg/index'
 import styles from './searchBox.module.scss'
 import { searchItemVisible, searchTextState } from 'states/music.atom'
 
-const SearchBox = memo(() => {
+const SearchBox = () => {
   const [, setItemVisible] = useRecoilState(searchItemVisible)
   const [searchInput, setSearchInput, resetSearchText] = useRecoil(searchTextState)
   const inputEl = useRef<HTMLInputElement>(null)
@@ -43,8 +43,6 @@ const SearchBox = memo(() => {
       </button>
     </div>
   )
-})
-
-SearchBox.displayName = 'SearchBox'
+}
 
 export default SearchBox

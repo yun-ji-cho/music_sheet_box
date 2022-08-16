@@ -3,6 +3,7 @@ import { IResultData } from 'types'
 import styles from './searchResult.module.scss'
 
 import ResultItem from '../ResultItem/ResultItem'
+import { memo } from 'react'
 
 interface ISearchResult {
   totalLength: number
@@ -10,7 +11,7 @@ interface ISearchResult {
   filterContent: IResultData[] | undefined
 }
 
-const SearchResult = ({ totalLength, filterTitle, filterContent }: ISearchResult) => {
+const SearchResult = memo(({ totalLength = 0, filterTitle, filterContent }: ISearchResult) => {
   return (
     <div className={styles.searchResult}>
       <p className={styles.length}>검색결과 총 {totalLength}건을 찾았습니다.</p>
@@ -20,6 +21,8 @@ const SearchResult = ({ totalLength, filterTitle, filterContent }: ISearchResult
       </div>
     </div>
   )
-}
+})
+
+SearchResult.displayName = 'SearchResult'
 
 export default SearchResult

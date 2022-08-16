@@ -8,11 +8,11 @@ import Tag from '../Tag/Tag'
 import { useRecoil } from 'hooks/state'
 import { filterModalState, searchCategoryState, searchMusicCodeState, searchTextFilterState } from 'states/music.atom'
 
-interface IProp {
+interface Prop {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
 }
 
-const SearchForm = ({ handleSubmit }: IProp) => {
+const SearchForm = ({ handleSubmit }: Prop) => {
   const [, setFilterModal] = useRecoil(filterModalState)
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
