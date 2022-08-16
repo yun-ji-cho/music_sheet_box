@@ -1,4 +1,4 @@
-import { FormEvent } from 'react'
+import { FormEvent, useEffect } from 'react'
 import styles from './searchForm.module.scss'
 
 import SearchBox from '../SearchBox/SearchBox'
@@ -17,9 +17,15 @@ const SearchForm = ({ handleSubmit }: Prop) => {
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
   }
-  const [textFilter] = useRecoil(searchTextFilterState)
-  const [code] = useRecoil(searchMusicCodeState)
-  const [category] = useRecoil(searchCategoryState)
+  const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
+  const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
+  const [category, , resetCategory] = useRecoil(searchCategoryState)
+
+  useEffect(() => {
+    resetTextFilter()
+    resetSetCode()
+    resetCategory()
+  }, [resetCategory, resetSetCode, resetTextFilter])
 
   const tagArr = [
     { title: 'textFilter', value: textFilter },

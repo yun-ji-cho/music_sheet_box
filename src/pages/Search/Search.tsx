@@ -36,10 +36,6 @@ const Search = ({ data }: Props) => {
   const category = useRecoilValue(searchCategoryState)
 
   useEffect(() => {
-    console.log('search')
-  })
-
-  useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Search'
   }, [])

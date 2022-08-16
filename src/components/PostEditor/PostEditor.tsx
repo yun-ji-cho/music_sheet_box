@@ -140,7 +140,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     <div className={styles.postEditor} ref={scrollRef}>
       {isLoading && <Loading />}
       <h3>{isEdit ? 'Modify Post ' : 'Upload Post'}</h3>
-      <form action='' onSubmit={handleSubmit} id='submitForm'>
+      <form action='' onSubmit={handleSubmit} id='submitForm' encType='multipart/form-data'>
         <ul className={styles.formList}>
           <li>
             <p className={styles.itemTitle}>Image</p>

@@ -10,7 +10,7 @@
   + .resultItem {
     .titleArea {
       padding-top: 20px;
-      margin-top: 20px;
+      margin-top: 10px;
       border-top: 1px solid colors.$GRAYA;
     }
   }
@@ -24,13 +24,13 @@
   .list {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
+    margin-right: -40px;
   }
 
   .item {
     width: 50%;
-    padding-right: 15px;
-    margin-bottom: 8px;
+    padding-right: 40px;
+    margin-bottom: 40px;
     border-radius: 8px;
 
     button {
@@ -43,7 +43,7 @@
       position: relative;
       padding-top: 100%;
       overflow: hidden;
-      background: #fff;
+      background: colors.$WHITE;
       border-radius: 8px;
 
       .image {
@@ -65,19 +65,19 @@
 
     &Desc {
       font-size: 14px;
-      @include typography.lineClamp(2, 18);
+      @include typography.lineClamp(1, 20);
     }
 
     &Detail {
       padding-right: 5px;
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 12px;
       color: colors.$BEIGE;
     }
   }
 
   mark {
-    padding: 0 5px;
+    padding: 0 3px;
     color: colors.$WHITE;
     background-color: colors.$HIGHLIGHT_ORANGE;
   }

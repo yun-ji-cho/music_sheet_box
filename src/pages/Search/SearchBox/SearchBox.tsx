@@ -11,6 +11,11 @@ const SearchBox = () => {
   const [, setItemVisible] = useRecoilState(searchItemVisible)
   const [searchInput, setSearchInput, resetSearchText] = useRecoil(searchTextState)
   const inputEl = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    resetSearchText()
+  }, [resetSearchText])
+
   const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.currentTarget.value)
   }

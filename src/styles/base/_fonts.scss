@@ -12,6 +12,10 @@ select {
   font-feature-settings: 'tnum';
 }
 
+header {
+  font-family: 'Nanum Pen Script', sans-serif;
+}
+
 input[type='number'] {
   font-feature-settings: 'tnum';
 
@@ -20,8 +24,4 @@ input[type='number'] {
     margin: 0;
     -webkit-appearance: none;
   }
-}
-
-header {
-  font-family: 'Nanum Pen Script', sans-serif;
 }
