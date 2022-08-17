@@ -8,7 +8,7 @@ import {
   searchCategoryState,
   searchItemVisible,
 } from 'states/music.atom'
-import { IResultData, IMusicSheetRes } from 'types'
+import { IResultData } from 'types'
 
 import styles from './search.module.scss'
 
@@ -18,13 +18,13 @@ import SearchForm from './SearchForm/SearchForm'
 import Loading from 'components/Loading/Loading'
 
 interface Props {
-  data?: IMusicSheetRes
+  data: IResultData[]
 }
 
 const Search = ({ data }: Props) => {
   const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
-  const [filterTitle, setFilterTitle] = useState<IResultData[] | undefined>([])
-  const [filterContent, setFilterContent] = useState<IResultData[] | undefined>([])
+  const [filterTitle, setFilterTitle] = useState<IResultData[]>([])
+  const [filterContent, setFilterContent] = useState<IResultData[]>([])
   const [textFilter] = useRecoil(searchTextFilterState)
   const [totalLength, setTotalLength] = useState(0)
   const [search, setSearch] = useState(false)
@@ -52,32 +52,29 @@ const Search = ({ data }: Props) => {
 
   const filterData = () => {
     if (!data) return
-    const getData = data.results
-
-    let filteredData: IResultData[] = []
-
-    filteredData = getData
+    let filteredData: IResultData[]
+    filteredData = data
 
     if (code !== 'ALL') {
-      filteredData = filteredData.filter((item) => item.musicCode === code)
+      filteredData = filteredData.filter((item) => {
+        return String(item.musicCode) === code
+      })
     }
+
     if (category !== 'ALL') {
-      filteredData = filteredData.filter((item) => item.category === category)
+      filteredData = filteredData.filter((item) => String(item.category) === category)
     }
 
-    let filteredTitle: SetStateAction<IResultData[] | undefined>
-    let filteredContent: SetStateAction<IResultData[] | undefined>
-
-    filteredTitle = filteredData.filter((item) => item.title.includes(searchText))
-    filteredContent = filteredData.filter((item) => item.article.includes(searchText))
-
+    let filteredTitle: IResultData[]
+    let filteredContent: IResultData[]
+    filteredTitle = filteredData.filter((item) => String(item.title).includes(searchText))
+    filteredContent = filteredData.filter((item) => String(item.article).includes(searchText))
     if (textFilter === 'Title') {
       filteredContent = []
     }
     if (textFilter === 'Content') {
       filteredTitle = []
     }
-
     setFilterTitle(filteredTitle)
     setFilterContent(filteredContent)
   }

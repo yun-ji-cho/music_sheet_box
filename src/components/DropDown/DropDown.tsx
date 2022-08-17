@@ -1,4 +1,4 @@
-import { memo, FormEvent, useState, useRef, useEffect, MouseEvent } from 'react'
+import { memo, FormEvent, useState, useRef, useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import cx from 'classnames'
 
