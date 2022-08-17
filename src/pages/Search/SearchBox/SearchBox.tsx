@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useEffect, useRef } from 'react'
+import { ChangeEvent, useEffect, useRef } from 'react'
 import { useRecoil, useRecoilState } from 'hooks/state'
 import cx from 'classnames'
 

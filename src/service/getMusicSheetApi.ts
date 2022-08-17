@@ -4,9 +4,8 @@ import { IMusicSheetRes } from 'types/index'
 const MUSIC_BASE_URL = 'https://pcjmusic.herokuapp.com/community'
 
 interface Params {
-  filterType: string
-  music_code: string
-  search: string
+  limit: number
+  offset: number
 }
 
 export const getMusicSheetApi = (params?: Params) =>

@@ -1,4 +1,5 @@
 import styles from './pagination.module.scss'
+import { ArrowPrev, ArrowNext } from 'assets/svg/index'
 
 interface Props {
   total: number
@@ -12,12 +13,13 @@ const Pagination = ({ total, page, setPage }: Props) => {
   return (
     <div className={styles.pagination}>
       <button type='button' onClick={() => setPage(page - 1)} disabled={page === 1}>
-        &lt;
+        <ArrowPrev />
       </button>
       <input className={styles.current} type='tel' value={page} />
-      <span className={styles.total}> / {numPages}</span>
+      <span> / </span>
+      <span className={styles.total}>{numPages}</span>
       <button type='button' onClick={() => setPage(page + 1)} disabled={page === numPages}>
-        &gt;
+        <ArrowNext />
       </button>
     </div>
   )

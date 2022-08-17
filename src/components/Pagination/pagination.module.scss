@@ -18,34 +18,36 @@
   .total {
     display: block;
     margin-right: 10px;
+    margin-left: 10px;
   }
 
   button {
-    padding: 8px;
     margin: 0;
-    font-size: 1rem;
+    font-size: 16px;
     color: colors.$WHITE;
-    background: black;
     border: none;
     border-radius: 8px;
+    opacity: 0.8;
+
+    svg {
+      width: 40px;
+      height: 40px;
+    }
 
     &:hover {
       cursor: pointer;
-      background: tomato;
-      transform: translateY(-2px);
+      opacity: 1;
     }
 
     &[disabled] {
       cursor: revert;
-      background: grey;
-      transform: revert;
+      opacity: 0.5;
     }
 
     &[aria-current] {
       font-weight: bold;
       cursor: revert;
       background: deeppink;
-      transform: revert;
     }
   }
 }

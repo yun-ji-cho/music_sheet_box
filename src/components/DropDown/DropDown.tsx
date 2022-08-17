@@ -1,4 +1,4 @@
-import { memo, FormEvent, useState } from 'react'
+import { memo, FormEvent, useState, useRef, useEffect, MouseEvent } from 'react'
 import { useRecoilValue } from 'recoil'
 import cx from 'classnames'
 
@@ -19,14 +19,30 @@ const DropDown = memo(({ label, type, onChange, value, selectAlert }: Props) => 
   const [isOpenDropDown, setIsOpenDropDown] = useState(false)
   const CODE_LIST = useRecoilValue(codeList)
   const CATEGORY_LIST = useRecoilValue(categoryList)
+  const dropDownRef = useRef<HTMLDivElement>(null)
   let listItem = label === 'Code' ? CODE_LIST : CATEGORY_LIST
-
-  if (type === 'search') listItem = ['ALL', ...listItem]
-  if (!listItem) return null
 
   const handleShowDropDown = () => {
     setIsOpenDropDown((prev) => !prev)
   }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', clickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside)
+    }
+  })
+
+  const clickOutside = (e: Event) => {
+    if (!dropDownRef.current) return
+    if (isOpenDropDown && !dropDownRef.current.contains(e.target as Node)) {
+      handleShowDropDown()
+    }
+  }
+
+  if (type === 'search') listItem = ['ALL', ...listItem]
+  if (!listItem) return null
 
   const handleChangeTitle = (e: FormEvent<HTMLButtonElement>) => {
     onChange(e.currentTarget.value)
@@ -37,7 +53,7 @@ const DropDown = memo(({ label, type, onChange, value, selectAlert }: Props) => 
     <div className={styles.dropDown}>
       {label && <label htmlFor='selectCode'>{label}</label>}
       <div className={styles.select}>
-        <div className={cx(styles.dropDownBox, { [styles.isActive]: isOpenDropDown })}>
+        <div ref={dropDownRef} className={cx(styles.dropDownBox, { [styles.isActive]: isOpenDropDown })}>
           <button
             type='button'
             className={cx(styles.current, { [styles.alert]: selectAlert && value === '선택하세요' })}
