@@ -7,7 +7,8 @@ import { DownloadIcon, LikeIcon } from 'assets/svg/index'
 
 import styles from './item.module.scss'
 
-const Item = ({ id, title, article, musicCode, category, created, image }: IResultData) => {
+const Item = (props: IResultData) => {
+  const { id, title, article, musicCode, category, created, image } = props
   const navigate = useNavigate()
   const [like] = useState(false)
 

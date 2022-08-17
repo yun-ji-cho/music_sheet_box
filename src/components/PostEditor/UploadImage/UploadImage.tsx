@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, memo } from 'react'
 import cx from 'classnames'
 
 import styles from './uploadImage.module.scss'
@@ -12,7 +12,7 @@ interface Props {
   handleRemoveImage: () => void
 }
 
-const UploadImage = ({ handleImageUpload, previewURL, imageVisible, handleRemoveImage }: Props) => {
+const UploadImage = memo(({ handleImageUpload, previewURL, imageVisible, handleRemoveImage }: Props) => {
   return (
     <>
       <input
@@ -43,6 +43,8 @@ const UploadImage = ({ handleImageUpload, previewURL, imageVisible, handleRemove
       </label>
     </>
   )
-}
+})
+
+UploadImage.displayName = 'UploadImage'
 
 export default UploadImage

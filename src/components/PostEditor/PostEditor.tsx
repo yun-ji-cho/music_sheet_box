@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState, useRef, useEffect } from 'react'
+import { FormEvent, ChangeEvent, useState, useRef, useEffect, useCallback } from 'react'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 
@@ -53,7 +53,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     setImageVisible(true)
   }, [isEdit, originData])
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     if (!e.currentTarget.files) return
     const reader = new FileReader()
@@ -64,7 +64,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     }
     // console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
-  }
+  }, [])
 
   const { isLoading, mutate } = useMutation(addNewItemApi, {
     onSettled: () => {
@@ -126,11 +126,11 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     mutate(formData)
   }
 
-  const handleRemoveImage = () => {
+  const handleRemoveImage = useCallback(() => {
     setImageVisible(false)
     setPreviewURL('')
     setImage('')
-  }
+  }, [])
 
   const handleCloseModal = () => {
     setModalOpen(false)
