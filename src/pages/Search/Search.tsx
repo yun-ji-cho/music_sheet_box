@@ -16,22 +16,21 @@ import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
 import Loading from 'components/Loading/Loading'
+import { useQuery } from 'react-query'
+import { getMusicSheetApi } from 'service/getMusicSheetApi'
 
-interface Props {
-  data?: IMusicSheetRes
-}
-
-const Search = ({ data }: Props) => {
+const Search = () => {
   const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
   const [filterTitle, setFilterTitle] = useState<IResultData[] | undefined>([])
   const [filterContent, setFilterContent] = useState<IResultData[] | undefined>([])
-  const [textFilter] = useRecoil(searchTextFilterState)
   const [totalLength, setTotalLength] = useState(0)
   const [search, setSearch] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
-  const [searchText] = useRecoil(searchTextState)
-
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
+  const [filterType, setFilterType] = useState('')
+
+  const [textFilter] = useRecoil(searchTextFilterState)
+  const [searchText] = useRecoil(searchTextState)
   const code = useRecoilValue(searchMusicCodeState)
   const category = useRecoilValue(searchCategoryState)
 
@@ -39,6 +38,12 @@ const Search = ({ data }: Props) => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Search'
   }, [])
+
+  useEffect(() => {
+    if (textFilter === 'Any') setFilterType('')
+    if (textFilter === 'Title') setFilterType('title')
+    if (textFilter === 'Article') setFilterType('article')
+  }, [textFilter])
 
   useEffect(() => {
     let titleDataLength = 0
@@ -50,37 +55,18 @@ const Search = ({ data }: Props) => {
     setTotalLength(titleDataLength + contentDataLength)
   }, [filterTitle, filterContent])
 
-  const filterData = () => {
-    if (!data) return
-    const getData = data.results
-
-    let filteredData: IResultData[] = []
-
-    filteredData = getData
-
-    if (code !== 'ALL') {
-      filteredData = filteredData.filter((item) => item.musicCode === code)
+  const { data, refetch } = useQuery(
+    ['musicSheets', searchText, textFilter, code, category],
+    () => getMusicSheetApi({ filterType, search: searchText, music_code: code, category }).then((res) => res.data),
+    {
+      refetchOnWindowFocus: false,
+      useErrorBoundary: true,
     }
-    if (category !== 'ALL') {
-      filteredData = filteredData.filter((item) => item.category === category)
-    }
+  )
 
-    let filteredTitle: SetStateAction<IResultData[] | undefined>
-    let filteredContent: SetStateAction<IResultData[] | undefined>
-
-    filteredTitle = filteredData.filter((item) => item.title.includes(searchText))
-    filteredContent = filteredData.filter((item) => item.article.includes(searchText))
-
-    if (textFilter === 'Title') {
-      filteredContent = []
-    }
-    if (textFilter === 'Content') {
-      filteredTitle = []
-    }
-
-    setFilterTitle(filteredTitle)
-    setFilterContent(filteredContent)
-  }
+  useEffect(() => {
+    console.log(data)
+  })
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -92,7 +78,7 @@ const Search = ({ data }: Props) => {
       setItemVisible(false)
       setTimeout(() => {
         setSearch(false)
-        filterData()
+        refetch()
         setItemVisible(true)
       }, 500)
     }
