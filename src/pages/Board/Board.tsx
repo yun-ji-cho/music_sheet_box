@@ -7,7 +7,6 @@ import Item from 'components/Item/Item'
 import SortDropDown from './SortDropDown/SortDropDown'
 import Loading from 'components/Loading/Loading'
 import { WarningIcon } from 'assets/svg'
-import Pagination from 'components/Pagination/Pagination'
 
 const sortOptionList = [
   { value: 'latest', name: '최신순' },
@@ -23,7 +22,6 @@ interface Props {
 const Board = ({ data, isLoading, refetch }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [sortType, setSortType] = useState('latest')
-  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -81,7 +79,6 @@ const Board = ({ data, isLoading, refetch }: Props) => {
         <strong>{data ? data.length : 0} </strong>개의 악보가 있습니다.
       </div>
       {handleListView()}
-      {data && <Pagination total={data.length} page={page} setPage={setPage} />}
     </div>
   )
 }

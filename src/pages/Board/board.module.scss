@@ -15,14 +15,9 @@
     }
   }
 
-  .tableHeader {
+  .topWrap {
     display: flex;
     justify-content: space-between;
-    width: 84%;
-    padding: 10px;
-    padding-bottom: 15px;
-    font-size: 12px;
-    color: colors.$GRAYA;
   }
 
   .tableItemList {
