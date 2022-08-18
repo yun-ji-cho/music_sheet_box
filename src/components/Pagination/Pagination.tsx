@@ -15,7 +15,14 @@ const Pagination = ({ total, page, setPage }: Props) => {
       <button type='button' onClick={() => setPage(page - 1)} disabled={page === 1}>
         <ArrowPrev />
       </button>
-      <input className={styles.current} type='tel' value={page} />
+      <input
+        className={styles.current}
+        type='tel'
+        value={page}
+        onChange={(e) => {
+          setPage(Number(e.currentTarget.value))
+        }}
+      />
       <span> / </span>
       <span className={styles.total}>{numPages}</span>
       <button type='button' onClick={() => setPage(page + 1)} disabled={page === numPages}>
