@@ -7,3 +7,9 @@ export interface IResultData {
   created: string
   image: string
 }
+export interface IMusicSheetRes {
+  count: number
+  next: null | number
+  previous: null | number
+  results: IResultData[]
+}

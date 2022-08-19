@@ -40,8 +40,8 @@ const App = () => {
         <Header />
         <GNB />
         <Routes>
-          <Route path='' element={<Search data={data} />} />
-          <Route path='detail/:id' element={<Detail dataList={data} />} />
+          <Route path='' element={<Search />} />
+          <Route path='detail/:id' element={<Detail dataList={data?.results} />} />
           <Route path='/' element={<Layout />}>
             <Route path='board' element={<Board data={data} isLoading={isLoading} refetch={refetch} />} />
             <Route path='upload' element={<Upload refetch={refetch} />} />

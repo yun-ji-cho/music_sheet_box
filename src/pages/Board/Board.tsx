@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 import styles from './board.module.scss'
-import { IResultData } from 'types'
+import { IMusicSheetRes } from 'types'
 
 import Item from 'components/Item/Item'
 import SortDropDown from './SortDropDown/SortDropDown'
@@ -15,7 +15,7 @@ const sortOptionList = [
 
 interface Props {
   isLoading: Boolean
-  data?: IResultData[]
+  data?: IMusicSheetRes
   refetch: () => void
 }
 
@@ -45,7 +45,7 @@ const Board = ({ data, isLoading, refetch }: Props) => {
       }
       return calcTime(a.created) - calcTime(b.created)
     }
-    const copyList = data?.slice()
+    const copyList = data?.results.slice()
     const sortedList = copyList?.sort(compare)
     return sortedList
   }
@@ -53,7 +53,7 @@ const Board = ({ data, isLoading, refetch }: Props) => {
   if (isLoading) return <Loading />
 
   const handleListView = () => {
-    if (!data || data.length < 1)
+    if (!data || data.count < 1)
       <div className={styles.noContent}>
         <WarningIcon />
         <div className={styles.text}>등록된 악보가 없습니다.</div>
@@ -76,7 +76,7 @@ const Board = ({ data, isLoading, refetch }: Props) => {
   return (
     <div className={styles.board} ref={scrollRef}>
       <div className={styles.itemCount}>
-        <strong>{data ? data.length : 0} </strong>개의 악보가 있습니다.
+        <strong>{data ? data.count : 0} </strong>개의 악보가 있습니다.
       </div>
       {handleListView()}
     </div>

@@ -1,15 +1,17 @@
 import { axios } from 'hooks/worker'
-import { IResultData } from 'types/index'
+import { IMusicSheetRes } from 'types/index'
 
 const MUSIC_BASE_URL = 'https://pcjmusic.herokuapp.com/community'
 
 interface Params {
-  limit: number
-  offset: number
+  filterType: string
+  music_code: string
+  search: string
+  category: string
 }
 
 export const getMusicSheetApi = (params?: Params) =>
-  axios.get<IResultData[]>(`${MUSIC_BASE_URL}`, {
+  axios.get<IMusicSheetRes>(`${MUSIC_BASE_URL}`, {
     params: {
       ...params,
     },
