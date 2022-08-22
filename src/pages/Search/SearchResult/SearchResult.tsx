@@ -7,17 +7,16 @@ import { memo } from 'react'
 
 interface ISearchResult {
   totalLength: number
-  filterTitle: IResultData[] | undefined
-  filterContent: IResultData[] | undefined
+  filterResult: IResultData[]
+  title: string
 }
 
-const SearchResult = memo(({ totalLength = 0, filterTitle, filterContent }: ISearchResult) => {
+const SearchResult = memo(({ totalLength = 0, filterResult, title }: ISearchResult) => {
   return (
     <div className={styles.searchResult}>
       <p className={styles.length}>검색결과 총 {totalLength}건을 찾았습니다.</p>
       <div className={styles.resultWrap}>
-        {filterTitle && filterTitle.length > 0 && <ResultItem filterArray={filterTitle} title='Title' />}
-        {filterContent && filterContent.length > 0 && <ResultItem filterArray={filterContent} title='Content' />}
+        <ResultItem filterArray={filterResult} title={title} />
       </div>
     </div>
   )

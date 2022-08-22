@@ -20,6 +20,7 @@ const App = () => {
     refetchOnWindowFocus: false,
     refetchOnMount: true,
     useErrorBoundary: true,
+    enabled: false,
     onError(err) {
       if (isAxiosError(err)) {
         // eslint-disable-next-line no-console

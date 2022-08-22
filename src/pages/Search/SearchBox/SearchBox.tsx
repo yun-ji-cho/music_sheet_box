@@ -14,13 +14,13 @@ const SearchBox = () => {
 
   useEffect(() => {
     resetSearchText()
-  }, [resetSearchText])
+  }, [])
 
   const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.currentTarget.value)
   }
   const handleRemoveValue = () => {
-    resetSearchText()
+    setSearchInput('')
     if (inputEl.current) {
       inputEl.current.focus()
     }

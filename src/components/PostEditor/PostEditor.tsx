@@ -1,5 +1,5 @@
 import { FormEvent, ChangeEvent, useState, useRef, useEffect, useCallback } from 'react'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { IResultData } from 'types'
@@ -15,10 +15,9 @@ import Loading from 'components/Loading/Loading'
 interface Props {
   isEdit?: Boolean
   originData?: IResultData
-  refetch: () => void
 }
 
-const PostEditor = ({ isEdit, originData, refetch }: Props) => {
+const PostEditor = ({ isEdit, originData }: Props) => {
   const navigate = useNavigate()
   const titleInput = useRef<HTMLInputElement>(null)
   const articleInput = useRef<HTMLTextAreaElement>(null)
@@ -37,13 +36,13 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
   const [moveToBoard, setMoveToBoard] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [cancelButton, setCancelButton] = useState(false)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView()
   }, [])
 
   useEffect(() => {
-    // console.log(originData)
     if (!isEdit || !originData) return
     setPreviewURL(originData.image)
     setTitle(originData.title)
@@ -62,7 +61,6 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
       setPreviewURL(String(reader.result))
       setImageVisible(true)
     }
-    // console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
   }, [])
 
@@ -75,7 +73,7 @@ const PostEditor = ({ isEdit, originData, refetch }: Props) => {
     onSuccess: () => {
       setIconCheck(true)
       setAlertMessage('이미지 업로드 완료')
-      refetch()
+      queryClient.invalidateQueries('musicSheets')
     },
     onError: (error) => {
       setModalOpen(true)

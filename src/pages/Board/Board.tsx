@@ -53,14 +53,20 @@ const Board = ({ data, isLoading, refetch }: Props) => {
   if (isLoading) return <Loading />
 
   const handleListView = () => {
-    if (!data || data.count < 1)
-      <div className={styles.noContent}>
-        <WarningIcon />
-        <div className={styles.text}>등록된 악보가 없습니다.</div>
-      </div>
+    if (data?.count === 0) {
+      return (
+        <div className={styles.noContent}>
+          <WarningIcon />
+          <div className={styles.text}>등록된 악보가 없습니다.</div>
+        </div>
+      )
+    }
 
     return (
       <>
+        <div className={styles.itemCount}>
+          <strong>{data ? data.count : 0} </strong>개의 악보가 있습니다.
+        </div>
         <div className={styles.topWrap}>
           <SortDropDown value={sortType} onChange={setSortType} optionList={sortOptionList} />
         </div>
@@ -75,9 +81,6 @@ const Board = ({ data, isLoading, refetch }: Props) => {
 
   return (
     <div className={styles.board} ref={scrollRef}>
-      <div className={styles.itemCount}>
-        <strong>{data ? data.count : 0} </strong>개의 악보가 있습니다.
-      </div>
       {handleListView()}
     </div>
   )

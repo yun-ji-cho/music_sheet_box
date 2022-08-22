@@ -21,18 +21,12 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
   const navigate = useNavigate()
 
   const handleBoldText = (item: IResultData) => {
-    if (title === 'Title') {
-      return (
-        <>
-          <p className={styles.itemTitle}>{parse(BoldText(searchText, item.title))}</p>
-          <p className={styles.itemDesc}>{item.article}</p>
-        </>
-      )
-    }
     return (
       <>
-        <p className={styles.itemTitle}>{item.title}</p>
-        <p className={styles.itemDesc}>{parse(BoldText(searchText, item.article))}</p>
+        <p className={styles.itemTitle}>{title !== 'Content' ? parse(BoldText(searchText, item.title)) : item.title}</p>
+        <p className={styles.itemDesc}>
+          {title !== 'Title' ? parse(BoldText(searchText, item.article)) : item.article}
+        </p>
       </>
     )
   }

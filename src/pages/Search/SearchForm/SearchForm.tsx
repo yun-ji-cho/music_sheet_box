@@ -17,6 +17,7 @@ const SearchForm = ({ handleSubmit }: Prop) => {
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
   }
+
   const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
   const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
   const [category, , resetCategory] = useRecoil(searchCategoryState)
@@ -25,7 +26,7 @@ const SearchForm = ({ handleSubmit }: Prop) => {
     resetTextFilter()
     resetSetCode()
     resetCategory()
-  }, [resetCategory, resetSetCode, resetTextFilter])
+  }, [])
 
   const tagArr = [
     { title: 'textFilter', value: textFilter },
