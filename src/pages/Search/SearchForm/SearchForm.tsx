@@ -10,9 +10,10 @@ import { filterModalState, searchCategoryState, searchMusicCodeState, searchText
 
 interface Prop {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
+  refetch: () => void
 }
 
-const SearchForm = ({ handleSubmit }: Prop) => {
+const SearchForm = ({ handleSubmit, refetch }: Prop) => {
   const [, setFilterModal] = useRecoil(filterModalState)
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
@@ -46,7 +47,7 @@ const SearchForm = ({ handleSubmit }: Prop) => {
           <Tag key={item.title} title={item.title} value={item.value} />
         ))}
       </ul>
-      <FilterModal />
+      <FilterModal refetch={refetch} />
     </form>
   )
 }

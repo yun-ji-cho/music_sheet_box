@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import Portal from '../Portal'
 import Button from 'components/Button/Button'
 import { useNavigate } from 'react-router-dom'

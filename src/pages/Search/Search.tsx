@@ -21,7 +21,6 @@ import { IResultData } from 'types'
 
 const Search = () => {
   const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
-  const [search, setSearch] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const [matchedData, setMatchedData] = useState<IResultData[] | undefined>([])
@@ -70,6 +69,7 @@ const Search = () => {
 
   useEffect(() => {
     console.log(data)
+    console.log(searchText)
   })
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -97,7 +97,7 @@ const Search = () => {
       {/* {search && <Loading />} */}
       {isLoading && <Loading />}
       <h2>Find Your Music Sheet</h2>
-      <SearchForm handleSubmit={handleSubmit} />
+      <SearchForm handleSubmit={handleSubmit} refetch={refetch} />
       {itemVisible && matchedData && (
         <SearchResult totalLength={matchedData.length} filterResult={matchedData} title={textFilter} />
       )}

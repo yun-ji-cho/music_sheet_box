@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef } from 'react'
+import { ChangeEvent, useEffect, useRef, useCallback } from 'react'
 import { useRecoil, useRecoilState } from 'hooks/state'
 import cx from 'classnames'
 
@@ -6,6 +6,7 @@ import { SearchIcon, CloseIcon } from 'assets/svg/index'
 
 import styles from './searchBox.module.scss'
 import { searchItemVisible, searchTextState } from 'states/music.atom'
+import { debounce } from 'utils/util'
 
 const SearchBox = () => {
   const [, setItemVisible] = useRecoilState(searchItemVisible)
@@ -16,9 +17,15 @@ const SearchBox = () => {
     resetSearchText()
   }, [])
 
-  const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.currentTarget.value)
-  }
+  const handleInputValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      debounce(setSearchInput(e.currentTarget.value), 500)
+    },
+    [searchInput]
+  )
+  // const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setSearchInput(e.currentTarget.value)
+  // }
   const handleRemoveValue = () => {
     setSearchInput('')
     if (inputEl.current) {
