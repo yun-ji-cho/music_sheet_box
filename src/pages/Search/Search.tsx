@@ -24,6 +24,7 @@ const Search = () => {
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const [matchedData, setMatchedData] = useState<IResultData[] | undefined>([])
+  const [searchLoading, setSearchLoading] = useState(false)
 
   const [textFilter] = useRecoil(searchTextFilterState)
   const [searchText] = useRecoil(searchTextState)
@@ -54,7 +55,7 @@ const Search = () => {
     if (category === 'ALL') setFilterCategory('')
   }, [category])
 
-  const { data, refetch, isLoading } = useQuery(
+  const { data, refetch } = useQuery(
     ['musicSheets', searchText, filterType, filterCode, filterCategory],
     () =>
       getMusicSheetApi({ search: searchText, filterType, music_code: filterCode, category: filterCategory }).then(
@@ -69,8 +70,8 @@ const Search = () => {
 
   useEffect(() => {
     console.log(data)
-    console.log(searchText)
-  })
+    refetch()
+  }, [data, refetch, searchText])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -82,20 +83,19 @@ const Search = () => {
     refetch()
 
     if (data) {
-      // setSearch(true)
+      setSearchLoading(true)
       setItemVisible(false)
       setMatchedData(data.results)
       setTimeout(() => {
-        // setSearch(false)
+        setSearchLoading(false)
         setItemVisible(true)
-      }, 500)
+      }, 300)
     }
   }
 
   return (
     <div className={styles.search}>
-      {/* {search && <Loading />} */}
-      {isLoading && <Loading />}
+      {searchLoading && <Loading />}
       <h2>Find Your Music Sheet</h2>
       <SearchForm handleSubmit={handleSubmit} refetch={refetch} />
       {itemVisible && matchedData && (

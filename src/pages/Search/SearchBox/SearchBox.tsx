@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useCallback } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useRecoil, useRecoilState } from 'hooks/state'
 import cx from 'classnames'
 
@@ -6,28 +6,26 @@ import { SearchIcon, CloseIcon } from 'assets/svg/index'
 
 import styles from './searchBox.module.scss'
 import { searchItemVisible, searchTextState } from 'states/music.atom'
-import { debounce } from 'utils/util'
+import { useDebounce } from 'hooks/index'
 
 const SearchBox = () => {
   const [, setItemVisible] = useRecoilState(searchItemVisible)
-  const [searchInput, setSearchInput, resetSearchText] = useRecoil(searchTextState)
+  const [localInput, setLocalInput] = useState('')
+  const [searchInput, setSearchInput] = useRecoil(searchTextState)
   const inputEl = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    resetSearchText()
-  }, [])
+  const debouncedValue = useDebounce(localInput, 500)
 
-  const handleInputValue = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      debounce(setSearchInput(e.currentTarget.value), 500)
-    },
-    [searchInput]
-  )
-  // const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setSearchInput(e.currentTarget.value)
-  // }
+  const handleInputValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setLocalInput(event.target.value)
+  }
+
+  useEffect(() => {
+    setSearchInput(localInput)
+  }, [debouncedValue])
+
   const handleRemoveValue = () => {
-    setSearchInput('')
+    setLocalInput('')
     if (inputEl.current) {
       inputEl.current.focus()
     }
@@ -41,7 +39,7 @@ const SearchBox = () => {
 
   return (
     <div className={styles.searchBox}>
-      <input type='text' placeholder='Search...' onChange={handleInputValue} value={searchInput} ref={inputEl} />
+      <input type='text' placeholder='Search...' onChange={handleInputValue} value={localInput} ref={inputEl} />
       <button
         type='button'
         aria-label='삭제'
