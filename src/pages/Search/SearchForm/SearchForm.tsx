@@ -1,4 +1,3 @@
-import { FormEvent, useEffect } from 'react'
 import styles from './searchForm.module.scss'
 
 import SearchBox from '../SearchBox/SearchBox'
@@ -8,26 +7,15 @@ import Tag from '../Tag/Tag'
 import { useRecoil } from 'hooks/state'
 import { filterModalState, searchCategoryState, searchMusicCodeState, searchTextFilterState } from 'states/music.atom'
 
-interface Prop {
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
-  refetch: () => void
-}
-
-const SearchForm = ({ handleSubmit, refetch }: Prop) => {
+const SearchForm = () => {
   const [, setFilterModal] = useRecoil(filterModalState)
   const handleFilterModal = () => {
     setFilterModal((prev) => !prev)
   }
 
-  const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
-  const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
-  const [category, , resetCategory] = useRecoil(searchCategoryState)
-
-  useEffect(() => {
-    resetTextFilter()
-    resetSetCode()
-    resetCategory()
-  }, [])
+  const [textFilter] = useRecoil(searchTextFilterState)
+  const [code] = useRecoil(searchMusicCodeState)
+  const [category] = useRecoil(searchCategoryState)
 
   const tagArr = [
     { title: 'textFilter', value: textFilter },
@@ -35,7 +23,7 @@ const SearchForm = ({ handleSubmit, refetch }: Prop) => {
     { title: 'category', value: category },
   ]
   return (
-    <form action='' onSubmit={handleSubmit} className={styles.searchForm}>
+    <div className={styles.searchForm}>
       <div className={styles.searchWrap}>
         <SearchBox />
         <button type='button' className={styles.filterBtn} onClick={handleFilterModal}>
@@ -47,8 +35,8 @@ const SearchForm = ({ handleSubmit, refetch }: Prop) => {
           <Tag key={item.title} title={item.title} value={item.value} />
         ))}
       </ul>
-      <FilterModal refetch={refetch} />
-    </form>
+      <FilterModal />
+    </div>
   )
 }
 

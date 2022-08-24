@@ -1,9 +1,6 @@
 import { MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useRecoil } from 'hooks/state'
 import parse from 'html-react-parser'
-
-import { searchTextState } from 'states/music.atom'
 import { IResultData } from 'types'
 
 import styles from './resultItem.module.scss'
@@ -14,18 +11,20 @@ import { BoldText } from '../BoldText'
 interface IFilter {
   filterArray: IResultData[]
   title: string
+  searchedWord: string
 }
 
-const ResultItem = ({ filterArray, title }: IFilter) => {
-  const [searchText] = useRecoil(searchTextState)
+const ResultItem = ({ filterArray, title, searchedWord }: IFilter) => {
   const navigate = useNavigate()
 
   const handleBoldText = (item: IResultData) => {
     return (
       <>
-        <p className={styles.itemTitle}>{title !== 'Content' ? parse(BoldText(searchText, item.title)) : item.title}</p>
+        <p className={styles.itemTitle}>
+          {title !== 'Content' ? parse(BoldText(searchedWord, item.title)) : item.title}
+        </p>
         <p className={styles.itemDesc}>
-          {title !== 'Title' ? parse(BoldText(searchText, item.article)) : item.article}
+          {title !== 'Title' ? parse(BoldText(searchedWord, item.article)) : item.article}
         </p>
       </>
     )

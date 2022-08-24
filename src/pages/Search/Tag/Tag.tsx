@@ -20,7 +20,7 @@ const Tag = memo(({ title, value }: TagArr) => {
   if (title === 'code' && value === 'ALL') return null
   if (title === 'category' && value === 'ALL') return null
 
-  const handleValue = () => {
+  const handleRemoveTag = () => {
     if (title === 'textFilter') resetTextFilter()
     if (title === 'code') resetSetCode()
     if (title === 'category') resetCategory()
@@ -30,7 +30,7 @@ const Tag = memo(({ title, value }: TagArr) => {
     <li className={cx(styles.tag, styles[title])}>
       <span>{value}</span>
       <button type='button' className={styles.removeBtn}>
-        <CloseIcon onClick={handleValue} />
+        <CloseIcon onClick={handleRemoveTag} />
       </button>
     </li>
   )

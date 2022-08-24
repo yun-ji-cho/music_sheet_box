@@ -14,11 +14,7 @@ import Button from 'components/Button/Button'
 
 const filterList = ['Any', 'Title', 'Content']
 
-interface Prop {
-  refetch: () => void
-}
-
-const FilterModal = memo(({ refetch }: Prop) => {
+const FilterModal = memo(() => {
   const [filterModal, setFilterModal] = useRecoil(filterModalState)
   const [radioValue, setRadioValue] = useState(filterList[0])
   const [globalTextFilter, setGlobalTextFilter] = useRecoil(searchTextFilterState)
@@ -38,7 +34,6 @@ const FilterModal = memo(({ refetch }: Prop) => {
     setGlobalCode(code)
     setGlobalCategory(category)
     setFilterModal(false)
-    refetch()
   }
 
   const handleCloseModal = () => {
