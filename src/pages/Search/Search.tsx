@@ -1,46 +1,65 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRecoil } from 'hooks/state'
 import { useRecoilState } from 'recoil'
+import { useQuery } from 'react-query'
 import {
   searchTextState,
   searchTextFilterState,
   searchMusicCodeState,
   searchCategoryState,
   searchItemVisible,
+  searchedWordState,
+  searchRefreshState,
 } from 'states/music.atom'
+
+import { getMusicSheetApi } from 'service/getMusicSheetApi'
+import { IResultData } from 'types'
 
 import styles from './search.module.scss'
 
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
-import { useQuery } from 'react-query'
-import { getMusicSheetApi } from 'service/getMusicSheetApi'
-import { IResultData } from 'types'
 
 const Search = () => {
   const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const [matchedData, setMatchedData] = useState<IResultData[] | undefined>([])
-  const [searchedWord, setSearchedWord] = useState('')
+  const [searchedWord, setSearchedWord, resetSearchedWord] = useRecoil(searchedWordState)
 
   const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
-  const [searchInput, , resetSearchInput] = useRecoil(searchTextState)
+  const [searchInput, setSearchInput, resetSearchInput] = useRecoil(searchTextState)
   const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
   const [category, , resetCategory] = useRecoil(searchCategoryState)
+  const [isRefreshPage] = useRecoil(searchRefreshState)
 
   const [filterType, setFilterType] = useState('')
   const [filterCode, setFilterCode] = useState('')
   const [filterCategory, setFilterCategory] = useState('')
 
   useEffect(() => {
+    if (!isRefreshPage) {
+      setSearchInput(searchedWord)
+      return
+    }
     resetTextFilter()
     resetSetCode()
     resetCategory()
     resetSearchInput()
+    resetSearchedWord()
     setItemVisible(false)
-  }, [resetCategory, resetSearchInput, resetSetCode, resetTextFilter, setItemVisible])
+  }, [
+    isRefreshPage,
+    resetCategory,
+    resetSearchInput,
+    resetSearchedWord,
+    resetSetCode,
+    resetTextFilter,
+    searchedWord,
+    setItemVisible,
+    setSearchInput,
+  ])
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -80,6 +99,7 @@ const Search = () => {
     if (!searchInput) {
       setConfirmModalOpen(true)
       setAlertMessage('검색어를 입력해주세요.')
+      return
     }
     refetch()
     setSearchedWord(searchInput)
@@ -88,7 +108,6 @@ const Search = () => {
 
   useEffect(() => {
     if (isFetched && data && searchedWord === searchInput) {
-      // console.log('매치 데이터', data.results)
       setMatchedData(data.results)
     }
   }, [data, isFetched, searchInput, searchedWord])
@@ -104,7 +123,6 @@ const Search = () => {
           totalLength={matchedData.length}
           filterResult={matchedData}
           title={textFilter}
-          searchedWord={searchedWord}
           isFetching={isFetching}
         />
       )}

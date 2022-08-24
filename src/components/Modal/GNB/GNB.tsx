@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 
-import { navToggleState } from 'states/music.atom'
+import { navToggleState, searchRefreshState } from 'states/music.atom'
 
 import Portal from '../Portal'
 
@@ -10,8 +10,10 @@ import styles from './gnb.module.scss'
 
 const GNB = () => {
   const [navToggle, setNavToggle] = useRecoilState(navToggleState)
+  const [, setSearchRefresh] = useRecoilState(searchRefreshState)
   const handleNavToggle = () => {
     setNavToggle(false)
+    setSearchRefresh(true)
   }
   return (
     <Portal>

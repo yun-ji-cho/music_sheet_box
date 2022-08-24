@@ -10,12 +10,15 @@ import defaultImage from 'assets/images/default_img.png'
 
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
+import { useRecoil } from 'hooks/state'
+import { searchRefreshState } from 'states/music.atom'
 
 interface ItemProps {
   dataList: IResultData[]
+  refetch: () => void
 }
 
-const Detail = ({ dataList }: ItemProps) => {
+const Detail = ({ dataList, refetch }: ItemProps) => {
   const navigate = useNavigate()
   const { id } = useParams()
   const [filterData, setFilterData] = useState<IResultData>()
@@ -25,6 +28,7 @@ const Detail = ({ dataList }: ItemProps) => {
   const [moveToBoard, setMoveToBoard] = useState(false)
   const [iconCheck, setIconCheck] = useState(false)
   const [cancelButton, setCancelButton] = useState(false)
+  const [, setSearchRefresh] = useRecoil(searchRefreshState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -32,6 +36,7 @@ const Detail = ({ dataList }: ItemProps) => {
   })
 
   useEffect(() => {
+    refetch()
     if (dataList?.length >= 1) {
       const targetPost = dataList.find((item) => item.id === Number(id))
 
@@ -43,10 +48,11 @@ const Detail = ({ dataList }: ItemProps) => {
         setMoveToBoard(true)
       }
     }
-  }, [dataList, id])
+  }, [dataList, id, refetch])
 
   const handleMoveList = () => {
     navigate(-1)
+    setSearchRefresh(false)
   }
 
   const handleEdit = () => {

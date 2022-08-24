@@ -28,6 +28,10 @@ export const searchTextState = atom({
   key: 'searchTextState',
   default: '',
 })
+export const searchedWordState = atom({
+  key: 'searchedWordState',
+  default: '',
+})
 export const searchTextFilterState = atom({
   key: 'searchTextFilterState',
   default: 'Any',
@@ -39,4 +43,9 @@ export const searchMusicCodeState = atom({
 export const searchCategoryState = atom({
   key: 'searchCategoryState',
   default: 'ALL',
+})
+
+export const searchRefreshState = atom({
+  key: 'searchRefreshState',
+  default: true,
 })

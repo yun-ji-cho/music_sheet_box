@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { IResultData } from 'types'
 
+import { useRecoilValue } from 'recoil'
+import { searchedWordState } from 'states/music.atom'
+
 import styles from './resultItem.module.scss'
 import defaultImage from 'assets/images/default_img.png'
 
@@ -11,12 +14,11 @@ import { BoldText } from '../BoldText'
 interface IFilter {
   filterArray: IResultData[]
   title: string
-  searchedWord: string
 }
 
-const ResultItem = ({ filterArray, title, searchedWord }: IFilter) => {
+const ResultItem = ({ filterArray, title }: IFilter) => {
   const navigate = useNavigate()
-
+  const searchedWord = useRecoilValue(searchedWordState)
   const handleBoldText = (item: IResultData) => {
     return (
       <>
