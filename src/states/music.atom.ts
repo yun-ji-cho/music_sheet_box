@@ -49,3 +49,7 @@ export const searchRefreshState = atom({
   key: 'searchRefreshState',
   default: true,
 })
+export const inputBlurState = atom({
+  key: 'inputBlurState',
+  default: false,
+})

@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <h1>
-        <NavLink to='/' className={styles.logo} onClick={handleNavToggle}>
+        <NavLink to='/' className={styles.logo}>
           <SaveBoxIcon className={styles.logoIcon} />
           Sheet Music Box
         </NavLink>

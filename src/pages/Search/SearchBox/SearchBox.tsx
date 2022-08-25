@@ -22,9 +22,20 @@ const SearchBox = () => {
     }
   }
 
+  const handleBlur = () => {
+    console.log('blur')
+  }
+
   return (
     <div className={styles.searchBox}>
-      <input type='text' placeholder='Search...' onChange={handleInputValue} value={searchInput} ref={inputEl} />
+      <input
+        type='text'
+        placeholder='Search...'
+        onChange={handleInputValue}
+        value={searchInput}
+        ref={inputEl}
+        onBlur={handleBlur}
+      />
       <button
         type='button'
         aria-label='삭제'

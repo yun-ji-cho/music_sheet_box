@@ -11,7 +11,7 @@ import defaultImage from 'assets/images/default_img.png'
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import { useRecoil } from 'hooks/state'
-import { searchRefreshState } from 'states/music.atom'
+import { searchedWordState, searchRefreshState, searchTextState } from 'states/music.atom'
 
 interface ItemProps {
   dataList: IResultData[]
@@ -29,6 +29,8 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   const [iconCheck, setIconCheck] = useState(false)
   const [cancelButton, setCancelButton] = useState(false)
   const [, setSearchRefresh] = useRecoil(searchRefreshState)
+  const [, setSearchInput] = useRecoil(searchTextState)
+  const [searchedWord] = useRecoil(searchedWordState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -51,8 +53,9 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   }, [dataList, id, refetch])
 
   const handleMoveList = () => {
-    navigate(-1)
     setSearchRefresh(false)
+    setSearchInput(searchedWord)
+    navigate(-1)
   }
 
   const handleEdit = () => {
@@ -66,8 +69,8 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   const handleCloseModal = () => {
     setDeleteModal(false)
   }
-  const handleMoveToBoard = () => {
-    navigate(`../board`)
+  const handleMoveToBack = () => {
+    navigate(-1)
   }
 
   const { mutate } = useMutation(deleteItemApi, {
@@ -101,7 +104,7 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
           message={message}
           iconCheck={iconCheck}
           moveToBoard={moveToBoard}
-          confirmOnClick={handleMoveToBoard}
+          confirmOnClick={handleMoveToBack}
         />
       )}
       {deleteModal && (
@@ -109,7 +112,7 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
           message={message}
           iconCheck={iconCheck}
           moveToBoard={moveToBoard}
-          confirmOnClick={cancelButton ? handleDeletePost : handleMoveToBoard}
+          confirmOnClick={cancelButton ? handleDeletePost : handleMoveToBack}
           cancelButtonClick={handleCloseModal}
         />
       )}

@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRecoil } from 'hooks/state'
-import { useRecoilState } from 'recoil'
 import { useQuery } from 'react-query'
 import {
   searchTextState,
@@ -10,6 +9,7 @@ import {
   searchItemVisible,
   searchedWordState,
   searchRefreshState,
+  inputBlurState,
 } from 'states/music.atom'
 
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
@@ -22,43 +22,56 @@ import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
 
 const Search = () => {
-  const [itemVisible, setItemVisible] = useRecoilState(searchItemVisible)
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const [matchedData, setMatchedData] = useState<IResultData[] | undefined>([])
-  const [searchedWord, setSearchedWord, resetSearchedWord] = useRecoil(searchedWordState)
-
-  const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
-  const [searchInput, setSearchInput, resetSearchInput] = useRecoil(searchTextState)
-  const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
-  const [category, , resetCategory] = useRecoil(searchCategoryState)
-  const [isRefreshPage] = useRecoil(searchRefreshState)
-
   const [filterType, setFilterType] = useState('')
   const [filterCode, setFilterCode] = useState('')
   const [filterCategory, setFilterCategory] = useState('')
 
-  useEffect(() => {
-    if (!isRefreshPage) {
-      setSearchInput(searchedWord)
-      return
+  const [searchedWord, setSearchedWord, resetSearchedWord] = useRecoil(searchedWordState)
+  const [itemVisible, setItemVisible] = useRecoil(searchItemVisible)
+  const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
+  const [searchInput] = useRecoil(searchTextState)
+  const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
+  const [category, , resetCategory] = useRecoil(searchCategoryState)
+  const [isRefreshPage] = useRecoil(searchRefreshState)
+  const [inputBlur, setInputBlur] = useRecoil(inputBlurState)
+
+  const { data, refetch, isFetching, isFetched, isLoading } = useQuery(
+    ['musicSheets', searchInput, filterType, filterCode, filterCategory],
+    () =>
+      getMusicSheetApi({ search: searchInput, filterType, music_code: filterCode, category: filterCategory }).then(
+        (res) => res.data
+      ),
+    {
+      refetchOnWindowFocus: false,
+      useErrorBoundary: true,
+      enabled: false,
     }
-    resetTextFilter()
-    resetSetCode()
-    resetCategory()
-    resetSearchInput()
-    resetSearchedWord()
-    setItemVisible(false)
+  )
+  useEffect(() => {
+    if (searchInput !== searchedWord) return
+    refetch()
+  }, [data, refetch, searchInput, searchedWord])
+
+  useEffect(() => {
+    if (isRefreshPage && !searchInput && !searchedWord) {
+      resetTextFilter()
+      resetSetCode()
+      resetCategory()
+      resetSearchedWord()
+      setItemVisible(false)
+    }
   }, [
     isRefreshPage,
     resetCategory,
-    resetSearchInput,
     resetSearchedWord,
     resetSetCode,
     resetTextFilter,
+    searchInput,
     searchedWord,
     setItemVisible,
-    setSearchInput,
   ])
 
   useEffect(() => {
@@ -81,19 +94,6 @@ const Search = () => {
     if (category === 'ALL') setFilterCategory('')
   }, [category])
 
-  const { data, refetch, isFetching, isFetched } = useQuery(
-    ['musicSheets', searchInput, filterType, filterCode, filterCategory],
-    () =>
-      getMusicSheetApi({ search: searchInput, filterType, music_code: filterCode, category: filterCategory }).then(
-        (res) => res.data
-      ),
-    {
-      refetchOnWindowFocus: false,
-      useErrorBoundary: true,
-      enabled: false,
-    }
-  )
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!searchInput) {
@@ -102,15 +102,17 @@ const Search = () => {
       return
     }
     refetch()
-    setSearchedWord(searchInput)
     setItemVisible(true)
+    setSearchedWord(searchInput)
+    setInputBlur(true)
   }
 
   useEffect(() => {
+    if (!matchedData) return
     if (isFetched && data && searchedWord === searchInput) {
       setMatchedData(data.results)
     }
-  }, [data, isFetched, searchInput, searchedWord])
+  }, [data, isFetched, matchedData, searchInput, searchedWord])
 
   return (
     <div className={styles.search}>
@@ -118,7 +120,7 @@ const Search = () => {
       <form action='' onSubmit={handleSubmit}>
         <SearchForm />
       </form>
-      {itemVisible && matchedData && (
+      {itemVisible && matchedData && matchedData.length > 0 && (
         <SearchResult
           totalLength={matchedData.length}
           filterResult={matchedData}
