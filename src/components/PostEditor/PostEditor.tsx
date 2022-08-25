@@ -48,7 +48,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     setTitle(originData.title)
     setCode(originData.musicCode)
     setCategory(originData.category)
-    setNote(originData.article)
+    setNote(originData.content)
     setImageVisible(true)
   }, [isEdit, originData])
 

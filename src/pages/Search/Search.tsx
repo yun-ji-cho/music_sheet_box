@@ -38,12 +38,34 @@ const Search = () => {
   const [isRefreshPage] = useRecoil(searchRefreshState)
   const [inputBlur, setInputBlur] = useRecoil(inputBlurState)
 
-  const { data, refetch, isFetching, isFetched, isLoading } = useQuery(
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName('title')[0]
+    titleElement.innerHTML = 'Music box - Search'
+  }, [])
+
+  useEffect(() => {
+    setFilterType(textFilter.toLowerCase())
+  }, [textFilter])
+
+  useEffect(() => {
+    setFilterCode(code)
+    if (code === 'ALL') setFilterCode('')
+  }, [code])
+
+  useEffect(() => {
+    setFilterCategory(category)
+    if (category === 'ALL') setFilterCategory('')
+  }, [category])
+
+  const { data, refetch, isFetching, isFetched } = useQuery(
     ['musicSheets', searchInput, filterType, filterCode, filterCategory],
     () =>
-      getMusicSheetApi({ search: searchInput, filterType, music_code: filterCode, category: filterCategory }).then(
-        (res) => res.data
-      ),
+      getMusicSheetApi({
+        search: searchInput,
+        filterType: textFilter,
+        music_code: filterCode,
+        category: filterCategory,
+      }).then((res) => res.data),
     {
       refetchOnWindowFocus: false,
       useErrorBoundary: true,
@@ -74,26 +96,6 @@ const Search = () => {
     setItemVisible,
   ])
 
-  useEffect(() => {
-    const titleElement = document.getElementsByTagName('title')[0]
-    titleElement.innerHTML = 'Music box - Search'
-  }, [])
-
-  useEffect(() => {
-    setFilterType(textFilter.toLowerCase())
-    if (textFilter === 'Content') setFilterType('article')
-  }, [textFilter])
-
-  useEffect(() => {
-    setFilterCode(code)
-    if (code === 'ALL') setFilterCode('')
-  }, [code])
-
-  useEffect(() => {
-    setFilterCategory(category)
-    if (category === 'ALL') setFilterCategory('')
-  }, [category])
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!searchInput) {
@@ -104,11 +106,9 @@ const Search = () => {
     refetch()
     setItemVisible(true)
     setSearchedWord(searchInput)
-    setInputBlur(true)
   }
 
   useEffect(() => {
-    if (!matchedData) return
     if (isFetched && data && searchedWord === searchInput) {
       setMatchedData(data.results)
     }

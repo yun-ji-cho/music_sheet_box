@@ -8,7 +8,7 @@ import { DownloadIcon, LikeIcon } from 'assets/svg/index'
 import styles from './item.module.scss'
 
 const Item = (props: IResultData) => {
-  const { id, title, article, musicCode, category, created, image } = props
+  const { id, title, content, musicCode, category, created, image } = props
   const navigate = useNavigate()
   const [like] = useState(false)
 
@@ -38,7 +38,7 @@ const Item = (props: IResultData) => {
           <span className={styles.date}>{created.slice(0, 10)}</span>
         </div>
         <span className={styles.code}>{musicCode}</span>
-        <input type='hidden' data-img={image} data-category={category} data-article={article} />
+        {/* <input type='hidden' data-img={image} data-category={category} data-content={content} /> */}
       </button>
       <a href={image} aria-label='download' download>
         <DownloadIcon />

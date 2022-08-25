@@ -138,7 +138,7 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
           <p className={styles.title}>{filterData.title}</p>
           <span className={styles.code}>{filterData.musicCode}</span>
           <span className={styles.date}>{filterData.created.slice(0, 10)}</span>
-          <p className={styles.contents}>{filterData.article}</p>
+          <p className={styles.contents}>{filterData.content}</p>
         </div>
       )}
     </div>

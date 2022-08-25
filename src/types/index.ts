@@ -1,7 +1,7 @@
 export interface IResultData {
   id: number
   title: string
-  article: string
+  content: string
   musicCode: string
   category: string
   created: string

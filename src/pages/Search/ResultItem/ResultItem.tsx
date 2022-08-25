@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import parse from 'html-react-parser'
 import { IResultData } from 'types'
@@ -19,6 +19,7 @@ interface IFilter {
 const ResultItem = ({ filterArray, title }: IFilter) => {
   const navigate = useNavigate()
   const searchedWord = useRecoilValue(searchedWordState)
+
   const handleBoldText = (item: IResultData) => {
     return (
       <>
@@ -26,7 +27,7 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
           {title !== 'Content' ? parse(BoldText(searchedWord, item.title)) : item.title}
         </p>
         <p className={styles.itemDesc}>
-          {title !== 'Title' ? parse(BoldText(searchedWord, item.article)) : item.article}
+          {title !== 'Title' ? parse(BoldText(searchedWord, item.content)) : item.content}
         </p>
       </>
     )
