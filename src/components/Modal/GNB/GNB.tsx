@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 
 import { navToggleState, searchedWordState, searchRefreshState, searchTextState } from 'states/music.atom'
 
@@ -7,13 +7,12 @@ import Portal from '../Portal'
 
 import cx from 'classnames'
 import styles from './gnb.module.scss'
-import { useRecoil } from 'hooks/state'
 
 const GNB = () => {
   const [navToggle, setNavToggle] = useRecoilState(navToggleState)
   const [, setSearchRefresh] = useRecoilState(searchRefreshState)
-  const [, , resetSearchInput] = useRecoil(searchTextState)
-  const [, , resetSearchedWord] = useRecoil(searchedWordState)
+  const resetSearchInput = useResetRecoilState(searchTextState)
+  const resetSearchedWord = useResetRecoilState(searchedWordState)
   const handleNavToggle = () => {
     setNavToggle(false)
     setSearchRefresh(true)

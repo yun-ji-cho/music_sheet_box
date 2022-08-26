@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
 import { CloseIcon } from 'assets/svg'
-import { useRecoil } from 'hooks/state'
+import { useResetRecoilState } from 'hooks/state'
 import { searchCategoryState, searchMusicCodeState, searchTextFilterState } from 'states/music.atom'
 import styles from './tag.module.scss'
 import { cx } from 'styles'
@@ -12,9 +12,9 @@ interface TagArr {
 }
 
 const Tag = memo(({ title, value }: TagArr) => {
-  const [, , resetTextFilter] = useRecoil(searchTextFilterState)
-  const [, , resetSetCode] = useRecoil(searchMusicCodeState)
-  const [, , resetCategory] = useRecoil(searchCategoryState)
+  const resetTextFilter = useResetRecoilState(searchTextFilterState)
+  const resetSetCode = useResetRecoilState(searchMusicCodeState)
+  const resetCategory = useResetRecoilState(searchCategoryState)
 
   if (title === 'textFilter' && value === 'Any') return null
   if (title === 'code' && value === 'ALL') return null
