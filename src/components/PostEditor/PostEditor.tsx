@@ -117,7 +117,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     setModalOpen(false)
     const formData = new FormData()
     formData.append('title', title)
-    formData.append('article', note)
+    formData.append('content', note)
     formData.append('musicCode', code)
     formData.append('category', category)
     formData.append('image', image)

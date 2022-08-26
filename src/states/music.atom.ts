@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { IResultData } from 'types'
 
 export const navToggleState = atom<Boolean>({
   key: 'navToggleState',
@@ -22,6 +23,11 @@ export const codeList = atom({
 export const categoryList = atom({
   key: 'categoryList',
   default: ['발라드', 'CCM', '락', '클래식', '락발라드', '재즈', '일렉트로닉'],
+})
+
+export const matchedDataState = atom<IResultData[] | undefined>({
+  key: 'matchedDataState',
+  default: [],
 })
 
 export const searchTextState = atom({
@@ -51,5 +57,9 @@ export const searchRefreshState = atom({
 })
 export const inputBlurState = atom({
   key: 'inputBlurState',
+  default: false,
+})
+export const searchRefetchState = atom({
+  key: 'searchRefetchState',
   default: false,
 })

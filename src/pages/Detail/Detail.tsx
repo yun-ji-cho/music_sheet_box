@@ -11,7 +11,7 @@ import defaultImage from 'assets/images/default_img.png'
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import { useRecoil } from 'hooks/state'
-import { searchedWordState, searchRefreshState, searchTextState } from 'states/music.atom'
+import { searchedWordState, searchRefetchState, searchRefreshState, searchTextState } from 'states/music.atom'
 
 interface ItemProps {
   dataList: IResultData[]
@@ -31,11 +31,12 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   const [, setSearchRefresh] = useRecoil(searchRefreshState)
   const [, setSearchInput] = useRecoil(searchTextState)
   const [searchedWord] = useRecoil(searchedWordState)
+  const [searchRefetch, setSearchRefetch] = useRecoil(searchRefetchState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = `상세 - ${id}번 게시물`
-  })
+  }, [id])
 
   useEffect(() => {
     refetch()
@@ -54,7 +55,6 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
 
   const handleMoveList = () => {
     setSearchRefresh(false)
-    setSearchInput(searchedWord)
     navigate(-1)
   }
 
@@ -71,6 +71,7 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   }
   const handleMoveToBack = () => {
     navigate(-1)
+    setSearchRefetch(true)
   }
 
   const { mutate } = useMutation(deleteItemApi, {

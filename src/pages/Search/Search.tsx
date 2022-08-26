@@ -10,10 +10,12 @@ import {
   searchedWordState,
   searchRefreshState,
   inputBlurState,
+  matchedDataState,
+  searchRefetchState,
 } from 'states/music.atom'
 
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
-import { IResultData } from 'types'
+// import { IResultData } from 'types'
 
 import styles from './search.module.scss'
 
@@ -24,7 +26,7 @@ import SearchForm from './SearchForm/SearchForm'
 const Search = () => {
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
-  const [matchedData, setMatchedData] = useState<IResultData[] | undefined>([])
+  const [matchedData, setMatchedData, resetMatchedData] = useRecoil(matchedDataState)
   const [filterType, setFilterType] = useState('')
   const [filterCode, setFilterCode] = useState('')
   const [filterCategory, setFilterCategory] = useState('')
@@ -37,11 +39,39 @@ const Search = () => {
   const [category, , resetCategory] = useRecoil(searchCategoryState)
   const [isRefreshPage] = useRecoil(searchRefreshState)
   const [inputBlur, setInputBlur] = useRecoil(inputBlurState)
+  const [searchRefetch, setSearchRefetch] = useRecoil(searchRefetchState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
     titleElement.innerHTML = 'Music box - Search'
   }, [])
+
+  const { data, refetch, isFetching } = useQuery(
+    ['musicSheets', searchInput, filterType, filterCode, filterCategory],
+    () =>
+      getMusicSheetApi({
+        search: searchInput,
+        filterType: textFilter,
+        music_code: filterCode,
+        category: filterCategory,
+      }).then((res) => res.data),
+    {
+      refetchOnWindowFocus: false,
+      useErrorBoundary: true,
+      enabled: false,
+    }
+  )
+
+  useEffect(() => {
+    if (searchRefetch && data) {
+      refetch()
+      setMatchedData(data.results)
+    }
+  }, [data, matchedData, refetch, searchRefetch, setMatchedData, setSearchRefetch])
+
+  useEffect(() => {
+    setSearchRefetch(false)
+  }, [matchedData, setSearchRefetch])
 
   useEffect(() => {
     setFilterType(textFilter.toLowerCase())
@@ -57,25 +87,11 @@ const Search = () => {
     if (category === 'ALL') setFilterCategory('')
   }, [category])
 
-  const { data, refetch, isFetching, isFetched } = useQuery(
-    ['musicSheets', searchInput, filterType, filterCode, filterCategory],
-    () =>
-      getMusicSheetApi({
-        search: searchInput,
-        filterType: textFilter,
-        music_code: filterCode,
-        category: filterCategory,
-      }).then((res) => res.data),
-    {
-      refetchOnWindowFocus: false,
-      useErrorBoundary: true,
-      enabled: false,
-    }
-  )
   useEffect(() => {
-    if (searchInput !== searchedWord) return
-    refetch()
-  }, [data, refetch, searchInput, searchedWord])
+    if (data && searchedWord === searchInput && inputBlur) {
+      setMatchedData(data.results)
+    }
+  }, [data, inputBlur, matchedData, searchInput, searchedWord, setMatchedData])
 
   useEffect(() => {
     if (isRefreshPage && !searchInput && !searchedWord) {
@@ -104,15 +120,10 @@ const Search = () => {
       return
     }
     refetch()
-    setItemVisible(true)
     setSearchedWord(searchInput)
+    setItemVisible(true)
+    setInputBlur(true)
   }
-
-  useEffect(() => {
-    if (isFetched && data && searchedWord === searchInput) {
-      setMatchedData(data.results)
-    }
-  }, [data, isFetched, matchedData, searchInput, searchedWord])
 
   return (
     <div className={styles.search}>
@@ -120,7 +131,7 @@ const Search = () => {
       <form action='' onSubmit={handleSubmit}>
         <SearchForm />
       </form>
-      {itemVisible && matchedData && matchedData.length > 0 && (
+      {itemVisible && matchedData && (
         <SearchResult
           totalLength={matchedData.length}
           filterResult={matchedData}

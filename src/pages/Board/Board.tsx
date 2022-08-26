@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 
 import styles from './board.module.scss'
 import { IMusicSheetRes } from 'types'
+import { useNavigate } from 'react-router-dom'
 
 import Item from 'components/Item/Item'
 import SortDropDown from './SortDropDown/SortDropDown'
 import Loading from 'components/Loading/Loading'
 import { WarningIcon } from 'assets/svg'
+import Button from 'components/Button/Button'
 
 const sortOptionList = [
   { value: 'latest', name: '최신순' },
@@ -22,6 +24,7 @@ interface Props {
 const Board = ({ data, isLoading, refetch }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [sortType, setSortType] = useState('latest')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -50,6 +53,10 @@ const Board = ({ data, isLoading, refetch }: Props) => {
     return sortedList
   }
 
+  const handleMoveUpload = () => {
+    navigate(`/upload`)
+  }
+
   if (isLoading) return <Loading />
 
   const handleListView = () => {
@@ -58,6 +65,7 @@ const Board = ({ data, isLoading, refetch }: Props) => {
         <div className={styles.noContent}>
           <WarningIcon />
           <div className={styles.text}>등록된 악보가 없습니다.</div>
+          <Button message='악보 등록하기' width='width25' type='primary' onClick={handleMoveUpload} />
         </div>
       )
     }
