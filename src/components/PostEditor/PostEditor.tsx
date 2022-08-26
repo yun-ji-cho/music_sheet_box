@@ -183,10 +183,10 @@ const PostEditor = ({ isEdit, originData }: Props) => {
         <ConfirmModal
           iconCheck={iconCheck}
           message={alertMessage}
-          confirmOnClick={cancelButton ? handlePostData : setModalOpen}
+          confirmButtonFunc={cancelButton ? handlePostData : setModalOpen}
           moveToBoard={moveToBoard}
           cancelButton={cancelButton}
-          cancelButtonClick={handleCloseModal}
+          cancelButtonFunc={handleCloseModal}
         />
       )}
     </div>

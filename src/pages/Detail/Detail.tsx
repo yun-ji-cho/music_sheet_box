@@ -11,7 +11,7 @@ import defaultImage from 'assets/images/default_img.png'
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import { useRecoil } from 'hooks/state'
-import { searchedWordState, searchRefetchState, searchRefreshState, searchTextState } from 'states/music.atom'
+import { searchRefetchState, searchRefreshState } from 'states/music.atom'
 
 interface ItemProps {
   dataList: IResultData[]
@@ -22,16 +22,14 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   const navigate = useNavigate()
   const { id } = useParams()
   const [filterData, setFilterData] = useState<IResultData>()
-  const [resultModal, setResultModal] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false)
+  const [isEditModal, setIsEditModal] = useState(false)
+  const [confirmModal, setConfirmModal] = useState(false)
   const [message, setMessage] = useState('')
   const [moveToBoard, setMoveToBoard] = useState(false)
   const [iconCheck, setIconCheck] = useState(false)
   const [cancelButton, setCancelButton] = useState(false)
   const [, setSearchRefresh] = useRecoil(searchRefreshState)
-  const [, setSearchInput] = useRecoil(searchTextState)
-  const [searchedWord] = useRecoil(searchedWordState)
-  const [searchRefetch, setSearchRefetch] = useRecoil(searchRefetchState)
+  const [, setSearchRefetch] = useRecoil(searchRefetchState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -46,8 +44,9 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
       if (targetPost) {
         setFilterData(targetPost)
       } else {
+        setConfirmModal(true)
+        setCancelButton(false)
         setMessage('없는 게시물 입니다.')
-        setResultModal(true)
         setMoveToBoard(true)
       }
     }
@@ -59,28 +58,25 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   }
 
   const handleEdit = () => {
-    navigate(`/edit/${id}`)
+    setMessage('수정하시겠습니까?')
+    setConfirmModal(true)
+    setCancelButton(true)
+    setIsEditModal(true)
   }
   const handleDelete = () => {
     setMessage('삭제하시겠습니까?')
-    setDeleteModal(true)
+    setConfirmModal(true)
     setCancelButton(true)
+    setIsEditModal(false)
   }
   const handleCloseModal = () => {
-    setDeleteModal(false)
-  }
-  const handleMoveToBack = () => {
-    navigate(-1)
-    setSearchRefetch(true)
+    setConfirmModal(false)
   }
 
   const { mutate } = useMutation(deleteItemApi, {
-    onSettled: () => {
-      setDeleteModal(false)
-      setResultModal(true)
-    },
     onSuccess: () => {
       setIconCheck(true)
+      setCancelButton(false)
       setMessage('게시물 삭제 완료')
     },
     onError: (error) => {
@@ -90,31 +86,33 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
     },
   })
 
-  const handleDeletePost = () => {
-    mutate(Number(id))
-  }
-
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = defaultImage
   }
 
+  const confirmButtonFunc = () => {
+    if (!cancelButton) {
+      navigate(-1)
+      setSearchRefetch(true)
+    }
+
+    if (isEditModal) {
+      return navigate(`/edit/${id}`)
+    }
+
+    return mutate(Number(id))
+  }
+
   return (
     <div className={styles.detail}>
-      {resultModal && (
+      {confirmModal && (
         <ConfirmModal
           message={message}
           iconCheck={iconCheck}
           moveToBoard={moveToBoard}
-          confirmOnClick={handleMoveToBack}
-        />
-      )}
-      {deleteModal && (
-        <ConfirmModal
-          message={message}
-          iconCheck={iconCheck}
-          moveToBoard={moveToBoard}
-          confirmOnClick={cancelButton ? handleDeletePost : handleMoveToBack}
-          cancelButtonClick={handleCloseModal}
+          cancelButton={cancelButton}
+          confirmButtonFunc={confirmButtonFunc}
+          cancelButtonFunc={handleCloseModal}
         />
       )}
       <div className={styles.top}>

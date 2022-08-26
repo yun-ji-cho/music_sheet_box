@@ -11,15 +11,22 @@ interface Props {
   moveToBoard?: Boolean
   iconCheck?: Boolean
   cancelButton?: Boolean
-  cancelButtonClick?: () => void
-  confirmOnClick: Dispatch<SetStateAction<boolean>>
+  cancelButtonFunc?: () => void
+  confirmButtonFunc: Dispatch<SetStateAction<boolean>>
 }
 
-const ConfirmModal = ({ message, moveToBoard, iconCheck, confirmOnClick, cancelButtonClick, cancelButton }: Props) => {
+const ConfirmModal = ({
+  message,
+  moveToBoard,
+  iconCheck,
+  confirmButtonFunc,
+  cancelButtonFunc,
+  cancelButton,
+}: Props) => {
   const navigate = useNavigate()
 
   const handleOnclick = () => {
-    confirmOnClick(false)
+    confirmButtonFunc(false)
     if (moveToBoard) navigate(`../board`)
   }
 
@@ -38,7 +45,7 @@ const ConfirmModal = ({ message, moveToBoard, iconCheck, confirmOnClick, cancelB
             </div>
             <div className={styles.buttonWrap}>
               <Button message='확인' onClick={handleOnclick} type='primary' width='widthBasic' />
-              {cancelButton && <Button message='취소' onClick={cancelButtonClick} type='negative' width='widthBasic' />}
+              {cancelButton && <Button message='취소' onClick={cancelButtonFunc} type='negative' width='widthBasic' />}
             </div>
           </div>
         </div>

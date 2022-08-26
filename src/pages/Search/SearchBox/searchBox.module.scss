@@ -4,8 +4,9 @@
   position: relative;
   box-sizing: border-box;
   display: flex;
-  width: calc(100% - 55px);
-  height: 45px;
+  align-items: center;
+  width: calc(100% - 50px);
+  height: 50px;
   background: colors.$WHITE;
   border-radius: 8px;
 
@@ -14,14 +15,21 @@
   }
 
   input[type='text'] {
-    width: calc(100% - 45px);
+    width: calc(100% - 50px);
     height: 100%;
-    padding: 0 35px 0 10px;
+    padding: 0 45px 0 10px;
     font-size: 18px;
     color: colors.$GRAY3;
 
     &::placeholder {
       color: colors.$GRAYA;
+    }
+  }
+
+  .searchBtn {
+    &:hover {
+      background-color: colors.$GRAYE;
+      border-radius: 50%;
     }
   }
 
@@ -37,7 +45,7 @@
     &.deleteBtn {
       position: absolute;
       top: 50%;
-      right: 45px;
+      right: 60px;
       display: none;
       width: 22px;
       transform: translateY(-50%);

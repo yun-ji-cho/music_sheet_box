@@ -26,7 +26,7 @@ import SearchForm from './SearchForm/SearchForm'
 const Search = () => {
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
-  const [matchedData, setMatchedData, resetMatchedData] = useRecoil(matchedDataState)
+  const [matchedData, setMatchedData] = useRecoil(matchedDataState)
   const [filterType, setFilterType] = useState('')
   const [filterCode, setFilterCode] = useState('')
   const [filterCategory, setFilterCategory] = useState('')
@@ -140,7 +140,7 @@ const Search = () => {
         />
       )}
 
-      {confirmModalOpen && <ConfirmModal message={alertMessage} confirmOnClick={setConfirmModalOpen} />}
+      {confirmModalOpen && <ConfirmModal message={alertMessage} confirmButtonFunc={setConfirmModalOpen} />}
     </div>
   )
 }

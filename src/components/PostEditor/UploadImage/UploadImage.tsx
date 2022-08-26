@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import styles from './uploadImage.module.scss'
 
-import { PlusIcon, FileImageIcon, CloseIcon } from 'assets/svg/index'
+import { PlusIcon, FileImageIcon, RoundCloseIcon } from 'assets/svg/index'
 
 interface Props {
   handleImageUpload: (e: ChangeEvent<HTMLInputElement>) => void
@@ -37,7 +37,7 @@ const UploadImage = memo(({ handleImageUpload, previewURL, imageVisible, handleR
         <div className={styles.image}>
           <img src={previewURL} alt='upload images' />
           <button type='button' className={styles.removeBtn} onClick={handleRemoveImage}>
-            <CloseIcon className={styles.closeBtn} />
+            <RoundCloseIcon className={styles.closeBtn} />
           </button>
         </div>
       </label>

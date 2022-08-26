@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="그룹_1048" data-name="그룹 1048" transform="translate(-1.932 -2)">
+    <rect id="사각형_136" data-name="사각형 136" width="20" height="20" rx="10" transform="translate(1.932 2)" fill="#ccc"/>
+    <path id="Icon_material-close" data-name="Icon material-close" d="M15.353,8.291,14.562,7.5l-3.135,3.135L8.291,7.5,7.5,8.291l3.135,3.135L7.5,14.562l.791.791,3.135-3.135,3.135,3.135.791-.791-3.135-3.135Z" transform="translate(0.417 0.417)" fill="#fff"/>
+  </g>
+</svg>

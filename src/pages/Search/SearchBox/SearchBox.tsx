@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef } from 'react'
 import { useRecoil } from 'hooks/state'
 import cx from 'classnames'
 
-import { SearchIcon, CloseIcon } from 'assets/svg/index'
+import { SearchIcon, RoundCloseIcon } from 'assets/svg/index'
 
 import styles from './searchBox.module.scss'
 import { inputBlurState, searchTextState } from 'states/music.atom'
@@ -37,7 +37,7 @@ const SearchBox = () => {
         className={cx(styles.deleteBtn, { [styles.isActive]: searchInput })}
         onClick={handleRemoveValue}
       >
-        <CloseIcon className={styles.removeIcon} />
+        <RoundCloseIcon className={styles.removeIcon} />
       </button>
       <button type='submit' aria-label='검색' className={styles.searchBtn}>
         <SearchIcon className={styles.searchIcon} />
