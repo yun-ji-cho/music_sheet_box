@@ -1,10 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { useRecoil } from 'hooks/state'
 import { Routes, Route } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import { useResetRecoilState } from 'recoil'
 
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
 import loadingBox from 'assets/images/bouncing_box.gif'
+import {
+  searchTextState,
+  searchTextFilterState,
+  searchMusicCodeState,
+  searchCategoryState,
+  searchedWordState,
+  searchItemVisible,
+} from 'states/music.atom'
 import styles from './Routes.module.scss'
 
 import Search from '../pages/Search/Search'
@@ -16,45 +25,45 @@ import PageLayout from '../components/PageLayout/PageLayout'
 import Header from '../components/Header/Header'
 import GNB from '../components/Modal/GNB/GNB'
 
-import { searchTextState, searchTextFilterState, searchMusicCodeState, searchCategoryState } from 'states/music.atom'
-
 const App = () => {
-  const [searchInput] = useRecoil(searchTextState)
-  const [filterType, setFilterType] = useState('')
-  const [filterCode, setFilterCode] = useState('')
-  const [filterCategory, setFilterCategory] = useState('')
+  const [navToggle, setNavToggle] = useState(false)
+  const [searchInput, , resetSearchInput] = useRecoil(searchTextState)
+  const resetSearchedWord = useResetRecoilState(searchedWordState)
   const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
   const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
   const [category, , resetCategory] = useRecoil(searchCategoryState)
+  const resetItemVisible = useResetRecoilState(searchItemVisible)
+
+  const handleResetForm = useCallback(() => {
+    resetSearchInput()
+    resetSearchedWord()
+    resetTextFilter()
+    resetSetCode()
+    resetCategory()
+    resetItemVisible()
+  }, [resetCategory, resetItemVisible, resetSearchInput, resetSearchedWord, resetSetCode, resetTextFilter])
 
   const { isLoading, data, refetch, isFetching } = useQuery(
-    ['musicSheets', searchInput, filterType, filterCode, filterCategory],
-    () =>
-      getMusicSheetApi({
+    ['musicSheets', searchInput, textFilter, code, category],
+    async () => {
+      textFilter.toLowerCase()
+      const queryCode = code === 'ALL' ? '' : code
+      const queryCategory = category === 'ALL' ? '' : category
+
+      const res = await getMusicSheetApi({
         search: searchInput,
         filterType: textFilter,
-        music_code: filterCode,
-        category: filterCategory,
-      }).then((res) => res.data),
+        music_code: queryCode,
+        category: queryCategory,
+      })
+      return res.data
+    },
     {
       refetchOnWindowFocus: false,
       useErrorBoundary: true,
       enabled: false,
     }
   )
-  useEffect(() => {
-    setFilterType(textFilter.toLowerCase())
-  }, [textFilter])
-
-  useEffect(() => {
-    setFilterCode(code)
-    if (code === 'ALL') setFilterCode('')
-  }, [code])
-
-  useEffect(() => {
-    setFilterCategory(category)
-    if (category === 'ALL') setFilterCategory('')
-  }, [category])
 
   if (isLoading)
     return (
@@ -66,8 +75,8 @@ const App = () => {
   return (
     <div className={styles.app}>
       <div className={styles.container}>
-        <Header />
-        <GNB />
+        <Header navToggle={navToggle} setNavToggle={setNavToggle} />
+        <GNB refetch={refetch} handleResetForm={handleResetForm} navToggle={navToggle} setNavToggle={setNavToggle} />
         <Routes>
           <Route path='' element={<Search data={data} refetch={refetch} isFetching={isFetching} />} />
           <Route path='detail/:id' element={<Detail dataList={data?.results} refetch={refetch} />} />

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface IResultData {
   id: number
   title: string
@@ -12,4 +14,9 @@ export interface IMusicSheetRes {
   next: null | number
   previous: null | number
   results: IResultData[]
+}
+
+export interface Nav {
+  navToggle: Boolean
+  setNavToggle: Dispatch<SetStateAction<boolean>>
 }

@@ -1,15 +1,12 @@
-import { useRecoilState } from 'recoil'
+import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 import cx from 'classnames'
 import { SaveBoxIcon } from 'assets/svg/index'
 
 import styles from './header.module.scss'
+import { Nav } from 'types'
 
-import { navToggleState } from 'states/music.atom'
-
-const Header = () => {
-  const [navToggle, setNavToggle] = useRecoilState(navToggleState)
-
+const Header = memo(({ navToggle, setNavToggle }: Nav) => {
   const handleNavToggle = () => {
     setNavToggle((prev) => !prev)
   }
@@ -26,6 +23,8 @@ const Header = () => {
       </button>
     </header>
   )
-}
+})
+
+Header.displayName = 'Header'
 
 export default Header

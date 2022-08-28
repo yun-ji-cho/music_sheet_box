@@ -11,11 +11,10 @@ import { memo } from 'react'
 interface ISearchResult {
   totalLength: number
   filterResult: IResultData[]
-  title: string
   isFetching: Boolean
 }
 
-const SearchResult = memo(({ totalLength = 0, filterResult, title, isFetching }: ISearchResult) => {
+const SearchResult = memo(({ totalLength = 0, filterResult, isFetching }: ISearchResult) => {
   const searchedWord = useRecoilValue(searchedWordState)
   return (
     <div className={styles.searchResult}>
@@ -27,7 +26,7 @@ const SearchResult = memo(({ totalLength = 0, filterResult, title, isFetching }:
             &quot;{searchedWord}&quot; 검색결과 총 {totalLength}건을 찾았습니다.
           </p>
           <div className={styles.resultWrap}>
-            <ResultItem filterArray={filterResult} title={title} />
+            <ResultItem filterArray={filterResult} />
           </div>
         </>
       )}

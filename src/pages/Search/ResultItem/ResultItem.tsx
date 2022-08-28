@@ -4,23 +4,21 @@ import parse from 'html-react-parser'
 import { IResultData } from 'types'
 
 import { useRecoilValue } from 'recoil'
-import { searchedWordState, searchRefetchState } from 'states/music.atom'
+import { searchedWordState, searchTextFilterState } from 'states/music.atom'
 
 import styles from './resultItem.module.scss'
 import defaultImage from 'assets/images/default_img.png'
 
 import { BoldText } from '../BoldText'
-import { useRecoil } from 'hooks/state'
 
 interface IFilter {
   filterArray: IResultData[]
-  title: string
 }
 
-const ResultItem = ({ filterArray, title }: IFilter) => {
+const ResultItem = ({ filterArray }: IFilter) => {
   const navigate = useNavigate()
   const searchedWord = useRecoilValue(searchedWordState)
-  const [, setSearchRefetch] = useRecoil(searchRefetchState)
+  const title = useRecoilValue(searchTextFilterState)
 
   const handleBoldText = (item: IResultData) => {
     return (
@@ -37,7 +35,6 @@ const ResultItem = ({ filterArray, title }: IFilter) => {
 
   const handleMoveDetail = (e: MouseEvent<HTMLButtonElement>) => {
     const id = Number(e.currentTarget.value)
-    setSearchRefetch(false)
     navigate(`/detail/${id}`)
   }
 

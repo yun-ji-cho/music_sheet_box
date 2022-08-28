@@ -51,15 +51,7 @@ export const searchCategoryState = atom({
   default: 'ALL',
 })
 
-export const searchRefreshState = atom({
-  key: 'searchRefreshState',
-  default: true,
-})
 export const inputBlurState = atom({
   key: 'inputBlurState',
-  default: false,
-})
-export const searchRefetchState = atom({
-  key: 'searchRefetchState',
   default: false,
 })

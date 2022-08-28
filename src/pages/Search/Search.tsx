@@ -2,15 +2,10 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useRecoil } from 'hooks/state'
 import {
   searchTextState,
-  searchTextFilterState,
-  searchMusicCodeState,
-  searchCategoryState,
   searchItemVisible,
   searchedWordState,
-  searchRefreshState,
-  inputBlurState,
+  // inputBlurState,
   matchedDataState,
-  searchRefetchState,
 } from 'states/music.atom'
 
 import styles from './search.module.scss'
@@ -31,15 +26,10 @@ const Search = ({ data, refetch, isFetching }: Props) => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const [matchedData, setMatchedData] = useRecoil(matchedDataState)
 
-  const [searchedWord, setSearchedWord, resetSearchedWord] = useRecoil(searchedWordState)
+  const [searchedWord, setSearchedWord] = useRecoil(searchedWordState)
   const [itemVisible, setItemVisible] = useRecoil(searchItemVisible)
-  const [textFilter, , resetTextFilter] = useRecoil(searchTextFilterState)
   const [searchInput] = useRecoil(searchTextState)
-  const [code, , resetSetCode] = useRecoil(searchMusicCodeState)
-  const [category, , resetCategory] = useRecoil(searchCategoryState)
-  const [isRefreshPage] = useRecoil(searchRefreshState)
-  const [inputBlur, setInputBlur] = useRecoil(inputBlurState)
-  const [searchRefetch, setSearchRefetch] = useRecoil(searchRefetchState)
+  // const [inputBlur, setInputBlur] = useRecoil(inputBlurState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -47,40 +37,17 @@ const Search = ({ data, refetch, isFetching }: Props) => {
   }, [])
 
   useEffect(() => {
-    if (searchRefetch && data) {
+    if (data) {
       refetch()
       setMatchedData(data.results)
     }
-  }, [data, refetch, searchRefetch, setMatchedData])
+  }, [data, refetch, setMatchedData])
 
-  useEffect(() => {
-    setSearchRefetch(false)
-  }, [matchedData, setSearchRefetch])
-
-  useEffect(() => {
-    if (data && searchedWord === searchInput && inputBlur) {
-      setMatchedData(data.results)
-    }
-  }, [data, inputBlur, matchedData, searchInput, searchedWord, setMatchedData])
-
-  useEffect(() => {
-    if (isRefreshPage && !searchInput && !searchedWord) {
-      resetTextFilter()
-      resetSetCode()
-      resetCategory()
-      resetSearchedWord()
-      setItemVisible(false)
-    }
-  }, [
-    isRefreshPage,
-    resetCategory,
-    resetSearchedWord,
-    resetSetCode,
-    resetTextFilter,
-    searchInput,
-    searchedWord,
-    setItemVisible,
-  ])
+  // useEffect(() => {
+  //   if (data && !searchedWord) {
+  //     setMatchedData(data.results)
+  //   }
+  // }, [data, matchedData, searchedWord, setMatchedData])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -92,7 +59,7 @@ const Search = ({ data, refetch, isFetching }: Props) => {
     refetch()
     setSearchedWord(searchInput)
     setItemVisible(true)
-    setInputBlur(true)
+    // setInputBlur(true)
   }
 
   return (
@@ -102,12 +69,7 @@ const Search = ({ data, refetch, isFetching }: Props) => {
         <SearchForm />
       </form>
       {itemVisible && matchedData && (
-        <SearchResult
-          totalLength={matchedData.length}
-          filterResult={matchedData}
-          title={textFilter}
-          isFetching={isFetching}
-        />
+        <SearchResult totalLength={matchedData.length} filterResult={matchedData} isFetching={isFetching} />
       )}
 
       {confirmModalOpen && <ConfirmModal message={alertMessage} confirmButtonFunc={setConfirmModalOpen} />}

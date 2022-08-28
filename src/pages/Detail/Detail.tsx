@@ -10,8 +10,6 @@ import defaultImage from 'assets/images/default_img.png'
 
 import Button from 'components/Button/Button'
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
-import { useRecoil } from 'hooks/state'
-import { searchRefetchState, searchRefreshState } from 'states/music.atom'
 
 interface ItemProps {
   dataList: IResultData[]
@@ -28,8 +26,6 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   const [moveToBoard, setMoveToBoard] = useState(false)
   const [iconCheck, setIconCheck] = useState(false)
   const [cancelButton, setCancelButton] = useState(false)
-  const [, setSearchRefresh] = useRecoil(searchRefreshState)
-  const [, setSearchRefetch] = useRecoil(searchRefetchState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -53,7 +49,6 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   }, [dataList, id, refetch])
 
   const handleMoveList = () => {
-    setSearchRefresh(false)
     navigate(-1)
   }
 
@@ -93,7 +88,6 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
   const confirmButtonFunc = () => {
     if (!cancelButton) {
       navigate(-1)
-      setSearchRefetch(true)
     }
 
     if (isEditModal) {

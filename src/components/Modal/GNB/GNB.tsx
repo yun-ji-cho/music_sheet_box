@@ -1,23 +1,22 @@
+import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import cx from 'classnames'
+import { Nav } from 'types'
 
-import { navToggleState, searchedWordState, searchRefreshState, searchTextState } from 'states/music.atom'
+import styles from './gnb.module.scss'
 
 import Portal from '../Portal'
 
-import cx from 'classnames'
-import styles from './gnb.module.scss'
+interface Props extends Nav {
+  refetch: () => {}
+  handleResetForm: () => {}
+}
 
-const GNB = () => {
-  const [navToggle, setNavToggle] = useRecoilState(navToggleState)
-  const [, setSearchRefresh] = useRecoilState(searchRefreshState)
-  const resetSearchInput = useResetRecoilState(searchTextState)
-  const resetSearchedWord = useResetRecoilState(searchedWordState)
+const GNB = memo(({ refetch, handleResetForm, navToggle, setNavToggle }: Props) => {
   const handleNavToggle = () => {
     setNavToggle(false)
-    setSearchRefresh(true)
-    resetSearchInput()
-    resetSearchedWord()
+    refetch()
+    handleResetForm()
   }
   return (
     <Portal>
@@ -46,6 +45,7 @@ const GNB = () => {
       </div>
     </Portal>
   )
-}
+})
 
+GNB.displayName = 'GNB'
 export default GNB
