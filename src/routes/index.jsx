@@ -6,7 +6,6 @@ import { isAxiosError } from 'utils/axios'
 import loadingBox from 'assets/images/bouncing_box.gif'
 import styles from './Routes.module.scss'
 
-import Layout from ''
 import Search from '../pages/Search/Search'
 import Board from '../pages/Board/Board'
 import Upload from '../pages/Upload/Upload'

@@ -22,10 +22,23 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const titleInput = useRef<HTMLInputElement>(null)
   const articleInput = useRef<HTMLTextAreaElement>(null)
   const [image, setImage] = useState<any>(null)
-  const [title, setTitle] = useState('')
   const [code, setCode] = useState('선택하세요')
   const [category, setCategory] = useState('선택하세요')
-  const [note, setNote] = useState('')
+  const [inputs, setInputs] = useState({
+    title: '',
+    note: '',
+  })
+
+  const { title, note } = inputs
+
+  const onChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const { value, name } = e.target
+    setInputs({
+      ...inputs,
+      [name]: value,
+    })
+  }
+
   const [codeSelect, setCodeSelect] = useState(false)
   const [categorySelect, setCategorySelect] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
@@ -45,10 +58,12 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   useEffect(() => {
     if (!isEdit || !originData) return
     setPreviewURL(originData.image)
-    setTitle(originData.title)
     setCode(originData.musicCode)
     setCategory(originData.category)
-    setNote(originData.content)
+    setInputs({
+      title: originData.title,
+      note: originData.content,
+    })
     setImageVisible(true)
   }, [isEdit, originData])
 
@@ -153,13 +168,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
             <label htmlFor='title' className={styles.itemTitle}>
               Title
             </label>
-            <input
-              type='text'
-              id='title'
-              ref={titleInput}
-              value={title}
-              onChange={(e) => setTitle(e.currentTarget.value)}
-            />
+            <input name='title' type='text' id='title' ref={titleInput} value={title} onChange={onChange} />
           </li>
           <li>
             <DropDown label='Code' value={code} onChange={setCode} selectAlert={codeSelect} />
@@ -171,7 +180,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
             <label htmlFor='article' className={styles.itemTitle}>
               Note
             </label>
-            <textarea value={note} id='article' ref={articleInput} onChange={(e) => setNote(e.currentTarget.value)} />
+            <textarea name='note' value={note} id='article' ref={articleInput} onChange={onChange} />
           </li>
         </ul>
         <div className={styles.buttonWrap}>
