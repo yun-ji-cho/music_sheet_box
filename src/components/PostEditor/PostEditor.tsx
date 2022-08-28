@@ -24,21 +24,6 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const [image, setImage] = useState<any>(null)
   const [code, setCode] = useState('선택하세요')
   const [category, setCategory] = useState('선택하세요')
-  const [inputs, setInputs] = useState({
-    title: '',
-    note: '',
-  })
-
-  const { title, note } = inputs
-
-  const onChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-    const { value, name } = e.target
-    setInputs({
-      ...inputs,
-      [name]: value,
-    })
-  }
-
   const [codeSelect, setCodeSelect] = useState(false)
   const [categorySelect, setCategorySelect] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
@@ -50,6 +35,23 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [cancelButton, setCancelButton] = useState(false)
   const queryClient = useQueryClient()
+  const [inputs, setInputs] = useState({
+    title: '',
+    note: '',
+  })
+
+  const { title, note } = inputs
+
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+      const { value, name } = e.target
+      setInputs({
+        ...inputs,
+        [name]: value,
+      })
+    },
+    [inputs]
+  )
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView()

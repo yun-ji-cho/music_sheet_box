@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRecoil } from 'hooks/state'
-import { useQuery } from 'react-query'
 import {
   searchTextState,
   searchTextFilterState,
@@ -14,22 +13,23 @@ import {
   searchRefetchState,
 } from 'states/music.atom'
 
-import { getMusicSheetApi } from 'service/getMusicSheetApi'
-// import { IResultData } from 'types'
-
 import styles from './search.module.scss'
 
 import ConfirmModal from 'components/Modal/ConfirmModal/ConfirmModal'
 import SearchResult from './SearchResult/SearchResult'
 import SearchForm from './SearchForm/SearchForm'
+import { IMusicSheetRes } from 'types'
 
-const Search = () => {
+interface Props {
+  data: IMusicSheetRes
+  refetch: () => void
+  isFetching: Boolean
+}
+
+const Search = ({ data, refetch, isFetching }: Props) => {
   const [alertMessage, setAlertMessage] = useState('')
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
   const [matchedData, setMatchedData] = useRecoil(matchedDataState)
-  const [filterType, setFilterType] = useState('')
-  const [filterCode, setFilterCode] = useState('')
-  const [filterCategory, setFilterCategory] = useState('')
 
   const [searchedWord, setSearchedWord, resetSearchedWord] = useRecoil(searchedWordState)
   const [itemVisible, setItemVisible] = useRecoil(searchItemVisible)
@@ -46,46 +46,16 @@ const Search = () => {
     titleElement.innerHTML = 'Music box - Search'
   }, [])
 
-  const { data, refetch, isFetching } = useQuery(
-    ['musicSheets', searchInput, filterType, filterCode, filterCategory],
-    () =>
-      getMusicSheetApi({
-        search: searchInput,
-        filterType: textFilter,
-        music_code: filterCode,
-        category: filterCategory,
-      }).then((res) => res.data),
-    {
-      refetchOnWindowFocus: false,
-      useErrorBoundary: true,
-      enabled: false,
-    }
-  )
-
   useEffect(() => {
     if (searchRefetch && data) {
       refetch()
       setMatchedData(data.results)
     }
-  }, [data, matchedData, refetch, searchRefetch, setMatchedData, setSearchRefetch])
+  }, [data, refetch, searchRefetch, setMatchedData])
 
   useEffect(() => {
     setSearchRefetch(false)
   }, [matchedData, setSearchRefetch])
-
-  useEffect(() => {
-    setFilterType(textFilter.toLowerCase())
-  }, [textFilter])
-
-  useEffect(() => {
-    setFilterCode(code)
-    if (code === 'ALL') setFilterCode('')
-  }, [code])
-
-  useEffect(() => {
-    setFilterCategory(category)
-    if (category === 'ALL') setFilterCategory('')
-  }, [category])
 
   useEffect(() => {
     if (data && searchedWord === searchInput && inputBlur) {
