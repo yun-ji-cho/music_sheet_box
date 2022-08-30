@@ -4,8 +4,8 @@ import {
   searchTextState,
   searchItemVisible,
   searchedWordState,
-  // inputBlurState,
   matchedDataState,
+  inputBlurState,
 } from 'states/music.atom'
 
 import styles from './search.module.scss'
@@ -29,7 +29,7 @@ const Search = ({ data, refetch, isFetching }: Props) => {
   const [searchedWord, setSearchedWord] = useRecoil(searchedWordState)
   const [itemVisible, setItemVisible] = useRecoil(searchItemVisible)
   const [searchInput] = useRecoil(searchTextState)
-  // const [inputBlur, setInputBlur] = useRecoil(inputBlurState)
+  const [, setInputBlur] = useRecoil(inputBlurState)
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0]
@@ -37,17 +37,17 @@ const Search = ({ data, refetch, isFetching }: Props) => {
   }, [])
 
   useEffect(() => {
+    refetch()
     if (data) {
-      refetch()
       setMatchedData(data.results)
     }
   }, [data, refetch, setMatchedData])
 
-  // useEffect(() => {
-  //   if (data && !searchedWord) {
-  //     setMatchedData(data.results)
-  //   }
-  // }, [data, matchedData, searchedWord, setMatchedData])
+  useEffect(() => {
+    if (data && !searchedWord && searchedWord === searchInput) {
+      setMatchedData(data.results)
+    }
+  }, [data, searchInput, searchedWord, setMatchedData])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -59,7 +59,7 @@ const Search = ({ data, refetch, isFetching }: Props) => {
     refetch()
     setSearchedWord(searchInput)
     setItemVisible(true)
-    // setInputBlur(true)
+    setInputBlur(true)
   }
 
   return (

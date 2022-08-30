@@ -87,13 +87,14 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
 
   const confirmButtonFunc = () => {
     if (!cancelButton) {
-      navigate(-1)
+      return navigate(-1)
     }
 
     if (isEditModal) {
       return navigate(`/edit/${id}`)
     }
 
+    // refetch()
     return mutate(Number(id))
   }
 

@@ -5,7 +5,6 @@ import { useQuery } from 'react-query'
 import { useResetRecoilState } from 'recoil'
 
 import { getMusicSheetApi } from 'service/getMusicSheetApi'
-import loadingBox from 'assets/images/bouncing_box.gif'
 import {
   searchTextState,
   searchTextFilterState,
@@ -46,13 +45,13 @@ const App = () => {
   const { isLoading, data, refetch, isFetching } = useQuery(
     ['musicSheets', searchInput, textFilter, code, category],
     async () => {
-      textFilter.toLowerCase()
+      const queryFilterText = textFilter.toLowerCase()
       const queryCode = code === 'ALL' ? '' : code
       const queryCategory = category === 'ALL' ? '' : category
 
       const res = await getMusicSheetApi({
         search: searchInput,
-        filterType: textFilter,
+        filterType: queryFilterText,
         music_code: queryCode,
         category: queryCategory,
       })
@@ -64,13 +63,6 @@ const App = () => {
       enabled: false,
     }
   )
-
-  if (isLoading)
-    return (
-      <div className={styles.loadingContainer}>
-        <img src={loadingBox} className={styles.loadingIcon} alt='app loader' />
-      </div>
-    )
 
   return (
     <div className={styles.app}>

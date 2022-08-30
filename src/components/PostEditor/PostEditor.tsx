@@ -57,6 +57,15 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     scrollRef.current?.scrollIntoView()
   }, [])
 
+  const convertURLtoFile = async (url: string) => {
+    const response = await fetch(url)
+    const data = await response.blob()
+    const ext = url.split('.').pop()
+    const filename = url.split('/').pop()
+    const metadata = { type: `image/${ext}` }
+    return new File([data], filename!, metadata)
+  }
+
   useEffect(() => {
     if (!isEdit || !originData) return
     setPreviewURL(originData.image)
@@ -67,6 +76,8 @@ const PostEditor = ({ isEdit, originData }: Props) => {
       note: originData.content,
     })
     setImageVisible(true)
+    console.log(convertURLtoFile(originData.image))
+    // setImage(convertURLtoFile(originData.image))
   }, [isEdit, originData])
 
   const handleImageUpload = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +89,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
       setPreviewURL(String(reader.result))
       setImageVisible(true)
     }
+    console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
   }, [])
 
@@ -103,6 +115,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    console.log(originData)
     if (!image || !previewURL) {
       setModalOpen(true)
       setAlertMessage('이미지를 등록해주세요')
