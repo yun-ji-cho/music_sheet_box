@@ -1,9 +1,9 @@
 import { FormEvent, ChangeEvent, useState, useRef, useEffect, useCallback } from 'react'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { IResultData } from 'types'
-import { addNewItemApi } from 'service/getMusicSheetApi'
+import { addNewItemApi, editItemApi } from 'service/getMusicSheetApi'
 import styles from './postEditor.module.scss'
 
 import Button from 'components/Button/Button'
@@ -26,6 +26,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const [category, setCategory] = useState('선택하세요')
   const [codeSelect, setCodeSelect] = useState(false)
   const [categorySelect, setCategorySelect] = useState(false)
+  const [id, setId] = useState<number>()
   const [alertMessage, setAlertMessage] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [previewURL, setPreviewURL] = useState<string | undefined>('')
@@ -34,7 +35,6 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const [moveToBoard, setMoveToBoard] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [cancelButton, setCancelButton] = useState(false)
-  const queryClient = useQueryClient()
   const [inputs, setInputs] = useState({
     title: '',
     note: '',
@@ -57,27 +57,17 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     scrollRef.current?.scrollIntoView()
   }, [])
 
-  const convertURLtoFile = async (url: string) => {
-    const response = await fetch(url)
-    const data = await response.blob()
-    const ext = url.split('.').pop()
-    const filename = url.split('/').pop()
-    const metadata = { type: `image/${ext}` }
-    return new File([data], filename!, metadata)
-  }
-
   useEffect(() => {
     if (!isEdit || !originData) return
     setPreviewURL(originData.image)
     setCode(originData.musicCode)
     setCategory(originData.category)
+    setId(originData.id)
     setInputs({
       title: originData.title,
       note: originData.content,
     })
     setImageVisible(true)
-    console.log(convertURLtoFile(originData.image))
-    // setImage(convertURLtoFile(originData.image))
   }, [isEdit, originData])
 
   const handleImageUpload = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -89,11 +79,11 @@ const PostEditor = ({ isEdit, originData }: Props) => {
       setPreviewURL(String(reader.result))
       setImageVisible(true)
     }
-    console.log(e.currentTarget.files?.[0])
+    // console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
   }, [])
 
-  const { isLoading, mutate } = useMutation(addNewItemApi, {
+  const option = {
     onSettled: () => {
       setModalOpen(true)
       setMoveToBoard(true)
@@ -101,16 +91,18 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     },
     onSuccess: () => {
       setIconCheck(true)
-      setAlertMessage('이미지 업로드 완료')
-      queryClient.invalidateQueries('musicSheets')
+      setAlertMessage('게시글 업로드 완료')
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       setModalOpen(true)
       // eslint-disable-next-line no-console
       console.log(error)
-      setAlertMessage('이미지 업로드 실패')
+      setAlertMessage('게시글 업로드 실패')
     },
-  })
+  }
+
+  const { isLoading, mutate } = useMutation(addNewItemApi, option)
+  // const { isLoading, mutate } = useMutation(editItemApi, option)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -151,6 +143,10 @@ const PostEditor = ({ isEdit, originData }: Props) => {
     formData.append('musicCode', code)
     formData.append('category', category)
     formData.append('image', image)
+
+    if (originData) {
+      formData.append('id', String(id))
+    }
     mutate(formData)
   }
 
