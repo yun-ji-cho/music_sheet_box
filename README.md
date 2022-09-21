@@ -28,109 +28,166 @@
 <summary>펼치기</summary>
 
 ```
-src
- ┣ assets
- ┃ ┣ images
- ┃ ┃ ┗ 1.jpg
- ┃ ┗ svg
- ┃ ┃ ┣ chevron_left.svg
- ┃ ┃ ┣ close.svg
- ┃ ┃ ┣ download.svg
- ┃ ┃ ┣ file_image.svg
- ┃ ┃ ┣ gnb_list.svg
- ┃ ┃ ┣ gnb_search.svg
- ┃ ┃ ┣ gnb_upload.svg
- ┃ ┃ ┣ header_envelope.svg
- ┃ ┃ ┣ header_save-box.svg
- ┃ ┃ ┣ header_share.svg
- ┃ ┃ ┣ heart.svg
- ┃ ┃ ┣ index.js
- ┃ ┃ ┣ logo.svg
- ┃ ┃ ┗ plus.svg
- ┣ components
- ┃ ┣ Button
- ┃ ┃ ┣ button.module.scss
- ┃ ┃ ┗ Button.tsx
- ┃ ┣ GNB
- ┃ ┃ ┣ gnb.module.scss
- ┃ ┃ ┗ GNB.tsx
- ┃ ┣ Header
- ┃ ┃ ┣ header.module.scss
- ┃ ┃ ┗ Header.tsx
- ┃ ┣ Layout
- ┃ ┃ ┣ layout.module.scss
- ┃ ┃ ┗ Layout.tsx
- ┃ ┣ Modal
- ┃ ┃ ┣ ConfirmModal
- ┃ ┃ ┃ ┣ confirmModal.module.scss
- ┃ ┃ ┃ ┗ ConfirmModal.tsx
- ┃ ┃ ┣ Detail
- ┃ ┃ ┃ ┣ Detail.module.scss
- ┃ ┃ ┃ ┗ Detail.tsx
- ┃ ┃ ┗ Portal.tsx
- ┃ ┗ gnb.module.scss
- ┣ data
- ┃ ┗ data.ts
- ┣ hooks
- ┃ ┣ worker
- ┃ ┃ ┣ index.tsx
- ┃ ┃ ┣ useAxios.tsx
- ┃ ┃ ┗ useAxiosCore.tsx
- ┃ ┗ index.tsx
- ┣ pages
- ┃ ┣ Board
- ┃ ┃ ┣ Item
- ┃ ┃ ┃ ┣ item.module.scss
- ┃ ┃ ┃ ┗ Item.tsx
- ┃ ┃ ┣ board.module.scss
- ┃ ┃ ┗ Board.tsx
- ┃ ┣ Search
- ┃ ┃ ┣ search.module.scss
- ┃ ┃ ┗ Search.tsx
- ┃ ┗ Upload
- ┃ ┃ ┣ upload.module.scss
- ┃ ┃ ┗ Upload.tsx
- ┣ recoil
- ┃ ┗ music.atom.ts
- ┣ routes
- ┃ ┣ index.jsx
- ┃ ┗ Routes.module.scss
- ┣ service
- ┃ ┗ getMusicSheetApi.ts
- ┣ styles
- ┃ ┣ base
- ┃ ┃ ┣ _fonts.scss
- ┃ ┃ ┣ _more.scss
- ┃ ┃ ┗ _reset.scss
- ┃ ┣ constants
- ┃ ┃ ┣ _colors.scss
- ┃ ┃ ┣ _levels.scss
- ┃ ┃ ┗ _sizes.scss
- ┃ ┣ mixins
- ┃ ┃ ┣ _animation.scss
- ┃ ┃ ┣ _flexbox.scss
- ┃ ┃ ┣ _position.scss
- ┃ ┃ ┣ _responsive.scss
- ┃ ┃ ┣ _typography.scss
- ┃ ┃ ┗ _visual.scss
- ┃ ┣ index.js
- ┃ ┗ index.scss
- ┣ types
- ┃ ┗ index.ts
- ┣ utils
- ┃ ┗ axios.ts
- ┣ index.tsx
- ┣ logo.svg
- ┣ react-app-env.d.ts
- ┣ reportWebVitals.ts
- ┗ setupTests.ts
+📦src
+ ┣ 📂assets
+ ┃ ┣ 📂images
+ ┃ ┃ ┣ 📜bouncing_box.gif
+ ┃ ┃ ┣ 📜default_img.png
+ ┃ ┃ ┗ 📜loading.gif
+ ┃ ┗ 📂svg
+ ┃ ┃ ┣ 📜alert_check.svg
+ ┃ ┃ ┣ 📜alert_warning.svg
+ ┃ ┃ ┣ 📜arrow_down.svg
+ ┃ ┃ ┣ 📜arrow_next.svg
+ ┃ ┃ ┣ 📜arrow_prev.svg
+ ┃ ┃ ┣ 📜chevron_left.svg
+ ┃ ┃ ┣ 📜clock.svg
+ ┃ ┃ ┣ 📜close.svg
+ ┃ ┃ ┣ 📜download.svg
+ ┃ ┃ ┣ 📜file_image.svg
+ ┃ ┃ ┣ 📜filter.svg
+ ┃ ┃ ┣ 📜gnb_list.svg
+ ┃ ┃ ┣ 📜gnb_search.svg
+ ┃ ┃ ┣ 📜gnb_upload.svg
+ ┃ ┃ ┣ 📜header_envelope.svg
+ ┃ ┃ ┣ 📜header_save-box.svg
+ ┃ ┃ ┣ 📜header_share.svg
+ ┃ ┃ ┣ 📜heart.svg
+ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┣ 📜like.svg
+ ┃ ┃ ┣ 📜logo.svg
+ ┃ ┃ ┣ 📜plus.svg
+ ┃ ┃ ┣ 📜round_close.svg
+ ┃ ┃ ┗ 📜star.svg
+ ┣ 📂components
+ ┃ ┣ 📂Button
+ ┃ ┃ ┣ 📜button.module.scss
+ ┃ ┃ ┗ 📜Button.tsx
+ ┃ ┣ 📂DropDown
+ ┃ ┃ ┣ 📜dropDown.module.scss
+ ┃ ┃ ┗ 📜DropDown.tsx
+ ┃ ┣ 📂Header
+ ┃ ┃ ┣ 📜header.module.scss
+ ┃ ┃ ┗ 📜Header.tsx
+ ┃ ┣ 📂Item
+ ┃ ┃ ┣ 📜item.module.scss
+ ┃ ┃ ┗ 📜Item.tsx
+ ┃ ┣ 📂Loading
+ ┃ ┃ ┣ 📜loading.module.scss
+ ┃ ┃ ┗ 📜Loading.tsx
+ ┃ ┣ 📂Modal
+ ┃ ┃ ┣ 📂ConfirmModal
+ ┃ ┃ ┃ ┣ 📜confirmModal.module.scss
+ ┃ ┃ ┃ ┗ 📜ConfirmModal.tsx
+ ┃ ┃ ┣ 📂GNB
+ ┃ ┃ ┃ ┣ 📜gnb.module.scss
+ ┃ ┃ ┃ ┗ 📜GNB.tsx
+ ┃ ┃ ┗ 📜Portal.tsx
+ ┃ ┣ 📂PageLayout
+ ┃ ┃ ┣ 📜pageLayout.module.scss
+ ┃ ┃ ┗ 📜PageLayout.tsx
+ ┃ ┣ 📂Pagination
+ ┃ ┃ ┣ 📜pagination.module.scss
+ ┃ ┃ ┗ 📜Pagination.tsx
+ ┃ ┗ 📂PostEditor
+ ┃ ┃ ┣ 📂UploadImage
+ ┃ ┃ ┃ ┣ 📜uploadImage.module.scss
+ ┃ ┃ ┃ ┗ 📜UploadImage.tsx
+ ┃ ┃ ┣ 📜postEditor.module.scss
+ ┃ ┃ ┗ 📜PostEditor.tsx
+ ┣ 📂hooks
+ ┃ ┣ 📂state
+ ┃ ┃ ┗ 📜index.ts
+ ┃ ┣ 📂worker
+ ┃ ┃ ┣ 📜index.tsx
+ ┃ ┃ ┣ 📜useAxios.tsx
+ ┃ ┃ ┗ 📜useAxiosCore.tsx
+ ┃ ┗ 📜index.tsx
+ ┣ 📂pages
+ ┃ ┣ 📂Board
+ ┃ ┃ ┣ 📂SortDropDown
+ ┃ ┃ ┃ ┣ 📜sortDropDown.module.scss
+ ┃ ┃ ┃ ┗ 📜SortDropDown.tsx
+ ┃ ┃ ┣ 📜board.module.scss
+ ┃ ┃ ┗ 📜Board.tsx
+ ┃ ┣ 📂Detail
+ ┃ ┃ ┣ 📜detail.module.scss
+ ┃ ┃ ┗ 📜Detail.tsx
+ ┃ ┣ 📂Edit
+ ┃ ┃ ┣ 📜edit.module.scss
+ ┃ ┃ ┗ 📜Edit.tsx
+ ┃ ┣ 📂Search
+ ┃ ┃ ┣ 📂FilterModal
+ ┃ ┃ ┃ ┣ 📜filterModal.module.scss
+ ┃ ┃ ┃ ┗ 📜FilterModal.tsx
+ ┃ ┃ ┣ 📂ResultItem
+ ┃ ┃ ┃ ┣ 📜resultItem.module.scss
+ ┃ ┃ ┃ ┗ 📜ResultItem.tsx
+ ┃ ┃ ┣ 📂SearchBox
+ ┃ ┃ ┃ ┣ 📜searchBox.module.scss
+ ┃ ┃ ┃ ┗ 📜SearchBox.tsx
+ ┃ ┃ ┣ 📂SearchForm
+ ┃ ┃ ┃ ┣ 📜searchForm.module.scss
+ ┃ ┃ ┃ ┗ 📜SearchForm.tsx
+ ┃ ┃ ┣ 📂SearchResult
+ ┃ ┃ ┃ ┣ 📜searchResult.module.scss
+ ┃ ┃ ┃ ┗ 📜SearchResult.tsx
+ ┃ ┃ ┣ 📂Tag
+ ┃ ┃ ┃ ┣ 📜tag.module.scss
+ ┃ ┃ ┃ ┗ 📜Tag.tsx
+ ┃ ┃ ┣ 📂TextFilter
+ ┃ ┃ ┃ ┣ 📜textFilter.module.scss
+ ┃ ┃ ┃ ┗ 📜TextFilter.tsx
+ ┃ ┃ ┣ 📜BoldText.tsx
+ ┃ ┃ ┣ 📜search.module.scss
+ ┃ ┃ ┗ 📜Search.tsx
+ ┃ ┗ 📂Upload
+ ┃ ┃ ┣ 📜upload.module.scss
+ ┃ ┃ ┗ 📜Upload.tsx
+ ┣ 📂routes
+ ┃ ┣ 📜index.jsx
+ ┃ ┗ 📜Routes.module.scss
+ ┣ 📂service
+ ┃ ┗ 📜getMusicSheetApi.ts
+ ┣ 📂states
+ ┃ ┗ 📜music.atom.ts
+ ┣ 📂styles
+ ┃ ┣ 📂base
+ ┃ ┃ ┣ 📜_fonts.scss
+ ┃ ┃ ┣ 📜_more.scss
+ ┃ ┃ ┗ 📜_reset.scss
+ ┃ ┣ 📂constants
+ ┃ ┃ ┣ 📜_colors.scss
+ ┃ ┃ ┣ 📜_levels.scss
+ ┃ ┃ ┗ 📜_sizes.scss
+ ┃ ┣ 📂mixins
+ ┃ ┃ ┣ 📜_animation.scss
+ ┃ ┃ ┣ 📜_flexbox.scss
+ ┃ ┃ ┣ 📜_position.scss
+ ┃ ┃ ┣ 📜_responsive.scss
+ ┃ ┃ ┣ 📜_typography.scss
+ ┃ ┃ ┗ 📜_visual.scss
+ ┃ ┣ 📜index.js
+ ┃ ┗ 📜index.scss
+ ┣ 📂types
+ ┃ ┗ 📜index.ts
+ ┣ 📂utils
+ ┃ ┗ 📜axios.ts
+ ┣ 📜index.tsx
+ ┣ 📜logo.svg
+ ┣ 📜react-app-env.d.ts
+ ┣ 📜reportWebVitals.ts
+ ┗ 📜setupTests.ts
 ```
 <br/>
 </details>
 
 # 💡 기능 설명
-* 검색창 : 저장한 악보를 검색합니다. 타이틀, 내용, Code, Category 로 검색할 수 있습니다. 
-* Filter 버튼을 눌러서 상세 조건을 선택하면 검색창 및에 태그가 나타납니다.
+* 검색창 : 저장한 악보를 검색합니다. 
+- 검색어를 입력하지 않을고 검색 버튼을 누르면 alert 창이 뜹니다.
+- 검색창에 단어를 치면 전체 검색 결과를 보여줍니다.
+- 필터창을 열어 단어를 제목과 타이틀에서 부분검색 할 수 있습니다. 또한 Code, Category 로 상세조건을 주어 검색할 수 있습니다. 
+- 필터를 사용하여 검색시 분류 키워드가 태그로 나타납니다. 태그를 삭제하면 필터창에서도 초기화 됩니다.
 
 ![image](https://user-images.githubusercontent.com/73115315/173238637-22d36e65-9e94-4685-a6fb-3550728448f2.png)
 ![image](https://user-images.githubusercontent.com/73115315/173238666-b35cb3c6-f2df-4c74-bcbd-e892a52b267a.png)
@@ -150,12 +207,6 @@ src
 ![image](https://user-images.githubusercontent.com/73115315/172043544-4e767059-c324-4263-ab9b-50a0e517c814.png)
 
 <br/><br/>
-
-# 🔥 추가 개발 LIST
-1. 포스팅하고 게시판으로 이동했을 때 새로고침 없이 게시판에 업데이트 
-2. 검색 결과에 따른 리스트 보여주기
-3. 포스팅 좋아요 기능, 삭제, 수정
-4. 게시판 필터기능
 
 <br/>
 
