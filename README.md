@@ -191,6 +191,7 @@
 - 필터를 사용하여 검색시 분류 키워드가 태그로 나타납니다. 태그를 삭제하면 필터창에서도 초기화 됩니다.
 
 [screen-recording.webm](https://user-images.githubusercontent.com/73115315/191522825-f7c74216-a4f5-440a-9380-9863e176f64d.webm)
+![screen-recording](https://user-images.githubusercontent.com/73115315/191523951-7df3323f-ef79-425a-84ea-4c596a63dcde.gif)
 
 ![image](https://user-images.githubusercontent.com/73115315/191448395-e831fd35-e310-4d8a-b20c-b377946e0cd4.png)
 ![image](https://user-images.githubusercontent.com/73115315/191448529-12e54565-9d82-4e0c-b599-3b64dca2c6f9.png)
