@@ -65,7 +65,7 @@ const Board = ({ data, isLoading, refetch }: Props) => {
         <div className={styles.noContent}>
           <WarningIcon />
           <div className={styles.text}>등록된 악보가 없습니다.</div>
-          <Button message='악보 등록하기' width='width25' type='primary' onClick={handleMoveUpload} />
+          <Button message='악보 등록하기' width='width50' type='primary' onClick={handleMoveUpload} />
         </div>
       )
     }
