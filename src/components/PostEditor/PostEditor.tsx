@@ -59,6 +59,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
 
   useEffect(() => {
     if (!isEdit || !originData) return
+    console.log(originData)
     setPreviewURL(originData.image)
     setCode(originData.musicCode)
     setCategory(originData.category)
@@ -79,7 +80,6 @@ const PostEditor = ({ isEdit, originData }: Props) => {
       setPreviewURL(String(reader.result))
       setImageVisible(true)
     }
-    // console.log(e.currentTarget.files?.[0])
     setImage(e.currentTarget.files?.[0])
   }, [])
 
@@ -107,7 +107,6 @@ const PostEditor = ({ isEdit, originData }: Props) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log(originData)
     if (!image || !previewURL) {
       setModalOpen(true)
       setAlertMessage('이미지를 등록해주세요')

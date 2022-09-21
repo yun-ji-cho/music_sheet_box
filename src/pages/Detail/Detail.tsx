@@ -4,7 +4,7 @@ import { useMutation } from 'react-query'
 
 import styles from './detail.module.scss'
 import { IResultData } from 'types/index'
-import { PrevIcon, LikeIcon } from 'assets/svg'
+import { PrevIcon } from 'assets/svg'
 import { deleteItemApi } from 'service/getMusicSheetApi'
 import defaultImage from 'assets/images/default_img.png'
 
@@ -111,13 +111,10 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
         />
       )}
       <div className={styles.top}>
-        <button type='button' className={styles.topBtn} onClick={handleMoveList}>
+        <button type='button' className={styles.backBtn} onClick={handleMoveList}>
           <PrevIcon className={styles.prevIcon} />
         </button>
         <p className={styles.modalTitle}>Detail Item</p>
-        <button type='button' className={styles.topBtn}>
-          <LikeIcon className={styles.likeIcon} />
-        </button>
       </div>
       {filterData && (
         <div className={styles.inner}>

@@ -9,19 +9,21 @@
   background: colors.$BG_WHITE;
 
   .top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: relative;
     padding: 20px 0 40px;
+    text-align: center;
 
     .modalTitle {
       font-size: 20px;
       font-weight: 700;
+      line-height: 45px;
       color: colors.$GRAY2;
     }
   }
 
-  .topBtn {
+  .backBtn {
+    position: absolute;
+    left: 0;
     width: 45px;
     height: 45px;
     background-color: colors.$MODAL_BTN_BG;
@@ -34,10 +36,6 @@
 
       &.prevIcon {
         fill: colors.$GRAY2;
-      }
-
-      &.likeIcon {
-        fill: colors.$PINK;
       }
     }
   }

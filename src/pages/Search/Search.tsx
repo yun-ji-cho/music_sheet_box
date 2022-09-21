@@ -38,10 +38,10 @@ const Search = ({ data, refetch, isFetching }: Props) => {
 
   useEffect(() => {
     refetch()
-    if (data) {
+    if (data && searchInput !== '') {
       setMatchedData(data.results)
     }
-  }, [data, refetch, setMatchedData])
+  }, [data, refetch, searchInput, setMatchedData])
 
   useEffect(() => {
     if (data && !searchedWord && searchedWord === searchInput) {
