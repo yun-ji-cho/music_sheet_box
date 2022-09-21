@@ -218,6 +218,7 @@
 - 이미지 등록시 이미지 미리보기가 가능합니다.
 - 이미지 미등록시 alert 창이 뜹니다. 
 - 상세 내용을 미입력시 테두리가 bold 처리되고 게시글 등록이 되지 않습니다.
+
 [screen-recording (1).webm](https://user-images.githubusercontent.com/73115315/191534468-efb82417-6fbb-445e-94a2-28e576dc148d.webm)
 
 <br/><br/>
