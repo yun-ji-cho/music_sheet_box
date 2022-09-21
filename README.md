@@ -190,6 +190,8 @@
 - 필터창을 열어 단어를 제목과 타이틀에서 부분검색 할 수 있습니다. 또한 Code, Category 로 상세조건을 주어 검색할 수 있습니다. 
 - 필터를 사용하여 검색시 분류 키워드가 태그로 나타납니다. 태그를 삭제하면 필터창에서도 초기화 됩니다.
 
+[screen-recording.webm](https://user-images.githubusercontent.com/73115315/191522825-f7c74216-a4f5-440a-9380-9863e176f64d.webm)
+
 ![image](https://user-images.githubusercontent.com/73115315/191448395-e831fd35-e310-4d8a-b20c-b377946e0cd4.png)
 ![image](https://user-images.githubusercontent.com/73115315/191448529-12e54565-9d82-4e0c-b599-3b64dca2c6f9.png)
 ![image](https://user-images.githubusercontent.com/73115315/191448683-59688086-6470-40ef-9acf-76c9b7e0d750.png)
