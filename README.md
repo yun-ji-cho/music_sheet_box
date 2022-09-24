@@ -188,6 +188,7 @@
 - 우측 상단에 햄버거 버튼을 클릭하면 GNB가 열립니다.
 - 활성화 된 페이지에 해당하는 링크는 파란색으로 칠해집니다.
 - GNB로 이동시 모든 입력값들은 초기화 됩니다.
+
 [screen-recording (2).webm](https://user-images.githubusercontent.com/73115315/192100202-29bda4ff-8c52-477a-b7a9-a6a13f060158.webm)
 
 ### Search
@@ -197,6 +198,7 @@
 - 필터창을 열어 검색어를 제목과 내용으로 분류검색 할 수 있습니다. 또한 Code, Category 셀렉트 박스를 선택해 상세 조건을 주어 검색할 수 있습니다. 
 - 필터를 사용하여 검색시 분류 키워드가 태그로 나타납니다. 태그를 삭제하면 필터창에서도 초기화 됩니다.
 <br/>
+
 [screen-recording.webm](https://user-images.githubusercontent.com/73115315/191522825-f7c74216-a4f5-440a-9380-9863e176f64d.webm)
 
 
