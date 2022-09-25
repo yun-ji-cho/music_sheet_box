@@ -200,7 +200,7 @@
 
 ### Search
 
-[screen-recording.webm](https://user-images.githubusercontent.com/73115315/191522825-f7c74216-a4f5-440a-9380-9863e176f64d.webm)
+[screen-recording (4).webm](https://user-images.githubusercontent.com/73115315/192149673-7ab98754-335a-4b79-ad6a-4c4998ef4f45.webm)
 
 #### 동작
 - 저장한 악보를 검색합니다. 
@@ -220,7 +220,7 @@
 
 ### BOARD
 
-![image](https://user-images.githubusercontent.com/73115315/172043500-b776645a-f52d-4fdc-89eb-e9376c431b69.png)
+[screen-recording (3).webm](https://user-images.githubusercontent.com/73115315/192148885-ace83acb-b788-46ae-88a0-1584be59bcde.webm)
 
 #### 동작
 - 저장한 악보 리스트를 보여줍니다. 
