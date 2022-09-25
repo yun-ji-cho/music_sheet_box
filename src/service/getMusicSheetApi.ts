@@ -1,7 +1,7 @@
 import { axios } from 'hooks/worker'
 import { IMusicSheetRes } from 'types/index'
 
-const MUSIC_BASE_URL = 'https://pcjmusic.herokuapp.com/community'
+const MUSIC_BASE_URL = 'http://18.177.20.169/community'
 
 interface Params {
   filterType?: string
@@ -17,7 +17,7 @@ export const getMusicSheetApi = (params?: Params) =>
     },
   })
 
-export const addNewItemApi = (formData: any) => axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)
+export const addNewItemApi = (formData: any) => axios.post<any>('http://18.177.20.169/community/', formData)
 // export const addNewItemApi = (formData: any, id?: number) => {
 //   id
 //     ? axios.post<any>('https://pcjmusic.herokuapp.com/community/', formData)

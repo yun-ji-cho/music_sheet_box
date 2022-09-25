@@ -54,7 +54,12 @@ const ResultItem = ({ filterArray }: IFilter) => {
               <li className={styles.item} key={item.id}>
                 <button type='button' onClick={handleMoveDetail} value={item.id}>
                   <div className={styles.imageWrap}>
-                    <img className={styles.image} src={item.image} alt={item.title} onError={handleImgError} />
+                    <img
+                      className={styles.image}
+                      src={`http://18.177.20.169/media/${item.image}`}
+                      alt={item.title}
+                      onError={handleImgError}
+                    />
                   </div>
                   <div className={styles.text}>{handleBoldText(item)}</div>
                   <div className={styles.itemDetail}>

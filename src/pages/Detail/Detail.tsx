@@ -123,7 +123,11 @@ const Detail = ({ dataList, refetch }: ItemProps) => {
             <Button message='삭제하기' onClick={handleDelete} type='negative' width='width50' />
           </div>
           <div className={styles.image}>
-            <img src={filterData.image} alt={filterData.title} onError={handleImgError} />
+            <img
+              src={`http://18.177.20.169/media/${filterData.image}`}
+              alt={filterData.title}
+              onError={handleImgError}
+            />
           </div>
           <span className={styles.category}>{filterData.category}</span>
           <p className={styles.title}>{filterData.title}</p>
