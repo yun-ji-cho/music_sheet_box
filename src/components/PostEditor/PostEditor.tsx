@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { IResultData } from 'types'
-import { addNewItemApi, editItemApi } from 'service/getMusicSheetApi'
+import { addNewItemApi } from 'service/getMusicSheetApi'
 import styles from './postEditor.module.scss'
 
 import Button from 'components/Button/Button'
@@ -59,8 +59,7 @@ const PostEditor = ({ isEdit, originData }: Props) => {
 
   useEffect(() => {
     if (!isEdit || !originData) return
-    console.log(originData)
-    setPreviewURL(originData.image)
+    setPreviewURL(`http://18.177.20.169/media/${originData.image}`)
     setCode(originData.musicCode)
     setCategory(originData.category)
     setId(originData.id)

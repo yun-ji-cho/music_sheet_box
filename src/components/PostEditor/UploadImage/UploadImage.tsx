@@ -17,7 +17,7 @@ const UploadImage = memo(({ handleImageUpload, previewURL, imageVisible, handleR
     <>
       <input
         type='file'
-        accept='.png, .jpeg, .gif, .jpg'
+        accept='.png, .jpeg, .jpg'
         id='fileUpload'
         className={styles.fileUpload}
         onChange={handleImageUpload}
@@ -35,7 +35,7 @@ const UploadImage = memo(({ handleImageUpload, previewURL, imageVisible, handleR
           <span className={styles.message2}>Click Here!</span>
         </div>
         <div className={styles.image}>
-          <img src={`http://18.177.20.169/media/${previewURL}`} alt='upload images' />
+          <img src={previewURL} alt='upload images' />
           <button type='button' className={styles.removeBtn} onClick={handleRemoveImage}>
             <RoundCloseIcon className={styles.closeBtn} />
           </button>
